@@ -1,0 +1,45 @@
+name: Publish GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - email-builder.html
+      - update-csp.cjs
+      - tests/version-check.cjs
+      - changelog.md
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/configure-pages@v5
+      - name: Prepare site
+        run: |
+          node update-csp.cjs --check
+          node tests/version-check.cjs
+          mkdir _site
+          cp email-builder.html _site/index.html
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

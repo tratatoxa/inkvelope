@@ -8,7 +8,9 @@
 
 ## Как запустить
 
-Скачайте [email-builder.html](https://github.com/tratatoxa/inkvelope/raw/refs/heads/main/email-builder.html) и откройте его в браузере. Установка не нужна.
+Откройте **[inkvelope в браузере](https://tratatoxa.github.io/inkvelope/)**. Установка не нужна.
+
+Для работы без интернета скачайте [email-builder.html](https://github.com/tratatoxa/inkvelope/raw/refs/heads/main/email-builder.html) и откройте его в браузере.
 
 ## Как пользоваться
 
