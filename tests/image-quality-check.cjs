@@ -10,8 +10,9 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
  await context.addInitScript(()=>Object.defineProperty(navigator,'clipboard',{value:{writeText:async text=>window.copied=text}}));
  const page=await context.newPage();page.setDefaultTimeout(5000);page.on('pageerror',e=>errors.push(e.message));
  await page.goto(pathToFileURL(path.resolve(__dirname,'../email-builder.html')).href);
+    await page.locator('#languageSelect').selectOption('ru');
  await page.waitForFunction(()=>document.querySelector('#frame').contentDocument?.querySelector('[data-bid]'));
- // При запуске открыта панель «О конструкторе», работа с блоками — на своей вкладке
+ // About opens on startup; blocks have their own tab.
  await page.locator('#t-blocks').click();
  const fixtures=await page.evaluate(()=>{
    const c=document.createElement('canvas');c.width=1600;c.height=600;const x=c.getContext('2d');const d=x.createImageData(c.width,c.height);let n=123456;

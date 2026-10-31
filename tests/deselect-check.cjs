@@ -11,12 +11,13 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     const page = await context.newPage(); page.setDefaultTimeout(5000);
     page.on('pageerror', e => errors.push(e.message));
     await page.goto(pathToFileURL(path.resolve(__dirname, '../email-builder.html')).href);
+    await page.locator('#languageSelect').selectOption('ru');
     await page.waitForFunction(() => document.querySelector('#frame').contentDocument?.querySelector('[data-bid]'));
     const frame = page.frameLocator('#frame');
     const selCount = () => page.evaluate(() => document.querySelector('#frame').contentDocument.querySelectorAll('[data-bid].sel').length);
     const shadow = () => page.evaluate(() => { const td = document.querySelector('#frame').contentDocument.querySelector('[data-bid].sel>td'); return td && getComputedStyle(td).boxShadow; });
     assert.equal(await page.locator('#clearSel').isHidden(), true);
-    // клик по блоку выделяет, кнопка снимает
+    // Click selects a block; the button clears selection.
     await frame.locator('[data-bid]').nth(1).click();
     assert.ok(await selCount() > 0);
     assert.equal(await page.locator('#clearSel').isVisible(), true);
@@ -24,32 +25,32 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.equal(await selCount(), 0);
     assert.equal(await page.locator('.card.sel').count(), 0);
     assert.equal(await page.locator('#clearSel').isHidden(), true);
-    // Esc вне поля ввода снимает выделение, в поле — нет
+    // Escape clears selection outside an input, but not inside one.
     await frame.locator('[data-bid]').nth(1).click();
     await page.locator('.card.sel textarea, .card.sel input[type=text]').first().focus();
     await page.keyboard.press('Escape');
-    assert.ok(await selCount() > 0, 'Esc в поле редактора не должен сбрасывать выделение');
+    assert.ok(await selCount() > 0, 'Escape in an editor field must preserve selection');
     await page.locator('#meta').click();
     await page.keyboard.press('Escape');
     assert.equal(await selCount(), 0);
-    // клик по пустому месту письма снимает выделение
+    // Clicking empty email space clears selection.
     await frame.locator('[data-bid]').nth(1).click();
     await page.evaluate(() => document.querySelector('#frame').contentDocument.body.click());
     assert.equal(await selCount(), 0);
-    // «Без рамок» скрывает рамку, но выделение сохраняется
+    // Clean view hides outlines while keeping the selected block.
     await frame.locator('[data-bid]').nth(1).click();
     assert.notEqual(await shadow(), 'none');
     await page.locator('#cleanView').click();
     assert.equal(await page.locator('#cleanView').getAttribute('aria-pressed'), 'true');
     assert.equal(await shadow(), 'none');
     assert.ok(await selCount() > 0);
-    // режим переживает перерисовку превью
+    // The mode survives preview rendering.
     await page.locator('.card.sel textarea, .card.sel input[type=text]').first().fill('Changed');
     await page.waitForTimeout(400);
     assert.equal(await shadow(), 'none');
     await page.locator('#cleanView').click();
     assert.notEqual(await shadow(), 'none');
-    // кнопки скрыты вне режима «Письмо»
+    // Controls are hidden outside Email view.
     await page.locator('[data-view=code]').click();
     assert.equal(await page.locator('#cleanView').isHidden(), true);
     assert.equal(await page.locator('#clearSel').isHidden(), true);

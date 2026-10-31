@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
-// Переверстка сохраняет плашку под списком и линию над подписью
+// Conversion preserves list backgrounds and the divider above the footer.
 const html = `<html><body>
 <table style="background:#F1F1F1" width="100%"><tr><td>
 <table width="600"><tr><td style="border-bottom:solid #BFBFBF 1.0pt;background:white">
@@ -23,6 +23,7 @@ const html = `<html><body>
     const page = await context.newPage(); page.setDefaultTimeout(5000);
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     await page.goto(pathToFileURL(path.resolve(__dirname, '../email-builder.html')).href);
+    await page.locator('#languageSelect').selectOption('ru');
     await page.locator('#importFile').setInputFiles({ name: 'layout.html', mimeType: 'text/html', buffer: Buffer.from(html) });
     await page.waitForSelector('[data-relayout]', { state: 'attached' });
     await page.evaluate(() => document.querySelector('[data-relayout]').click());
@@ -34,8 +35,8 @@ const html = `<html><body>
     assert.equal(list.bg, '#EFEFFF');
     assert.equal(list.items, 'Перейдите по адресу\nВойдите в аккаунт\nДобавьте в избранное');
     const text = st.blocks.filter(b => b.type === 'text');
-    assert.ok(text.every(b => !b.bg), 'обычный текст без плашки');
-    assert.ok(text.some(b => b.text.includes('Спасибо')), 'строка над линией не уходит в подпись');
+    assert.ok(text.every(b => !b.bg), 'normal text has no background');
+    assert.ok(text.some(b => b.text.includes('Спасибо')), 'text above the divider is not absorbed into the footer');
     const footer = st.blocks[st.blocks.length - 1];
     assert.equal(footer.type, 'footer'); assert.equal(footer.border, true);
     assert.ok(!footer.text.includes('Спасибо'));

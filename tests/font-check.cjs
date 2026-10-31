@@ -2,13 +2,14 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const { pathToFileURL } = require('node:url');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
-// Проверка предупреждает, если основного шрифта нет на компьютере, и молчит, если он есть
+// Warn when the primary font is missing; accept installed fonts.
 (async () => {
   const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH, headless: true, args: ['--disable-background-networking', '--no-proxy-server', '--host-resolver-rules=MAP * ~NOTFOUND'] });
   try {
     const page = await browser.newPage(); page.setDefaultTimeout(5000);
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     await page.goto(pathToFileURL(path.resolve(__dirname, '../email-builder.html')).href);
+    await page.locator('#languageSelect').selectOption('ru');
     await page.waitForFunction(() => document.querySelector('#frame').contentDocument?.querySelector('[data-bid]'));
     await page.locator('#t-style').click();
     const options = await page.evaluate(() => [...document.querySelectorAll('#fonts option')].map(o => o.value));
@@ -27,14 +28,14 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.match(await warn("'No Such Font 1234', 'Other Missing', sans-serif"), /показано шрифтом sans-serif/);
     assert.equal(await warn('Arial, Helvetica, sans-serif'), null);
     assert.equal(await warn('sans-serif'), null);
-    // Шрифт заголовков: своё предупреждение и пустое значение по умолчанию
+    // Heading fonts have their own warnings and default to empty.
     await page.locator('input[id$="-font"]').fill('Arial, Helvetica, sans-serif');
     await page.locator('input[id$="-hfont"]').fill("'No Such Heading Font', Arial, sans-serif");
     await page.waitForTimeout(300);
     await page.locator('[data-view=checks]').click();
     assert.ok(await page.evaluate(() => [...document.querySelectorAll('#checks li')].some(li => /Шрифт заголовков No Such Heading Font не установлен/.test(li.textContent))));
     await page.locator('[data-view=mail]').click();
-    // Импорт: заголовки другим шрифтом, чем текст, переносятся в «Шрифт заголовков» и так рисуются
+    // Import preserves distinct heading and body fonts.
     const mixed = `<html><body><p><b><span style="font-size:22pt;font-family:&quot;Georgia&quot;">Заголовок письма</span></b></p>
       <p><span style="font-size:10pt;font-family:&quot;Arial&quot;">Коллеги, привет! Это обычный абзац письма, набранный основным шрифтом, он длиннее заголовка.</span></p></body></html>`;
     await page.locator('#t-import').click();
@@ -50,7 +51,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     });
     assert.match(fonts.head, /Georgia/);
     assert.match(fonts.text, /Arial/);
-    // Импорт: третий шрифт у заголовка и у абзаца остаётся шрифтом блока, выравнивание заголовка сохраняется
+    // A third font remains a block override; heading alignment is preserved.
     const three = `<html><body><p><b><span style="font-size:22pt;font-family:&quot;Georgia&quot;">Первый заголовок</span></b></p>
       <p><span style="font-size:10pt;font-family:&quot;Arial&quot;">Коллеги, привет! Это обычный абзац письма, набранный основным шрифтом, он заметно длиннее заголовков и надписей.</span></p>
       <p><b><span style="font-size:22pt;font-family:&quot;Georgia&quot;">Второй заголовок письма</span></b></p>
@@ -70,12 +71,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
       return { h1: cell(/^Первый заголовок$/).style.fontFamily, big: cell(/^УЗНАТЬ ПОДРОБНОСТИ$/).style.fontFamily, bigAlign: cell(/^УЗНАТЬ ПОДРОБНОСТИ$/).style.textAlign, other: cell(/^Абзац, набранный/).style.fontFamily, plain: cell(/^Завершающий/).style.fontFamily };
     });
     assert.match(imp.h1, /Georgia/);
-    // Произвольное семейство сохраняется, дубликаты и emoji удаляются; добавлен запасной вариант
+    // Keep custom families, remove duplicates and emoji, and add fallbacks.
     assert.equal(imp.big.replace(/&quot;|"/g, "'"), "'Example Display', Arial, sans-serif");
     assert.equal(imp.bigAlign, 'center');
     assert.match(imp.other, /Verdana/);
     assert.match(imp.plain, /Arial/);
-    // Свой шрифт блока: рисуется в превью, попадает в проверку; заголовок выравнивается по центру
+    // Block fonts render in the preview and checks; headings support center alignment.
     await page.locator('#t-blocks').click();
     const card = async type => {
       const i = await page.evaluate(t => [...document.querySelectorAll('#blocks > .card')].findLastIndex(c => c.querySelector('.type').textContent === t), type);

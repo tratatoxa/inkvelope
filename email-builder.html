@@ -22,15 +22,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -->
-<html lang="ru" data-theme="light">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-34QiSLnOsudzieOeHJUsle3K9W/BNywfAn4JBseU0rs=' 'sha256-+vvoB3WemPcvk7aGLSLrOCOva77ppgBFfyfz8Mhvy9A='; style-src 'unsafe-inline'; img-src data:; font-src 'none'; connect-src 'none'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-UMkBpxLow9K0YnT5tTtOTKmHggNdXoNQT/SfMg1lZKo=' 'sha256-CHPq/FNQHfKFqA75rIsoA+7DqKDJQPH8kWzv6DCLozQ='; style-src 'unsafe-inline'; img-src data:; font-src 'none'; connect-src 'none'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
-<title>inkvelope — конструктор рассылок</title>
+<title data-i18n="401">inkvelope — email builder</title>
 <style>
-/* Layout: инструмент в две колонки — слева блоки и настройки, справа живое письмо на «столе» */
+/* Two-column layout: blocks and settings on the left, live email preview on the right. */
 :root {
   color-scheme: light;
   --bg: #f6f7fb; --panel: #ffffff; --ink: #101828; --muted: #475467; --line: #e6e9f2;
@@ -75,10 +75,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn.ghost { border-color: transparent; background: transparent; }
 .btn.ghost:hover { background: var(--soft); }
 .btn.danger { color: var(--bad); }
-/* Круглая кнопка со значком: отмена, повтор, тема */
+/* Round icon buttons: undo, redo and theme. */
 .btn.round { width: 34px; height: 34px; padding: 0; justify-content: center; font-size: 16px; line-height: 1; }
 .btn .ico { font-size: 15px; line-height: 1; }
-/* Кнопка шапки, открывающая панель слева */
+/* Header buttons that open a left-side pane. */
 .btn[aria-expanded="true"] { border-color: var(--accent); background: var(--soft); color: var(--accent); }
 .sep-v { width: 1px; align-self: stretch; margin: 2px 2px; background: var(--line); }
 #themeToggle .ico-sun { display: none; }
@@ -235,21 +235,22 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <body>
 <div class="app">
   <header class="bar">
-    <div class="brand"><h1>inkvelope<span class="ver" id="appVer" title="Версия конструктора"></span></h1><span>Конструктор писем для Outlook</span></div>
+    <div class="brand"><h1>inkvelope<span class="ver" id="appVer" title="Builder version" data-i18n-title="499"></span></h1><span><span data-i18n="402">Email builder for Outlook</span></span></div>
     <div class="actions">
-      <button class="btn" id="t-import" type="button" data-pane="p-import" aria-expanded="false" title="Открыть готовое письмо и перевести его в блоки"><span class="ico" aria-hidden="true">→</span>Импорт</button>
+      <button class="btn" id="t-import" type="button" data-pane="p-import" aria-expanded="false" title="Open an existing email and convert it into blocks" data-i18n-title="500"><span class="ico" aria-hidden="true">→</span><span data-i18n="403">Import</span></button>
       <span class="sep-v" aria-hidden="true"></span>
-      <button class="btn round" id="undoChange" type="button" aria-label="Отменить" title="Отменить последнее изменение (Ctrl+Z / ⌘Z)" disabled>↺</button>
-      <button class="btn round" id="redoChange" type="button" aria-label="Повторить" title="Повторить отменённое (Ctrl+Shift+Z / ⌘⇧Z / Ctrl+Y)" disabled>↻</button>
+      <button class="btn round" id="undoChange" type="button" aria-label="Undo" data-i18n-aria-label="501" title="Undo last change (Ctrl+Z / ⌘Z)" data-i18n-title="502" disabled>↺</button>
+      <button class="btn round" id="redoChange" type="button" aria-label="Redo" data-i18n-aria-label="503" title="Redo change (Ctrl+Shift+Z / ⌘⇧Z / Ctrl+Y)" data-i18n-title="504" disabled>↻</button>
       <span class="sep-v" aria-hidden="true"></span>
-      <button class="btn primary" id="copyMail" type="button">Копировать письмо</button>
-      <button class="btn" id="copyCode" type="button">Копировать HTML</button>
-      <button class="btn" id="saveHtml" type="button">Скачать .html</button>
+      <button class="btn primary" id="copyMail" type="button"><span data-i18n="404">Copy email</span></button>
+      <button class="btn" id="copyCode" type="button"><span data-i18n="405">Copy HTML</span></button>
+      <button class="btn" id="saveHtml" type="button"><span data-i18n="406">Download .html</span></button>
       <span class="sep-v" aria-hidden="true"></span>
-      <button class="btn" id="t-about" type="button" data-pane="p-about" aria-expanded="true" title="С чего начать и как устроен конструктор">О конструкторе</button>
-      <button class="btn" id="t-help" type="button" data-pane="p-help" aria-expanded="false" title="Как вставить письмо в Outlook">Как отправить</button>
+      <button class="btn" id="t-about" type="button" data-pane="p-about" aria-expanded="true" title="Getting started and builder details" data-i18n-title="505"><span data-i18n="407">About</span></button>
+      <button class="btn" id="t-help" type="button" data-pane="p-help" aria-expanded="false" title="How to paste an email into Outlook" data-i18n-title="506"><span data-i18n="408">How to send</span></button>
       <span class="sep-v" aria-hidden="true"></span>
-      <button class="btn round" id="themeToggle" type="button" aria-label="Переключить тему интерфейса" title="Тёмная тема">
+      <select class="btn small" id="languageSelect" aria-label="Interface language"><option value="en">English</option><option value="ru">Русский</option></select>
+      <button class="btn round" id="themeToggle" type="button" aria-label="Switch interface theme" data-i18n-aria-label="507" title="Dark theme" data-i18n-title="508">
         <svg class="ico-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></svg>
         <svg class="ico-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.2 8.2 0 1 0 20 14.2Z"/></svg>
       </button>
@@ -257,114 +258,114 @@ button, input, select, textarea { font: inherit; color: inherit; }
   </header>
 
   <div class="work">
-    <section class="editor" aria-label="Редактор">
+    <section class="editor" aria-label="Editor" data-i18n-aria-label="509">
       <div class="tabs" role="tablist">
-        <button class="tab" role="tab" id="t-style" aria-selected="false" data-pane="p-style">Оформление</button>
-        <button class="tab" role="tab" id="t-blocks" aria-selected="false" data-pane="p-blocks">Блоки</button>
+        <button class="tab" role="tab" id="t-style" aria-selected="false" data-pane="p-style"><span data-i18n="409">Appearance</span></button>
+        <button class="tab" role="tab" id="t-blocks" aria-selected="false" data-pane="p-blocks"><span data-i18n="410">Blocks</span></button>
       </div>
       <div class="pane" id="p-blocks" hidden>
-        <p class="note" id="sampleNote" hidden>Открыт <b>пример</b> письма. Обложка и иконки — заглушки, замените их своими картинками. Логотипы не заданы.</p>
+        <p class="note" id="sampleNote" hidden><span data-i18n="411">This is a</span> <b><span data-i18n="412">sample</span></b> <span data-i18n="413">email. The cover and icons are placeholders; replace them with your own images. No logos are set.</span></p>
         <div class="blocks" id="blocks"></div>
         <div class="adder">
-          <p>Добавить блок <span id="addWhere">в конец</span> — нажмите или перетащите в список:</p>
+          <p><span data-i18n="414">Add a block</span> <span id="addWhere"><span data-i18n="415">at the end</span></span> <span data-i18n="416">— click or drag into the list:</span></p>
           <div id="addBtns"></div>
         </div>
         <div class="adder" id="libBox">
-          <p>Мои блоки и шаблоны. Сохраняйте блок кнопкой ★ в его карточке. Библиотека живёт до закрытия вкладки — сохраните её в файл, чтобы пользоваться в других письмах.</p>
+          <p><span data-i18n="417">My blocks and templates. Save a block with ★ on its card. The library lasts until you close the tab; save it to a file to use it in other emails.</span></p>
           <div class="lib" id="lib"></div>
           <div class="btnrow">
-            <button type="button" class="btn small" id="saveTemplate">★ Письмо целиком как шаблон</button>
-            <button type="button" class="btn small" id="saveLib">Сохранить библиотеку (.json)</button>
-            <label class="btn small file-lbl">Открыть библиотеку…<input type="file" accept=".json,application/json" id="openLib"></label>
+            <button type="button" class="btn small" id="saveTemplate"><span data-i18n="418">★ Save entire email as a template</span></button>
+            <button type="button" class="btn small" id="saveLib"><span data-i18n="419">Save library (.json)</span></button>
+            <label class="btn small file-lbl"><span data-i18n="420">Open library…</span><input type="file" accept=".json,application/json" id="openLib"></label>
           </div>
         </div>
       </div>
       <div class="pane" id="p-import" hidden>
         <label class="drop" id="drop">
-          <input type="file" id="importFile" accept=".msg,.oft,.eml,.mht,.html,.htm,.olk15Message,.olk14Message" aria-label="Файл письма">
-          <b>Перетащите письмо сюда или нажмите, чтобы выбрать файл</b>
-          <span>.msg и .oft из Outlook для Windows · .eml · .html · .olk15Message из Outlook для Mac</span>
+          <input type="file" id="importFile" accept=".msg,.oft,.eml,.mht,.html,.htm,.olk15Message,.olk14Message" aria-label="Email file" data-i18n-aria-label="510">
+          <b><span data-i18n="421">Drop an email here or click to choose a file</span></b>
+          <span><span data-i18n="422">.msg and .oft from Outlook for Windows · .eml · .html · .olk15Message from Outlook for Mac</span></span>
         </label>
-        <p class="hint" style="margin-top:8px">Можно без файла: откройте письмо в Outlook, нажмите <span class="kbd">⌘A</span> и <span class="kbd">⌘C</span>, затем <span class="kbd">⌘V</span> на этой вкладке. Картинки при вставке из буфера не переносятся.</p>
-        <p class="hint">Внешние картинки и стили не загружаются. Для полного макета используйте письмо со встроенными PNG, JPG или GIF. Размер файла — до 20 МБ.</p>
+        <p class="hint" style="margin-top:8px"><span data-i18n="423">You can also open an email in Outlook, press</span> <span class="kbd">⌘A</span> <span data-i18n="424">and</span> <span class="kbd">⌘C</span><span data-i18n="425">, then</span> <span class="kbd">⌘V</span> <span data-i18n="426">in this tab. Images are not imported from the clipboard.</span></p>
+        <p class="hint"><span data-i18n="427">External images and styles are not loaded. For a complete layout, use an email with embedded PNG, JPG or GIF images. File size: up to 20 MB.</span></p>
         <div id="importResult"></div>
       </div>
       <div class="pane" id="p-style" hidden></div>
       <div class="pane help" id="p-help" hidden>
-        <h3>Отправка</h3>
+        <h3><span data-i18n="428">Sending</span></h3>
         <ol>
-          <li>Нажмите <b>«Копировать письмо»</b>.</li>
-          <li>В Outlook создайте новое письмо и вставьте: <span class="kbd">⌘V</span> на Mac, <span class="kbd">Ctrl+V</span> на Windows.</li>
-          <li>Отправьте письмо себе и откройте его на Mac и на Windows. Только после этого рассылайте.</li>
+          <li><span data-i18n="429">Click</span> <b><span data-i18n="430">“Copy email”</span></b>.</li>
+          <li><span data-i18n="431">Create a new Outlook message and paste:</span> <span class="kbd">⌘V</span> <span data-i18n="432">on Mac,</span> <span class="kbd">Ctrl+V</span> <span data-i18n="433">on Windows.</span></li>
+          <li><span data-i18n="434">Send yourself a test email and open it on Mac and Windows before sending it to others.</span></li>
         </ol>
-        <p>Не правьте вёрстку прямо в Outlook: редактор Outlook перепишет HTML по-своему. Нужна правка — исправьте текст здесь и скопируйте письмо заново.</p>
-        <p>Если кнопка не сработала, кликните по письму в превью, нажмите <span class="kbd">⌘A</span> / <span class="kbd">Ctrl+A</span>, затем <span class="kbd">⌘C</span> / <span class="kbd">Ctrl+C</span>.</p>
+        <p><span data-i18n="435">Make layout changes here and copy the email again. Editing the layout in Outlook can rewrite the HTML.</span></p>
+        <p><span data-i18n="436">If copying fails, click the email preview, press</span> <span class="kbd">⌘A</span> / <span class="kbd">Ctrl+A</span><span data-i18n="425">, then</span> <span class="kbd">⌘C</span> / <span class="kbd">Ctrl+C</span>.</p>
 
-        <h3>Другой способ для Outlook на Windows</h3>
-        <p>Скачайте файл <code>.html</code>, затем в новом письме: <b>Вставка → Вложить файл → Обзор</b>, выберите файл, раскройте стрелку у кнопки «Вставить» и выберите <b>«Вставить как текст»</b>. Так HTML попадёт в письмо без пересборки редактором. Встроенные картинки при этом могут не показаться; тогда используйте копирование и проверьте результат в Outlook. Картинки загружаются только из файлов, обращения к серверам отключены.</p>
+        <h3><span data-i18n="437">Alternative for Outlook for Windows</span></h3>
+        <p><span data-i18n="438">Download the</span> <code>.html</code><span data-i18n="439">file, then in a new message choose</span> <b><span data-i18n="440">Insert → Attach File → Browse</span></b><span data-i18n="441">. Choose the file, open the arrow next to Insert, then choose</span> <b><span data-i18n="442">“Insert as Text”</span></b><span data-i18n="443">. This inserts the HTML without rebuilding it in the editor. Embedded images may not appear; if so, use copy and paste and check the result in Outlook. Images are loaded from files only; server requests are disabled.</span></p>
       </div>
       <div class="pane help" id="p-about">
-        <h3>Как начать работу</h3>
+        <h3><span data-i18n="444">Getting started</span></h3>
         <ol>
-          <li>Откройте вкладку <b>«Блоки»</b> слева. Письмо собирается из блоков: шапка, картинка, заголовок, текст, список, колонки, кнопка, разделитель и подпись.</li>
-          <li>Добавьте блок кнопкой внизу списка или перетащите его в нужное место. Кликните блок прямо в письме справа, чтобы открыть его настройки.</li>
-          <li>Есть готовое письмо — нажмите <b>«Импорт»</b> в шапке и откройте файл: конструктор переведёт его в блоки.</li>
-          <li>На вкладке <b>«Оформление»</b> задайте шрифты, цвета и ширину письма — они действуют на всё письмо сразу.</li>
-          <li>Загляните в <b>«Проверку»</b> над письмом: она находит пустые ссылки, слабые картинки, неустановленные шрифты и то, что сломается в Outlook.</li>
-          <li>Нажмите <b>«Копировать письмо»</b> и вставьте его в Outlook. Подробности — в <b>«Как отправить»</b>.</li>
+          <li><span data-i18n="445">Open</span> <b><span data-i18n="446">“Blocks”</span></b> <span data-i18n="447">on the left. Build your email from headers, images, headings, text, lists, columns, buttons, dividers and a footer.</span></li>
+          <li><span data-i18n="448">Add a block using a button below the list, or drag it into place. Click a block in the preview to open its settings.</span></li>
+          <li><span data-i18n="449">Already have an email? Click</span> <b><span data-i18n="450">“Import”</span></b> <span data-i18n="451">in the header and open the file to convert it into blocks.</span></li>
+          <li><span data-i18n="452">Under</span> <b><span data-i18n="453">“Appearance”</span></b> <span data-i18n="454">set the fonts, colors and width for the whole email.</span></li>
+          <li><span data-i18n="455">Open</span> <b><span data-i18n="456">“Checks”</span></b> <span data-i18n="457">above the preview to find empty links, low-resolution images, missing fonts and Outlook compatibility issues.</span></li>
+          <li><span data-i18n="429">Click</span> <b><span data-i18n="430">“Copy email”</span></b> <span data-i18n="458">and paste it into Outlook. See</span> <b><span data-i18n="459">“How to send”</span></b>.</li>
         </ol>
-        <p>Конструктор работает прямо в браузере и ничего не отправляет в сеть. Черновик живёт до закрытия вкладки, поэтому сохраняйте работу кнопкой <b>«Сохранить проект (.json)»</b> на вкладке «Оформление».</p>
+        <p><span data-i18n="460">The builder runs in your browser and sends nothing over the network. Drafts last until the tab closes, so save your work using</span> <b><span data-i18n="461">“Save project (.json)”</span></b> <span data-i18n="462">under Appearance.</span></p>
 
-        <h3>Разметка текста</h3>
+        <h3><span data-i18n="463">Text formatting</span></h3>
         <ul>
-          <li><code>**жирный**</code> — жирный текст.</li>
-          <li><code>[текст ссылки](https://адрес)</code> — ссылка.</li>
-          <li>Пустая строка — новый абзац, одинарный перенос — перенос строки.</li>
+          <li><code><span data-i18n="464">**bold**</span></code> <span data-i18n="465">— bold text.</span></li>
+          <li><code><span data-i18n="466">[link text](https://address)</span></code> <span data-i18n="467">— a link.</span></li>
+          <li><span data-i18n="468">A blank line starts a new paragraph; a single line break stays in the same paragraph.</span></li>
         </ul>
-        <h3>Приёмы работы</h3>
+        <h3><span data-i18n="469">Tips</span></h3>
         <ul>
-          <li>Блоки переставляются мышью за ручку <b>⋮⋮</b>. Новый блок можно перетащить из палитры в нужное место списка.</li>
-          <li><span class="kbd">Ctrl+Z</span> / <span class="kbd">⌘Z</span> — отменить, <span class="kbd">Ctrl+Shift+Z</span> / <span class="kbd">⌘⇧Z</span> или <span class="kbd">Ctrl+Y</span> — повторить.</li>
-          <li>Кнопки ▲▼ у чисел меняют отступы на 4 px, остальные значения — на 1. Если удерживать кнопку, значение меняется непрерывно.</li>
-          <li>★ в карточке сохраняет блок в «Мои блоки». Библиотеку сохраните в файл, чтобы открыть её в другом письме.</li>
-          <li>«Колонки» в Outlook для Windows и Mac стоят рядом. На узком экране телефона они встают друг под другом: проверьте это в режиме «Телефон».</li>
+          <li><span data-i18n="470">Reorder blocks by dragging the</span> <b>⋮⋮</b><span data-i18n="471"> handle. Drag a new block from the palette into the list.</span></li>
+          <li><span class="kbd">Ctrl+Z</span> / <span class="kbd">⌘Z</span> <span data-i18n="472">— undo,</span> <span class="kbd">Ctrl+Shift+Z</span> / <span class="kbd">⌘⇧Z</span> <span data-i18n="473">or</span> <span class="kbd">Ctrl+Y</span> <span data-i18n="474">— redo.</span></li>
+          <li><span data-i18n="475">The ▲▼ buttons change spacing by 4 px and other values by 1. Hold a button to keep changing the value.</span></li>
+          <li><span data-i18n="476">★ saves a card to My blocks. Save the library to a file to open it in another email.</span></li>
+          <li><span data-i18n="477">Columns appear side by side in Outlook for Windows and Mac. They stack on narrow screens; check this in Phone view.</span></li>
         </ul>
 
-        <h3>Чёткие картинки</h3>
-        <p>Конструктор сохраняет картинки без сжатия и уменьшения разрешения. Для картинки шириной 600 px в письме подготовьте исходник шириной 1200 px. Для скриншотов, схем и логотипов выбирайте PNG; для фотографий подойдёт качественный JPEG.</p>
-        <p>Встраивание картинки в письмо само по себе не ухудшает качество. Если исходник уже размыт или пережат, замените его оригиналом. После отправки проверьте полученное письмо: почтовый редактор может отдельно обработать изображения.</p>
+        <h3><span data-i18n="478">Sharp images</span></h3>
+        <p><span data-i18n="479">Images keep their original bytes and resolution. For an image displayed at 600 px wide, use a source 1200 px wide. PNG works well for screenshots, diagrams and logos; use high-quality JPEG for photos.</span></p>
+        <p><span data-i18n="480">Embedding an image does not reduce its quality. If the source is blurry or heavily compressed, replace it with the original. Check the delivered email: the email editor may process images separately.</span></p>
 
-        <h3>Что делает инструмент и почему</h3>
+        <h3><span data-i18n="481">How the builder works</span></h3>
         <ul>
-          <li>Вся раскладка на таблицах шириной <code>600</code> px. Отступы только через <code>padding</code> ячеек: его одинаково понимают Word (Outlook для Windows) и WebKit (Outlook для Mac).</li>
-          <li>Никаких <code>mso-margin-*</code>, VML и списков Word. Списки и иконки — ячейки таблицы, поэтому левый край не уезжает.</li>
-          <li>Размеры в пикселях, у картинок заданы <code>width</code> и <code>height</code>, а для Outlook прописано 96 dpi. Письмо не «плывёт» при масштабе экрана 125–150%.</li>
-          <li>Разделитель — линия, а не строка из подчёркиваний.</li>
-          <li>У шрифта всегда есть запасной вариант, иначе Outlook для Windows покажет Times New Roman.</li>
-          <li>Висячие предлоги и союзы склеиваются со следующим словом неразрывным пробелом.</li>
+          <li><span data-i18n="482">The layout uses tables with a default width of</span> <code>600</code> <span data-i18n="483">px. Spacing uses table cell</span> <code>padding</code> <span data-i18n="484">, supported by both Word (Outlook for Windows) and WebKit (Outlook for Mac).</span></li>
+          <li><span data-i18n="485">No</span> <code>mso-margin-*</code><span data-i18n="486">, VML or Word lists. List markers and icons use table cells to keep the left edge aligned.</span></li>
+          <li><span data-i18n="487">Dimensions use pixels. Images have</span> <code>width</code> <span data-i18n="424">and</span> <code>height</code><span data-i18n="488">attributes, and Outlook is set to 96 dpi to keep the layout stable at 125–150% display scaling.</span></li>
+          <li><span data-i18n="489">Dividers use real lines rather than repeated underscores.</span></li>
+          <li><span data-i18n="490">Fonts always include a fallback; otherwise Outlook for Windows may use Times New Roman.</span></li>
+          <li><span data-i18n="491">Russian prepositions and conjunctions stay with the next word using a non-breaking space.</span></li>
         </ul>
       </div>
     </section>
 
-    <section class="stage" aria-label="Превью">
+    <section class="stage" aria-label="Preview" data-i18n-aria-label="511">
       <div class="stage-bar">
-        <div class="seg" role="group" aria-label="Режим превью">
-          <button type="button" data-view="mail" aria-pressed="true">Письмо</button>
-          <button type="button" data-view="orig" aria-pressed="false" hidden>Исходное</button>
+        <div class="seg" role="group" aria-label="Preview mode" data-i18n-aria-label="512">
+          <button type="button" data-view="mail" aria-pressed="true"><span data-i18n="492">Email</span></button>
+          <button type="button" data-view="orig" aria-pressed="false" hidden><span data-i18n="493">Original</span></button>
           <button type="button" data-view="code" aria-pressed="false">HTML</button>
-          <button type="button" data-view="checks" aria-pressed="false">Проверка <span id="checkCount"></span></button>
+          <button type="button" data-view="checks" aria-pressed="false"><span data-i18n="494">Checks</span> <span id="checkCount"></span></button>
         </div>
-        <div class="seg" role="group" aria-label="Ширина экрана" id="deviceSeg">
-          <button type="button" data-device="desktop" aria-pressed="true">Компьютер</button>
-          <button type="button" data-device="phone" aria-pressed="false">Телефон</button>
+        <div class="seg" role="group" aria-label="Preview width" data-i18n-aria-label="513" id="deviceSeg">
+          <button type="button" data-device="desktop" aria-pressed="true"><span data-i18n="495">Desktop</span></button>
+          <button type="button" data-device="phone" aria-pressed="false"><span data-i18n="496">Phone</span></button>
         </div>
-        <button type="button" class="btn small ghost" id="clearSel" title="Снять выделение с блока (Esc)" hidden>Снять выделение</button>
-        <button type="button" class="btn small ghost" id="cleanView" aria-pressed="false" title="Скрыть рамки выделения и наведения в превью">Без рамок</button>
+        <button type="button" class="btn small ghost" id="clearSel" title="Deselect block (Esc)" data-i18n-title="514" hidden><span data-i18n="497">Deselect</span></button>
+        <button type="button" class="btn small ghost" id="cleanView" aria-pressed="false" title="Hide selection and hover outlines in the preview" data-i18n-title="515"><span data-i18n="498">Clean view</span></button>
         <div class="meta" id="meta"></div>
       </div>
       <div class="view">
-        <iframe id="frame" title="Превью письма" sandbox="allow-same-origin"></iframe>
-        <iframe id="origFrame" title="Исходное письмо" sandbox="" hidden></iframe>
+        <iframe id="frame" title="Email preview" data-i18n-title="516" sandbox="allow-same-origin"></iframe>
+        <iframe id="origFrame" title="Original email" data-i18n-title="517" sandbox="" hidden></iframe>
         <div class="code-wrap" id="codeView" hidden><pre id="code"></pre></div>
         <div class="checks-wrap" id="checksView" hidden><ul class="checks" id="checks"></ul></div>
       </div>
@@ -374,9 +375,514 @@ button, input, select, textarea { font: inherit; color: inherit; }
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script id="mail-import">
-/* Разбор файлов писем: .msg/.oft (Outlook для Windows), .eml, .html, .olk15Message (Outlook для Mac).
-   Возвращает { html, subject, images: {cid|name:… → dataURI}, format, notes[] }.
-   Модуль без DOM: его можно проверять в node. */
+
+// English is the default. Translation changes UI text, never user-authored content.
+const I18N = (() => {
+  const catalog = new Map(), rendered = new Map();
+  const staticMessages = {
+  "401": [
+    "inkvelope — email builder",
+    "inkvelope — конструктор рассылок"
+  ],
+  "402": [
+    "Email builder for Outlook",
+    "Конструктор писем для Outlook"
+  ],
+  "403": [
+    "Import",
+    "Импорт"
+  ],
+  "404": [
+    "Copy email",
+    "Копировать письмо"
+  ],
+  "405": [
+    "Copy HTML",
+    "Копировать HTML"
+  ],
+  "406": [
+    "Download .html",
+    "Скачать .html"
+  ],
+  "407": [
+    "About",
+    "О конструкторе"
+  ],
+  "408": [
+    "How to send",
+    "Как отправить"
+  ],
+  "409": [
+    "Appearance",
+    "Оформление"
+  ],
+  "410": [
+    "Blocks",
+    "Блоки"
+  ],
+  "411": [
+    "This is a",
+    "Открыт"
+  ],
+  "412": [
+    "sample",
+    "пример"
+  ],
+  "413": [
+    "email. The cover and icons are placeholders; replace them with your own images. No logos are set.",
+    "письма. Обложка и иконки — заглушки, замените их своими картинками. Логотипы не заданы."
+  ],
+  "414": [
+    "Add a block",
+    "Добавить блок"
+  ],
+  "415": [
+    "at the end",
+    "в конец"
+  ],
+  "416": [
+    "— click or drag into the list:",
+    "— нажмите или перетащите в список:"
+  ],
+  "417": [
+    "My blocks and templates. Save a block with ★ on its card. The library lasts until you close the tab; save it to a file to use it in other emails.",
+    "Мои блоки и шаблоны. Сохраняйте блок кнопкой ★ в его карточке. Библиотека живёт до закрытия вкладки — сохраните её в файл, чтобы пользоваться в других письмах."
+  ],
+  "418": [
+    "★ Save entire email as a template",
+    "★ Письмо целиком как шаблон"
+  ],
+  "419": [
+    "Save library (.json)",
+    "Сохранить библиотеку (.json)"
+  ],
+  "420": [
+    "Open library…",
+    "Открыть библиотеку…"
+  ],
+  "421": [
+    "Drop an email here or click to choose a file",
+    "Перетащите письмо сюда или нажмите, чтобы выбрать файл"
+  ],
+  "422": [
+    ".msg and .oft from Outlook for Windows · .eml · .html · .olk15Message from Outlook for Mac",
+    ".msg и .oft из Outlook для Windows · .eml · .html · .olk15Message из Outlook для Mac"
+  ],
+  "423": [
+    "You can also open an email in Outlook, press",
+    "Можно без файла: откройте письмо в Outlook, нажмите"
+  ],
+  "424": [
+    "and",
+    "и"
+  ],
+  "425": [
+    ", then",
+    ", затем"
+  ],
+  "426": [
+    "in this tab. Images are not imported from the clipboard.",
+    "на этой вкладке. Картинки при вставке из буфера не переносятся."
+  ],
+  "427": [
+    "External images and styles are not loaded. For a complete layout, use an email with embedded PNG, JPG or GIF images. File size: up to 20 MB.",
+    "Внешние картинки и стили не загружаются. Для полного макета используйте письмо со встроенными PNG, JPG или GIF. Размер файла — до 20 МБ."
+  ],
+  "428": [
+    "Sending",
+    "Отправка"
+  ],
+  "429": [
+    "Click",
+    "Нажмите"
+  ],
+  "430": [
+    "“Copy email”",
+    "«Копировать письмо»"
+  ],
+  "431": [
+    "Create a new Outlook message and paste:",
+    "В Outlook создайте новое письмо и вставьте:"
+  ],
+  "432": [
+    "on Mac,",
+    "на Mac,"
+  ],
+  "433": [
+    "on Windows.",
+    "на Windows."
+  ],
+  "434": [
+    "Send yourself a test email and open it on Mac and Windows before sending it to others.",
+    "Отправьте письмо себе и откройте его на Mac и на Windows. Только после этого рассылайте."
+  ],
+  "435": [
+    "Make layout changes here and copy the email again. Editing the layout in Outlook can rewrite the HTML.",
+    "Не правьте вёрстку прямо в Outlook: редактор Outlook перепишет HTML по-своему. Нужна правка — исправьте текст здесь и скопируйте письмо заново."
+  ],
+  "436": [
+    "If copying fails, click the email preview, press",
+    "Если кнопка не сработала, кликните по письму в превью, нажмите"
+  ],
+  "437": [
+    "Alternative for Outlook for Windows",
+    "Другой способ для Outlook на Windows"
+  ],
+  "438": [
+    "Download the",
+    "Скачайте файл"
+  ],
+  "439": [
+    "file, then in a new message choose",
+    ", затем в новом письме:"
+  ],
+  "440": [
+    "Insert → Attach File → Browse",
+    "Вставка → Вложить файл → Обзор"
+  ],
+  "441": [
+    ". Choose the file, open the arrow next to Insert, then choose",
+    ", выберите файл, раскройте стрелку у кнопки «Вставить» и выберите"
+  ],
+  "442": [
+    "“Insert as Text”",
+    "«Вставить как текст»"
+  ],
+  "443": [
+    ". This inserts the HTML without rebuilding it in the editor. Embedded images may not appear; if so, use copy and paste and check the result in Outlook. Images are loaded from files only; server requests are disabled.",
+    ". Так HTML попадёт в письмо без пересборки редактором. Встроенные картинки при этом могут не показаться; тогда используйте копирование и проверьте результат в Outlook. Картинки загружаются только из файлов, обращения к серверам отключены."
+  ],
+  "444": [
+    "Getting started",
+    "Как начать работу"
+  ],
+  "445": [
+    "Open",
+    "Откройте вкладку"
+  ],
+  "446": [
+    "“Blocks”",
+    "«Блоки»"
+  ],
+  "447": [
+    "on the left. Build your email from headers, images, headings, text, lists, columns, buttons, dividers and a footer.",
+    "слева. Письмо собирается из блоков: шапка, картинка, заголовок, текст, список, колонки, кнопка, разделитель и подпись."
+  ],
+  "448": [
+    "Add a block using a button below the list, or drag it into place. Click a block in the preview to open its settings.",
+    "Добавьте блок кнопкой внизу списка или перетащите его в нужное место. Кликните блок прямо в письме справа, чтобы открыть его настройки."
+  ],
+  "449": [
+    "Already have an email? Click",
+    "Есть готовое письмо — нажмите"
+  ],
+  "450": [
+    "“Import”",
+    "«Импорт»"
+  ],
+  "451": [
+    "in the header and open the file to convert it into blocks.",
+    "в шапке и откройте файл: конструктор переведёт его в блоки."
+  ],
+  "452": [
+    "Under",
+    "На вкладке"
+  ],
+  "453": [
+    "“Appearance”",
+    "«Оформление»"
+  ],
+  "454": [
+    "set the fonts, colors and width for the whole email.",
+    "задайте шрифты, цвета и ширину письма — они действуют на всё письмо сразу."
+  ],
+  "455": [
+    "Open",
+    "Загляните в"
+  ],
+  "456": [
+    "“Checks”",
+    "«Проверку»"
+  ],
+  "457": [
+    "above the preview to find empty links, low-resolution images, missing fonts and Outlook compatibility issues.",
+    "над письмом: она находит пустые ссылки, слабые картинки, неустановленные шрифты и то, что сломается в Outlook."
+  ],
+  "458": [
+    "and paste it into Outlook. See",
+    "и вставьте его в Outlook. Подробности — в"
+  ],
+  "459": [
+    "“How to send”",
+    "«Как отправить»"
+  ],
+  "460": [
+    "The builder runs in your browser and sends nothing over the network. Drafts last until the tab closes, so save your work using",
+    "Конструктор работает прямо в браузере и ничего не отправляет в сеть. Черновик живёт до закрытия вкладки, поэтому сохраняйте работу кнопкой"
+  ],
+  "461": [
+    "“Save project (.json)”",
+    "«Сохранить проект (.json)»"
+  ],
+  "462": [
+    "under Appearance.",
+    "на вкладке «Оформление»."
+  ],
+  "463": [
+    "Text formatting",
+    "Разметка текста"
+  ],
+  "464": [
+    "**bold**",
+    "**жирный**"
+  ],
+  "465": [
+    "— bold text.",
+    "— жирный текст."
+  ],
+  "466": [
+    "[link text](https://address)",
+    "[текст ссылки](https://адрес)"
+  ],
+  "467": [
+    "— a link.",
+    "— ссылка."
+  ],
+  "468": [
+    "A blank line starts a new paragraph; a single line break stays in the same paragraph.",
+    "Пустая строка — новый абзац, одинарный перенос — перенос строки."
+  ],
+  "469": [
+    "Tips",
+    "Приёмы работы"
+  ],
+  "470": [
+    "Reorder blocks by dragging the",
+    "Блоки переставляются мышью за ручку"
+  ],
+  "471": [
+    " handle. Drag a new block from the palette into the list.",
+    ". Новый блок можно перетащить из палитры в нужное место списка."
+  ],
+  "472": [
+    "— undo,",
+    "— отменить,"
+  ],
+  "473": [
+    "or",
+    "или"
+  ],
+  "474": [
+    "— redo.",
+    "— повторить."
+  ],
+  "475": [
+    "The ▲▼ buttons change spacing by 4 px and other values by 1. Hold a button to keep changing the value.",
+    "Кнопки ▲▼ у чисел меняют отступы на 4 px, остальные значения — на 1. Если удерживать кнопку, значение меняется непрерывно."
+  ],
+  "476": [
+    "★ saves a card to My blocks. Save the library to a file to open it in another email.",
+    "★ в карточке сохраняет блок в «Мои блоки». Библиотеку сохраните в файл, чтобы открыть её в другом письме."
+  ],
+  "477": [
+    "Columns appear side by side in Outlook for Windows and Mac. They stack on narrow screens; check this in Phone view.",
+    "«Колонки» в Outlook для Windows и Mac стоят рядом. На узком экране телефона они встают друг под другом: проверьте это в режиме «Телефон»."
+  ],
+  "478": [
+    "Sharp images",
+    "Чёткие картинки"
+  ],
+  "479": [
+    "Images keep their original bytes and resolution. For an image displayed at 600 px wide, use a source 1200 px wide. PNG works well for screenshots, diagrams and logos; use high-quality JPEG for photos.",
+    "Конструктор сохраняет картинки без сжатия и уменьшения разрешения. Для картинки шириной 600 px в письме подготовьте исходник шириной 1200 px. Для скриншотов, схем и логотипов выбирайте PNG; для фотографий подойдёт качественный JPEG."
+  ],
+  "480": [
+    "Embedding an image does not reduce its quality. If the source is blurry or heavily compressed, replace it with the original. Check the delivered email: the email editor may process images separately.",
+    "Встраивание картинки в письмо само по себе не ухудшает качество. Если исходник уже размыт или пережат, замените его оригиналом. После отправки проверьте полученное письмо: почтовый редактор может отдельно обработать изображения."
+  ],
+  "481": [
+    "How the builder works",
+    "Что делает инструмент и почему"
+  ],
+  "482": [
+    "The layout uses tables with a default width of",
+    "Вся раскладка на таблицах шириной"
+  ],
+  "483": [
+    "px. Spacing uses table cell",
+    "px. Отступы только через"
+  ],
+  "484": [
+    ", supported by both Word (Outlook for Windows) and WebKit (Outlook for Mac).",
+    "ячеек: его одинаково понимают Word (Outlook для Windows) и WebKit (Outlook для Mac)."
+  ],
+  "485": [
+    "No",
+    "Никаких"
+  ],
+  "486": [
+    ", VML or Word lists. List markers and icons use table cells to keep the left edge aligned.",
+    ", VML и списков Word. Списки и иконки — ячейки таблицы, поэтому левый край не уезжает."
+  ],
+  "487": [
+    "Dimensions use pixels. Images have",
+    "Размеры в пикселях, у картинок заданы"
+  ],
+  "488": [
+    "attributes, and Outlook is set to 96 dpi to keep the layout stable at 125–150% display scaling.",
+    ", а для Outlook прописано 96 dpi. Письмо не «плывёт» при масштабе экрана 125–150%."
+  ],
+  "489": [
+    "Dividers use real lines rather than repeated underscores.",
+    "Разделитель — линия, а не строка из подчёркиваний."
+  ],
+  "490": [
+    "Fonts always include a fallback; otherwise Outlook for Windows may use Times New Roman.",
+    "У шрифта всегда есть запасной вариант, иначе Outlook для Windows покажет Times New Roman."
+  ],
+  "491": [
+    "Russian prepositions and conjunctions stay with the next word using a non-breaking space.",
+    "Висячие предлоги и союзы склеиваются со следующим словом неразрывным пробелом."
+  ],
+  "492": [
+    "Email",
+    "Письмо"
+  ],
+  "493": [
+    "Original",
+    "Исходное"
+  ],
+  "494": [
+    "Checks",
+    "Проверка"
+  ],
+  "495": [
+    "Desktop",
+    "Компьютер"
+  ],
+  "496": [
+    "Phone",
+    "Телефон"
+  ],
+  "497": [
+    "Deselect",
+    "Снять выделение"
+  ],
+  "498": [
+    "Clean view",
+    "Без рамок"
+  ],
+  "499": [
+    "Builder version",
+    "Версия конструктора"
+  ],
+  "500": [
+    "Open an existing email and convert it into blocks",
+    "Открыть готовое письмо и перевести его в блоки"
+  ],
+  "501": [
+    "Undo",
+    "Отменить"
+  ],
+  "502": [
+    "Undo last change (Ctrl+Z / ⌘Z)",
+    "Отменить последнее изменение (Ctrl+Z / ⌘Z)"
+  ],
+  "503": [
+    "Redo",
+    "Повторить"
+  ],
+  "504": [
+    "Redo change (Ctrl+Shift+Z / ⌘⇧Z / Ctrl+Y)",
+    "Повторить отменённое (Ctrl+Shift+Z / ⌘⇧Z / Ctrl+Y)"
+  ],
+  "505": [
+    "Getting started and builder details",
+    "С чего начать и как устроен конструктор"
+  ],
+  "506": [
+    "How to paste an email into Outlook",
+    "Как вставить письмо в Outlook"
+  ],
+  "507": [
+    "Switch interface theme",
+    "Переключить тему интерфейса"
+  ],
+  "508": [
+    "Dark theme",
+    "Тёмная тема"
+  ],
+  "509": [
+    "Editor",
+    "Редактор"
+  ],
+  "510": [
+    "Email file",
+    "Файл письма"
+  ],
+  "511": [
+    "Preview",
+    "Превью"
+  ],
+  "512": [
+    "Preview mode",
+    "Режим превью"
+  ],
+  "513": [
+    "Preview width",
+    "Ширина экрана"
+  ],
+  "514": [
+    "Deselect block (Esc)",
+    "Снять выделение с блока (Esc)"
+  ],
+  "515": [
+    "Hide selection and hover outlines in the preview",
+    "Скрыть рамки выделения и наведения в превью"
+  ],
+  "516": [
+    "Email preview",
+    "Превью письма"
+  ],
+  "517": [
+    "Original email",
+    "Исходное письмо"
+  ]
+};
+  let language = 'en';
+  const expand = (text, values) => text.replace(/\{(\d+)\}/g, (_, i) => String(values[i] ?? ''));
+  const t = (english, russian, values = []) => {
+    if (russian === undefined) {
+      const pair = catalog.get(english) || rendered.get(english);
+      return pair ? pair[language === 'ru' ? 1 : 0] : english;
+    }
+    const pair = [expand(english, values), expand(russian, values)];
+    const target = values.length ? rendered : catalog;
+    target.set(pair[0], pair); target.set(pair[1], pair);
+    // Keep fixed control labels and limit the cache of generated import messages.
+    while (rendered.size > 1000) rendered.delete(rendered.keys().next().value);
+    return pair[language === 'ru' ? 1 : 0];
+  };
+  const translateStatic = () => {
+    document.documentElement.lang = language;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const pair = staticMessages[el.dataset.i18n];
+      el.textContent = t(pair[0], pair[1]);
+    });
+    for (const attr of ['title', 'aria-label']) {
+      document.querySelectorAll('[data-i18n-' + attr + ']').forEach(el => {
+        const pair = staticMessages[el.getAttribute('data-i18n-' + attr)];
+        el.setAttribute(attr, t(pair[0], pair[1]));
+      });
+    }
+  };
+  return { t, translateStatic, get language() { return language; }, set language(value) { language = value === 'ru' ? 'ru' : 'en'; } };
+})();
+const tr = I18N.t;
+
+/* Email parsers: .msg/.oft (Outlook for Windows), .eml, .html, .olk15Message (Outlook for Mac).
+   Returns { html, subject, images: {cid|name:… → dataURI}, format, notes[] }.
+   DOM-free module, also testable in Node.js. */
 (function (root) {
 'use strict';
 
@@ -408,7 +914,7 @@ function decodeWords(s) {
   });
 }
 
-/* ---------- Compound File Binary (контейнер .msg) ---------- */
+/* ---------- Compound File Binary (.msg container) ---------- */
 function readCFB(u8) {
   const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
   if (dv.getUint32(0, true) !== 0xE011CFD0 || dv.getUint32(4, true) !== 0xE11AB1A1) throw new Error('not-cfb');
@@ -473,7 +979,7 @@ function readCFB(u8) {
   return { root: rootE, read, children };
 }
 
-/* ---------- сжатый RTF (LZFu) ---------- */
+/* ---------- compressed RTF (LZFu) ---------- */
 const RTF_PREBUF = '{\\rtf1\\ansi\\mac\\deff0\\deftab720{\\fonttbl;}{\\f0\\fnil \\froman \\fswiss \\fmodern \\fscript \\fdecor MS Sans SerifSymbolArialTimes New RomanCourier{\\colortbl\\red0\\green0\\blue0\r\n\\par \\pard\\plain\\f0\\fs20\\b\\i\\u\\tab\\tx';
 function decompressRTF(u8) {
   const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
@@ -503,7 +1009,7 @@ function decompressRTF(u8) {
   return out.subarray(0, Math.min(op, rawSize));
 }
 
-/* ---------- HTML, упакованный в RTF (\fromhtml1) ---------- */
+/* ---------- HTML embedded in RTF (\fromhtml1) ---------- */
 const RTF_SKIP = /^(fonttbl|colortbl|stylesheet|info|pict|object|listtable|listoverridetable|rsidtbl|generator|themedata|colorschememapping|latentstyles|datastore|xmlnstbl|mmathPr|filetbl|revtbl|header|footer|headerl|headerr|footerl|footerr|fldinst)$/;
 function rtfToHtml(u8) {
   const s = latin1(u8);
@@ -603,11 +1109,11 @@ function parseMsg(u8) {
   if (!html) { const t = str(top, '1013'); if (t) { html = t; source = 'HTML'; } }
   if (!html) {
     d = stream(top, '10090102');
-    if (d && d.length) { try { html = rtfToHtml(decompressRTF(d)); source = 'RTF'; } catch (e) { notes.push('Не удалось распаковать RTF-тело письма.'); } }
+    if (d && d.length) { try { html = rtfToHtml(decompressRTF(d)); source = 'RTF'; } catch (e) { notes.push(tr("Could not decompress the RTF message body.", "Не удалось распаковать RTF-тело письма.")); } }
   }
   if (!html) {
     const t = str(top, '1000');
-    if (t) { html = '<html><body>' + t.split(/\r?\n\s*\r?\n/).map(x => `<p>${x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\r?\n/g, '<br>')}</p>`).join('') + '</body></html>'; source = 'текст'; notes.push('В письме нет HTML, только простой текст.'); }
+    if (t) { html = '<html><body>' + t.split(/\r?\n\s*\r?\n/).map(x => `<p>${x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\r?\n/g, '<br>')}</p>`).join('') + '</body></html>'; source = tr("plain text", "текст"); notes.push(tr("This message contains plain text only, with no HTML.", "В письме нет HTML, только простой текст.")); }
   }
   const images = {};
   let attCount = 0;
@@ -624,7 +1130,7 @@ function parseMsg(u8) {
     if (cid) images[cid] = uri;
     if (fname) images['name:' + fname.toLowerCase()] = uri;
   }
-  if (attCount) notes.push(`Вложений, не являющихся картинками: ${attCount}. В макет они не переносятся.`);
+  if (attCount) notes.push(tr("Non-image attachments: {0}. These are not included in the layout.", "Вложений, не являющихся картинками: {0}. В макет они не переносятся.", [attCount]));
   return { html, subject: str(top, '0037'), images, format: 'Outlook .msg' + (source ? ` (${source})` : ''), notes };
 }
 
@@ -672,15 +1178,15 @@ function parseEml(u8) {
       const name = decodeWords(disp.p.filename || p.name || '');
       if (name) out.images['name:' + name.toLowerCase()] = uri;
       const loc = part.headers['content-location']; if (loc) out.images['loc:' + loc] = uri;
-    } else if (type === 'application/ms-tnef') out.notes.push('Тело письма упаковано в winmail.dat (TNEF). Сохраните письмо из Outlook для Windows как .msg и загрузите его.');
+    } else if (type === 'application/ms-tnef') out.notes.push(tr("The message body is packed in winmail.dat (TNEF). Save it as .msg from Outlook for Windows and import that file.", "Тело письма упаковано в winmail.dat (TNEF). Сохраните письмо из Outlook для Windows как .msg и загрузите его."));
     return part;
   };
   const top = walk(latin1(u8), 0);
   if (!out.html && out.text) out.html = '<html><body>' + out.text.split(/\r?\n\s*\r?\n/).map(x => `<p>${x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\r?\n/g, '<br>')}</p>`).join('') + '</body></html>';
-  return { html: out.html, subject: decodeWords(top.headers.subject || ''), images: out.images, format: 'Письмо .eml', notes: out.notes };
+  return { html: out.html, subject: decodeWords(top.headers.subject || ''), images: out.images, format: tr(".eml message", "Письмо .eml"), notes: out.notes };
 }
 
-/* ---------- .olk15Message (Outlook для Mac) ---------- */
+/* ---------- .olk15Message (Outlook for Mac) ---------- */
 function parseOlk(u8) {
   let html = '';
   for (const off of [1, 0]) {
@@ -691,8 +1197,8 @@ function parseOlk(u8) {
   }
   const raw = latin1(u8);
   const m = raw.match(/[\r\n]Subject: ([^\r\n]*(?:(?:\r\n|\r|\n)[ \t][^\r\n]*)*)/);
-  const notes = ['Outlook для Mac хранит картинки отдельно от .olk15Message, поэтому их в файле нет. Для полной проверки перетащите письмо из Outlook на рабочий стол — получится .eml с картинками.'];
-  return { html, subject: m ? decodeWords(m[1].replace(/(\r\n|\r|\n)[ \t]+/g, ' ')) : '', images: {}, format: 'Outlook для Mac (.olk15Message)', notes };
+  const notes = [tr("Outlook for Mac stores images separately from .olk15Message files. Drag the message from Outlook to the desktop to create an .eml file with images.", "Outlook для Mac хранит картинки отдельно от .olk15Message, поэтому их в файле нет. Для полной проверки перетащите письмо из Outlook на рабочий стол — получится .eml с картинками.")];
+  return { html, subject: m ? decodeWords(m[1].replace(/(\r\n|\r|\n)[ \t]+/g, ' ')) : '', images: {}, format: tr("Outlook for Mac (.olk15Message)", "Outlook для Mac (.olk15Message)"), notes };
 }
 
 function parseAny(u8, fileName) {
@@ -705,7 +1211,7 @@ function parseAny(u8, fileName) {
   const html = decodeText(u8, htmlCharset(u8));
   if (/<html|<body|<table|<p[\s>]|<div/i.test(html)) {
     const t = html.match(/<title>([^<]*)<\/title>/i);
-    return { html, subject: t ? t[1].trim() : '', images: {}, format: 'HTML-файл', notes: [] };
+    return { html, subject: t ? t[1].trim() : '', images: {}, format: tr("HTML file", "HTML-файл"), notes: [] };
   }
   throw new Error('unknown-format');
 }
@@ -719,59 +1225,64 @@ if (typeof module !== 'undefined' && module.exports) module.exports = api; else 
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
 const uid = () => Math.random().toString(36).slice(2, 9);
-// Версия по SemVer. Единственное место, где она задана: changelog.md должен начинаться с неё
-const APP_VERSION = '1.5.1';
+// SemVer version, defined here only; the latest changelog heading must match.
+const APP_VERSION = '1.6.0';
 $('#appVer').textContent = APP_VERSION;
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
 const MAX_BLOCKS = 1000;
 let dirty = false;
 window.addEventListener('beforeunload', e => { if (dirty || libDirty) { e.preventDefault(); e.returnValue = ''; } });
 
-/* ---------- модель ---------- */
+/* ---------- model ---------- */
 const SETTINGS_DEFAULT = {
-  subject: 'Новости команды', preheader: '',
+  get subject() { return tr("Team news", "Новости команды"); }, preheader: '',
   font: 'Arial, Helvetica, sans-serif', hfont: '', size: 15, lh: 22, pgap: 12,
   text: '#1F2937', muted: '#6B7280', accent: '#2563EB', link: '#1D4ED8', divider: '#D1D5DB',
   outer: '#F3F4F6', inner: '#FFFFFF', width: 600, side: 32, outerPad: 24, top: 28, bottom: 28, typo: true,
 };
 
-const SPACE = ['space', 'number', 'Отступ после, px', { min: 0, max: 120 }];
-const ALIGN = { options: [['left', 'По левому краю'], ['center', 'По центру']] };
+const SPACE = ['space', 'number', tr("Space after, px", "Отступ после, px"), { min: 0, max: 120 }];
+const ALIGN = { options: [['left', tr("Left", "По левому краю")], ['center', tr("Center", "По центру")]] };
 const FONT = label => ['font', 'text', label, { list: 'fonts' }];
-// Плашка: фон и внутренний отступ у отдельного блока
+// Block background and inner padding
 const BOX_DEFAULT = { bg: '', pad: 16, bgFull: false, fg: '' };
-const BOX = [['', 'sep', 'Фон блока'], ['bg', 'color', 'Цвет фона (пусто — без фона)'], ['pad', 'number', 'Отступ внутри фона, px', { min: 0, max: 60 }], ['bgFull', 'check', 'Фон на всю ширину письма'], ['fg', 'color', 'Цвет текста (пусто — обычный)']];
+const BOX = [['', 'sep', tr("Block background", "Фон блока")], ['bg', 'color', tr("Background color (empty for none)", "Цвет фона (пусто — без фона)")], ['pad', 'number', tr("Inner padding, px", "Отступ внутри фона, px"), { min: 0, max: 60 }], ['bgFull', 'check', tr("Full-width background", "Фон на всю ширину письма")], ['fg', 'color', tr("Text color (empty for default)", "Цвет текста (пусто — обычный)")]];
 const COL_DEFAULT = { img: null, alt: '', href: '', title: '', text: '', btnLabel: '', btnHref: '' };
-const COL_FIELDS = [['img', 'image', 'Картинка'], ['alt', 'text', 'Подпись, если картинки отключены'], ['href', 'url', 'Ссылка с картинки'], ['title', 'text', 'Заголовок'], ['text', 'textarea', 'Текст'], ['btnLabel', 'text', 'Надпись кнопки (пусто — без кнопки)'], ['btnHref', 'url', 'Ссылка кнопки']];
+const COL_FIELDS = [['img', 'image', tr("Image", "Картинка")], ['alt', 'text', tr("Alt text when images are disabled", "Подпись, если картинки отключены")], ['href', 'url', tr("Image link", "Ссылка с картинки")], ['title', 'text', tr("Heading", "Заголовок")], ['text', 'textarea', tr("Text", "Текст")], ['btnLabel', 'text', tr("Button label (empty to hide)", "Надпись кнопки (пусто — без кнопки)")], ['btnHref', 'url', tr("Button link", "Ссылка кнопки")]];
 const TYPES = {
-  header:  { name: 'Шапка', defaults: { logo: null, logoWidth: 90, logoHref: '', rightText: '', border: true, space: 24 },
-    fields: [['logo', 'image', 'Логотип'], ['logoWidth', 'number', 'Ширина логотипа, px', { min: 20, max: 300 }], ['logoHref', 'url', 'Ссылка с логотипа'], ['rightText', 'text', 'Текст справа'], ['border', 'check', 'Линия под шапкой'], SPACE] },
-  image:   { name: 'Картинка', defaults: { img: null, width: 0, fullBleed: false, alt: '', href: '', space: 20 },
-    fields: [['img', 'image', 'Изображение'], ['width', 'number', 'Ширина, px (0 — вся ширина текста)', { min: 0, max: 700 }], ['fullBleed', 'check', 'От края до края письма, без полей'], ['alt', 'text', 'Подпись, если картинки отключены'], ['href', 'url', 'Ссылка с картинки'], SPACE] },
-  heading: { name: 'Заголовок', defaults: { text: 'Заголовок', size: 18, color: '', align: 'left', font: '', space: 8, ...BOX_DEFAULT },
-    fields: [['text', 'text', 'Текст'], ['size', 'number', 'Размер, px', { min: 12, max: 40 }], ['color', 'color', 'Цвет (пусто — как у текста)'], ['align', 'select', 'Выравнивание', ALIGN], FONT('Шрифт (пусто — шрифт заголовков письма)'), ...BOX, SPACE] },
-  text:    { name: 'Текст', defaults: { text: '', icon: null, iconSize: 48, small: false, align: 'left', font: '', space: 16, ...BOX_DEFAULT },
-    fields: [['text', 'textarea', 'Текст'], ['small', 'check', 'Мелкий серый — для примечаний'], ['align', 'select', 'Выравнивание', ALIGN], FONT('Шрифт (пусто — как в письме)'), ['icon', 'image', 'Иконка слева (необязательно)'], ['iconSize', 'number', 'Размер иконки, px', { min: 16, max: 120 }], ...BOX, SPACE] },
-  list:    { name: 'Список', defaults: { items: '', style: 'num', icon: null, iconSize: 48, space: 16, ...BOX_DEFAULT },
-    fields: [['items', 'textarea', 'Пункты — каждый с новой строки'], ['style', 'select', 'Маркер', { options: [['num', '1.  2.  3.'], ['bullet', '•  точка'], ['check', '✓  галочка'], ['dash', '—  тире'], ['emoji', '✅  эмодзи']] }], ['icon', 'image', 'Иконка слева (необязательно)'], ['iconSize', 'number', 'Размер иконки, px', { min: 16, max: 120 }], ...BOX, SPACE] },
-  columns: { name: 'Колонки', defaults: { count: 2, gap: 24, align: 'left', cols: [{ ...COL_DEFAULT, title: 'Первая колонка', text: 'Короткий текст.' }, { ...COL_DEFAULT, title: 'Вторая колонка', text: 'Короткий текст.' }, { ...COL_DEFAULT, title: 'Третья колонка', text: 'Короткий текст.' }], space: 24, ...BOX_DEFAULT },
-    fields: [['count', 'select', 'Сколько колонок', { options: [['2', 'Две'], ['3', 'Три']], rerender: true }], ['gap', 'number', 'Между колонками, px', { min: 0, max: 60 }], ['align', 'select', 'Выравнивание', ALIGN], ['cols', 'cols', 'Колонки'], ...BOX, SPACE] },
-  button:  { name: 'Кнопка', defaults: { label: 'Подробнее', href: '', align: 'left', full: false, color: '', textColor: '', variant: 'fill', radius: 6, icon: null, space: 24, ...BOX_DEFAULT },
-    fields: [['label', 'text', 'Надпись'], ['href', 'url', 'Ссылка'], ['align', 'select', 'Выравнивание', ALIGN], ['full', 'check', 'На всю ширину'], ['variant', 'select', 'Вид', { options: [['fill', 'Заливка'], ['outline', 'Только рамка']] }], ['color', 'color', 'Цвет кнопки (пусто — акцентный)'], ['textColor', 'color', 'Цвет надписи (пусто — белый или цвет рамки)'], ['radius', 'number', 'Скругление углов, px (Outlook для Windows покажет прямые)', { min: 0, max: 30 }], ['icon', 'image', 'Иконка перед надписью (необязательно)'], ...BOX, SPACE] },
-  divider: { name: 'Разделитель', defaults: { style: 'solid', before: 8, space: 24 },
-    fields: [['style', 'select', 'Линия', { options: [['solid', 'Сплошная'], ['dashed', 'Пунктир']] }], ['before', 'number', 'Отступ до, px', { min: 0, max: 120 }], SPACE] },
-  spacer:  { name: 'Пустое место', defaults: { height: 24 },
-    fields: [['height', 'number', 'Высота, px', { min: 1, max: 200 }]] },
-  footer:  { name: 'Подпись', defaults: { text: '', logo: null, logoWidth: 110, logoHref: '', border: false, space: 0 },
-    fields: [['text', 'textarea', 'Текст'], ['logo', 'image', 'Логотип справа'], ['logoWidth', 'number', 'Ширина логотипа, px', { min: 20, max: 300 }], ['logoHref', 'url', 'Ссылка с логотипа'], ['border', 'check', 'Линия над подписью'], SPACE] },
+  header:  { get name() { return tr("Header", "Шапка"); }, defaults: { logo: null, logoWidth: 90, logoHref: '', rightText: '', border: true, space: 24 },
+    fields: [['logo', 'image', tr("Logo", "Логотип")], ['logoWidth', 'number', tr("Logo width, px", "Ширина логотипа, px"), { min: 20, max: 300 }], ['logoHref', 'url', tr("Logo link", "Ссылка с логотипа")], ['rightText', 'text', tr("Right-side text", "Текст справа")], ['border', 'check', tr("Line below header", "Линия под шапкой")], SPACE] },
+  image:   { get name() { return tr("Image", "Картинка"); }, defaults: { img: null, width: 0, fullBleed: false, alt: '', href: '', space: 20 },
+    fields: [['img', 'image', tr("Image", "Изображение")], ['width', 'number', tr("Width, px (0 for full content width)", "Ширина, px (0 — вся ширина текста)"), { min: 0, max: 700 }], ['fullBleed', 'check', tr("Edge to edge, without margins", "От края до края письма, без полей")], ['alt', 'text', tr("Alt text when images are disabled", "Подпись, если картинки отключены")], ['href', 'url', tr("Image link", "Ссылка с картинки")], SPACE] },
+  heading: { get name() { return tr("Heading", "Заголовок"); }, defaults: { text: tr("Heading", "Заголовок"), size: 18, color: '', align: 'left', font: '', space: 8, ...BOX_DEFAULT },
+    fields: [['text', 'text', tr("Text", "Текст")], ['size', 'number', tr("Size, px", "Размер, px"), { min: 12, max: 40 }], ['color', 'color', tr("Color (empty for default text color)", "Цвет (пусто — как у текста)")], ['align', 'select', tr("Alignment", "Выравнивание"), ALIGN], FONT(tr("Font (empty for the email heading font)", "Шрифт (пусто — шрифт заголовков письма)")), ...BOX, SPACE] },
+  text:    { get name() { return tr("Text", "Текст"); }, defaults: { text: '', icon: null, iconSize: 48, small: false, align: 'left', font: '', space: 16, ...BOX_DEFAULT },
+    fields: [['text', 'textarea', tr("Text", "Текст")], ['small', 'check', tr("Small muted text for notes", "Мелкий серый — для примечаний")], ['align', 'select', tr("Alignment", "Выравнивание"), ALIGN], FONT(tr("Font (empty for the email font)", "Шрифт (пусто — как в письме)")), ['icon', 'image', tr("Left icon (optional)", "Иконка слева (необязательно)")], ['iconSize', 'number', tr("Icon size, px", "Размер иконки, px"), { min: 16, max: 120 }], ...BOX, SPACE] },
+  list:    { get name() { return tr("List", "Список"); }, defaults: { items: '', style: 'num', icon: null, iconSize: 48, space: 16, ...BOX_DEFAULT },
+    fields: [['items', 'textarea', tr("Items, one per line", "Пункты — каждый с новой строки")], ['style', 'select', tr("Marker", "Маркер"), { options: [['num', '1.  2.  3.'], ['bullet', tr("•  bullet", "•  точка")], ['check', tr("✓  checkmark", "✓  галочка")], ['dash', tr("—  dash", "—  тире")], ['emoji', tr("✅  emoji", "✅  эмодзи")]] }], ['icon', 'image', tr("Left icon (optional)", "Иконка слева (необязательно)")], ['iconSize', 'number', tr("Icon size, px", "Размер иконки, px"), { min: 16, max: 120 }], ...BOX, SPACE] },
+  columns: { get name() { return tr("Columns", "Колонки"); }, defaults: { count: 2, gap: 24, align: 'left', cols: [{ ...COL_DEFAULT, title: tr("First column", "Первая колонка"), text: tr("Short text.", "Короткий текст.") }, { ...COL_DEFAULT, title: tr("Second column", "Вторая колонка"), text: tr("Short text.", "Короткий текст.") }, { ...COL_DEFAULT, title: tr("Third column", "Третья колонка"), text: tr("Short text.", "Короткий текст.") }], space: 24, ...BOX_DEFAULT },
+    fields: [['count', 'select', tr("Number of columns", "Сколько колонок"), { options: [['2', tr("Two", "Две")], ['3', tr("Three", "Три")]], rerender: true }], ['gap', 'number', tr("Column gap, px", "Между колонками, px"), { min: 0, max: 60 }], ['align', 'select', tr("Alignment", "Выравнивание"), ALIGN], ['cols', 'cols', tr("Columns", "Колонки")], ...BOX, SPACE] },
+  button:  { get name() { return tr("Button", "Кнопка"); }, defaults: { label: tr("Learn more", "Подробнее"), href: '', align: 'left', full: false, color: '', textColor: '', variant: 'fill', radius: 6, icon: null, space: 24, ...BOX_DEFAULT },
+    fields: [['label', 'text', tr("Label", "Надпись")], ['href', 'url', tr("Link", "Ссылка")], ['align', 'select', tr("Alignment", "Выравнивание"), ALIGN], ['full', 'check', tr("Full width", "На всю ширину")], ['variant', 'select', tr("Style", "Вид"), { options: [['fill', tr("Filled", "Заливка")], ['outline', tr("Outline", "Только рамка")]] }], ['color', 'color', tr("Button color (empty for accent)", "Цвет кнопки (пусто — акцентный)")], ['textColor', 'color', tr("Label color (empty for white or outline color)", "Цвет надписи (пусто — белый или цвет рамки)")], ['radius', 'number', tr("Corner radius, px (square in Outlook for Windows)", "Скругление углов, px (Outlook для Windows покажет прямые)"), { min: 0, max: 30 }], ['icon', 'image', tr("Icon before label (optional)", "Иконка перед надписью (необязательно)")], ...BOX, SPACE] },
+  divider: { get name() { return tr("Divider", "Разделитель"); }, defaults: { style: 'solid', before: 8, space: 24 },
+    fields: [['style', 'select', tr("Line", "Линия"), { options: [['solid', tr("Solid", "Сплошная")], ['dashed', tr("Dashed", "Пунктир")]] }], ['before', 'number', tr("Space before, px", "Отступ до, px"), { min: 0, max: 120 }], SPACE] },
+  spacer:  { get name() { return tr("Spacer", "Пустое место"); }, defaults: { height: 24 },
+    fields: [['height', 'number', tr("Height, px", "Высота, px"), { min: 1, max: 200 }]] },
+  footer:  { get name() { return tr("Footer", "Подпись"); }, defaults: { text: '', logo: null, logoWidth: 110, logoHref: '', border: false, space: 0 },
+    fields: [['text', 'textarea', tr("Text", "Текст")], ['logo', 'image', tr("Right-side logo", "Логотип справа")], ['logoWidth', 'number', tr("Logo width, px", "Ширина логотипа, px"), { min: 20, max: 300 }], ['logoHref', 'url', tr("Logo link", "Ссылка с логотипа")], ['border', 'check', tr("Line above footer", "Линия над подписью")], SPACE] },
 };
-const mk = (type, props = {}) => ({ id: uid(), type, ...structuredClone(TYPES[type].defaults), ...props });
+const mk = (type, props = {}) => {
+  const defaults = structuredClone(TYPES[type].defaults);
+  for (const key of ['text', 'label']) if (defaults[key]) defaults[key] = tr(defaults[key]);
+  if (defaults.cols) defaults.cols.forEach(col => { col.title = tr(col.title); col.text = tr(col.text); });
+  return { id: uid(), type, ...defaults, ...props };
+};
 
 let state = null;
 let selectedId = null;
 const open = new Set();
 
-/* ---------- утилиты вёрстки ---------- */
+/* ---------- layout helpers ---------- */
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const num = (v, d = 0, min = -Infinity, max = Infinity) => { const n = Number(v); return Number.isFinite(n) ? Math.min(max, Math.max(min, Math.round(n))) : d; };
 const hex = (v, d) => /^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(String(v || '').trim()) ? String(v).trim() : d;
@@ -800,9 +1311,9 @@ function inline(src, S) {
   h = h.replace(/\n/g, '<br>');
   return S.typo ? typo(h) : h;
 }
-// Заголовки набираются своим шрифтом, если он задан
+// Use a separate heading font when specified
 const headS = S => S.hfont ? { ...S, font: S.hfont } : S;
-// У блока может быть свой шрифт поверх шрифта письма
+// A block can override the email font
 const cleanFont = v => String(v || '').replace(/"/g, "'").replace(/[<>;{}]/g, '').trim();
 const blockS = (S, b) => { const font = cleanFont(b.font); return font ? { ...S, font } : S; };
 const f = (S, o = {}) => `font-family:${esc(S.font)};font-size:${o.size || S.size}px;line-height:${o.lh || S.lh}px;color:${o.color || S.text};mso-line-height-rule:exactly;`;
@@ -843,7 +1354,7 @@ function normSettings(s) {
   };
 }
 
-// Идентификаторы создаются заново; сетевые источники изображений не переносятся.
+// Generate fresh IDs and omit remote image sources.
 function normalizeProject(s) {
   if (!s || !Array.isArray(s.blocks) || s.blocks.length > MAX_BLOCKS || !s.settings || typeof s.settings !== 'object' || Array.isArray(s.settings)) throw new Error();
   let omittedImages = 0;
@@ -872,11 +1383,11 @@ function normBlock(b) {
 }
 const imagesOf = b => [b.logo, b.img, b.icon, ...(b.type === 'columns' ? b.cols.slice(0, num(b.count, 2, 2, 3)).map(c => c.img) : [])].filter(x => x && x.src);
 
-/* ---------- рендер блоков ---------- */
+/* ---------- block rendering ---------- */
 const R = {
   header(b, S, c) {
     const w = num(b.logoWidth, 90, 20, 300);
-    const logo = b.logo?.src ? linkWrap(b.logoHref, imgTag(b.logo, w, 'Логотип')) : (c.preview ? ph('Логотип не загружен', w) : '&nbsp;');
+    const logo = b.logo?.src ? linkWrap(b.logoHref, imgTag(b.logo, w, tr("Logo", "Логотип"))) : (c.preview ? ph(tr("No logo uploaded", "Логотип не загружен"), w) : '&nbsp;');
     const right = b.rightText ? `<td align="right" valign="middle" style="${f(S, { size: S.size - 2, lh: S.lh - 4, color: S.muted })}text-align:right;vertical-align:middle">${inline(b.rightText, S)}</td>` : '';
     return `<tr${c.attr}><td style="padding:18px ${S.side}px;${b.border ? `border-bottom:1px solid ${S.divider};` : ''}">${tbl(`<tr><td valign="middle" style="vertical-align:middle">${logo}</td>${right}</tr>`)}</td></tr>` + spaceRow(num(b.space, 24, 0, 120), c.attr);
   },
@@ -885,12 +1396,12 @@ const R = {
     const w = Math.min(num(b.width, 0, 0, 800) || max, max);
     const inner = b.img?.src
       ? `<table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto"><tr><td>${linkWrap(b.href, imgTag(b.img, w, b.alt))}</td></tr></table>`
-      : (c.preview ? ph('Картинка не выбрана — блок не попадёт в письмо', w) : '');
+      : (c.preview ? ph(tr("No image selected; this block will be omitted", "Картинка не выбрана — блок не попадёт в письмо"), w) : '');
     return inner ? c.row(inner, { pad: !b.fullBleed, align: 'center' }) : '';
   },
   heading(b, S, c) {
     const size = num(b.size, 18, 12, 40);
-    if (!String(b.text || '').trim()) return c.preview ? c.row(ph('Пустой заголовок')) : '';
+    if (!String(b.text || '').trim()) return c.preview ? c.row(ph(tr("Empty heading", "Пустой заголовок"))) : '';
     const al = b.align === 'center' ? 'center' : 'left';
     return c.row(tbl(`<tr><td align="${al}" style="${f(blockS(headS(S), b), { size, lh: Math.round(size * 1.3), color: hex(b.color, S.text) })}font-weight:bold;text-align:${al}">${inline(b.text, S)}</td></tr>`));
   },
@@ -898,12 +1409,12 @@ const R = {
     const o = b.small ? { size: S.size - 2, lh: S.lh - 4, color: S.muted } : {};
     o.align = b.align === 'center' ? 'center' : 'left';
     const inner = paras(b.text, blockS(S, b), o);
-    if (!inner) return c.preview ? c.row(ph('Пустой текст')) : '';
+    if (!inner) return c.preview ? c.row(ph(tr("Empty text", "Пустой текст"))) : '';
     return c.row(withIcon(b.icon, b.iconSize, inner));
   },
   list(b, S, c) {
     const items = String(b.items || '').split('\n').map(s => s.trim()).filter(Boolean);
-    if (!items.length) return c.preview ? c.row(ph('Пустой список')) : '';
+    if (!items.length) return c.preview ? c.row(ph(tr("Empty list", "Пустой список"))) : '';
     const style = b.style;
     const mw = style === 'num' ? (items.length > 9 ? 30 : 24) : style === 'emoji' ? 26 : 20;
     const mark = i => ({ num: `${i + 1}.`, bullet: '•', check: '✓', dash: '—', emoji: '✅' })[style] || '•';
@@ -929,7 +1440,7 @@ const R = {
       const txt = paras(col.text, S, { align: al });
       if (txt) parts.push(`<tr><td>${txt}</td></tr>`);
       if (String(col.btnLabel || '').trim()) parts.push(`<tr><td align="${al}" style="padding:12px 0 0 0">${buttonHtml({ label: col.btnLabel, href: col.btnHref, align: al }, S)}</td></tr>`);
-      const inner = parts.length ? tbl(parts.join('')) : (c.preview ? ph('Пустая колонка') : '&nbsp;');
+      const inner = parts.length ? tbl(parts.join('')) : (c.preview ? ph(tr("Empty column", "Пустая колонка")) : '&nbsp;');
       return `<td class="col" width="${cw}" valign="top" style="width:${cw}px;vertical-align:top">${inner}</td>`;
     });
     const spacer = gap ? `<td class="colgap" width="${gap}" style="width:${gap}px;font-size:1px;line-height:1px">&nbsp;</td>` : '';
@@ -945,8 +1456,8 @@ const R = {
   footer(b, S, c) {
     const w = num(b.logoWidth, 110, 20, 300);
     const text = b.text ? paras(b.text, S, { size: S.size - 1, lh: S.lh - 2, color: S.muted }) : '';
-    const logo = b.logo?.src ? `<td align="right" valign="middle" width="${w}" style="width:${w}px;vertical-align:middle">${linkWrap(b.logoHref, imgTag(b.logo, w, 'Логотип'))}</td>` : '';
-    if (!text && !logo) return c.preview ? c.row(ph('Пустая подпись')) : '';
+    const logo = b.logo?.src ? `<td align="right" valign="middle" width="${w}" style="width:${w}px;vertical-align:middle">${linkWrap(b.logoHref, imgTag(b.logo, w, tr("Logo", "Логотип")))}</td>` : '';
+    if (!text && !logo) return c.preview ? c.row(ph(tr("Empty footer", "Пустая подпись"))) : '';
     const inner = tbl(`<tr><td valign="middle" style="vertical-align:middle">${text || '&nbsp;'}</td>${logo}</tr>`);
     return c.row(b.border ? tbl(`<tr><td style="border-top:1px solid ${S.divider};padding-top:16px">${inner}</td></tr>`) : inner);
   },
@@ -962,10 +1473,10 @@ function buttonHtml(b, S) {
   const pad = fill ? '12px 24px' : '10px 22px';
   const cell = `background:${fill ? col : 'transparent'};${fill ? '' : `border:2px solid ${col};`}border-radius:${radius}px;padding:${pad}`;
   const tAlign = full ? 'center' : al;
-  return `<table role="presentation"${full ? ' width="100%"' : ` align="${al}"`} cellpadding="0" cellspacing="0" border="0" style="${full ? 'width:100%;' : al === 'center' ? 'margin:0 auto;' : ''}border-collapse:separate"><tr><td align="${tAlign}"${fill ? ` bgcolor="${col}"` : ''} style="${cell};text-align:${tAlign}"><a href="${esc(url)}" target="_blank" style="${f(S, { color: tc })}font-weight:bold;text-decoration:none;display:inline-block">${icon}${esc(b.label || 'Кнопка')}</a></td></tr></table>`;
+  return `<table role="presentation"${full ? ' width="100%"' : ` align="${al}"`} cellpadding="0" cellspacing="0" border="0" style="${full ? 'width:100%;' : al === 'center' ? 'margin:0 auto;' : ''}border-collapse:separate"><tr><td align="${tAlign}"${fill ? ` bgcolor="${col}"` : ''} style="${cell};text-align:${tAlign}"><a href="${esc(url)}" target="_blank" style="${f(S, { color: tc })}font-weight:bold;text-decoration:none;display:inline-block">${icon}${esc(b.label || tr("Button", "Кнопка"))}</a></td></tr></table>`;
 }
 
-// Прехедер: скрытая строка, которую почта показывает в списке писем рядом с темой.
+// Preheader: hidden text shown next to the subject in the inbox.
 function preheaderHtml(S) {
   const t = S.preheader.trim();
   if (!t) return '';
@@ -1000,7 +1511,7 @@ function buildEmail(st, { preview = false } = {}) {
   rows += spaceRow(S.bottom);
   const pv = preview ? `<style>[data-bid]{cursor:pointer}[data-bid]:hover>td{box-shadow:inset 0 0 0 1px rgba(109,93,252,.45)}[data-bid].sel>td{box-shadow:inset 0 0 0 2px #6d5dfc}html.clean [data-bid]>td{box-shadow:none!important}</style>` : '';
   return `<!DOCTYPE html>
-<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="${I18N.language}" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -1040,13 +1551,13 @@ function plainText(st) {
   return out.join('\n\n');
 }
 
-/* ---------- проверка ---------- */
-// Установлен ли шрифт на этом компьютере: текст этим шрифтом должен отличаться по ширине от обоих запасных
+/* ---------- checks ---------- */
+// Detect installed fonts by comparing glyph widths against two fallback families
 const fontSeen = new Map();
 function fontInstalled(name) {
   if (!fontSeen.has(name)) {
     const c = document.createElement('canvas').getContext('2d');
-    const w = f => { c.font = `40px ${f}`; return c.measureText('Проверка шрифта QqWwIil 0123').width; };
+    const w = f => { c.font = `40px ${f}`; return c.measureText("Font check QqWwIil 0123 Проверка").width; };
     const q = `"${name.replace(/["\\]/g, '')}"`;
     fontSeen.set(name, ['monospace', 'serif'].some(g => w(`${q}, ${g}`) !== w(g)));
   }
@@ -1056,79 +1567,79 @@ function fontInstalled(name) {
 function runChecks(st) {
   const S = normSettings(st.settings), list = [];
   const add = (lvl, text, id) => list.push({ lvl, text, id });
-  const blockFonts = st.blocks.filter(b => (b.type === 'heading' || b.type === 'text') && cleanFont(b.font)).map(b => [cleanFont(b.font), `Шрифт блока «${TYPES[b.type].name}»`, b.id]);
+  const blockFonts = st.blocks.filter(b => (b.type === 'heading' || b.type === 'text') && cleanFont(b.font)).map(b => [cleanFont(b.font), tr("Font of the “{0}” block", "Шрифт блока «{0}»", [TYPES[b.type].name]), b.id]);
   const warned = new Set();
-  [[S.font, 'Шрифт'], [S.hfont, 'Шрифт заголовков'], ...blockFonts].forEach(([font, label, id]) => {
-    if (id && (!/(sans-serif|serif|monospace)\s*$/i.test(font) || !font.includes(','))) add('bad', `${label}: нет запасного варианта. Допишите через запятую: Arial, sans-serif.`, id);
+  [[S.font, tr("Font", "Шрифт")], [S.hfont, tr("Heading font", "Шрифт заголовков")], ...blockFonts].forEach(([font, label, id]) => {
+    if (id && (!/(sans-serif|serif|monospace)\s*$/i.test(font) || !font.includes(','))) add('bad', tr("{0}: no fallback font. Add Arial, sans-serif after a comma.", "{0}: нет запасного варианта. Допишите через запятую: Arial, sans-serif.", [label]), id);
     const faces = font.split(',').map(x => x.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
     if (faces.length && !/^(sans-serif|serif|monospace|cursive|fantasy|system-ui)$/i.test(faces[0]) && !fontInstalled(faces[0]) && !warned.has(faces[0].toLowerCase())) {
       warned.add(faces[0].toLowerCase());
-      const shown = faces.slice(1).find(f => /^(sans-serif|serif|monospace)$/i.test(f) || fontInstalled(f)) || 'шрифтом по умолчанию';
-      add('warn', `${label} ${faces[0]} не установлен на этом компьютере, поэтому превью показано шрифтом ${shown}. У получателей, у которых шрифт есть, письмо будет выглядеть иначе. Установите шрифт через «Шрифты» (Font Book) и полностью перезапустите браузер.`, id);
+      const shown = faces.slice(1).find(f => /^(sans-serif|serif|monospace)$/i.test(f) || fontInstalled(f)) || tr("the default font", "шрифтом по умолчанию");
+      add('warn', tr("{0} {1} is not installed on this computer, so the preview uses {2}. Recipients with the primary font installed will see a different result. Install the font and restart your browser.", "{0} {1} не установлен на этом компьютере, поэтому превью показано шрифтом {2}. У получателей, у которых шрифт есть, письмо будет выглядеть иначе. Установите шрифт через «Шрифты» (Font Book) и полностью перезапустите браузер.", [label, faces[0], shown]), id);
     }
   });
-  if (S.hfont && (!/(sans-serif|serif|monospace)\s*$/i.test(S.hfont) || !S.hfont.includes(','))) add('bad', 'У шрифта заголовков нет запасного варианта. Outlook для Windows покажет Times New Roman, если основного шрифта нет у получателя. Допишите через запятую: Arial, sans-serif.');
-  if (!/(sans-serif|serif|monospace)\s*$/i.test(S.font) || !S.font.includes(',')) add('bad', 'У шрифта нет запасного варианта. Outlook для Windows покажет Times New Roman, если основного шрифта нет у получателя. Пример: Arial, Helvetica, sans-serif.');
+  if (S.hfont && (!/(sans-serif|serif|monospace)\s*$/i.test(S.hfont) || !S.hfont.includes(','))) add('bad', tr("The heading font has no fallback. Outlook for Windows will use Times New Roman if the primary font is missing. Add Arial, sans-serif after a comma.", "У шрифта заголовков нет запасного варианта. Outlook для Windows покажет Times New Roman, если основного шрифта нет у получателя. Допишите через запятую: Arial, sans-serif."));
+  if (!/(sans-serif|serif|monospace)\s*$/i.test(S.font) || !S.font.includes(',')) add('bad', tr("The font has no fallback. Outlook for Windows will use Times New Roman if the primary font is missing. For example: Arial, Helvetica, sans-serif.", "У шрифта нет запасного варианта. Outlook для Windows покажет Times New Roman, если основного шрифта нет у получателя. Пример: Arial, Helvetica, sans-serif."));
   let bytes = 0;
   const seen = new Set();
-  if (!S.preheader.trim()) add('warn', 'Нет прехедера. В списке писем рядом с темой почта покажет начало текста письма. Заполните «Прехедер» на вкладке «Оформление».');
-  else if (S.preheader.trim().length > 140) add('warn', `Прехедер длиной ${S.preheader.trim().length} символов. Почта показывает обычно 40–100 символов, остальное обрежется.`);
-  // Контраст по WCAG; короткие цвета #abc разворачиваются в #aabbcc
+  if (!S.preheader.trim()) add('warn', tr("No preheader. The inbox will show the beginning of the email next to its subject. Fill in Preheader under Appearance.", "Нет прехедера. В списке писем рядом с темой почта покажет начало текста письма. Заполните «Прехедер» на вкладке «Оформление»."));
+  else if (S.preheader.trim().length > 140) add('warn', tr("The preheader is {0} characters long. Most inboxes show 40–100 characters and truncate the rest.", "Прехедер длиной {0} символов. Почта показывает обычно 40–100 символов, остальное обрежется.", [S.preheader.trim().length]));
+  // WCAG contrast; expand short colors from #abc to #aabbcc
   const relLum = h => { h = h.length === 4 ? '#' + [...h.slice(1)].map(x => x + x).join('') : h; return [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4).reduce((s, v, i) => s + v * [0.2126, 0.7152, 0.0722][i], 0); };
   const contrast = (a, b) => { const x = relLum(a), y = relLum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
   st.blocks.forEach((b, i) => {
     const n = `${TYPES[b.type]?.name || b.type} №${i + 1}`;
     const bg = hex(b.bg, '');
-    if (bg && contrast(hex(b.fg, S.text), bg) < 3) add('warn', `${n}: текст плохо читается на фоне ${bg}. Задайте светлый «Цвет текста» для тёмного фона или наоборот.`, b.id);
+    if (bg && contrast(hex(b.fg, S.text), bg) < 3) add('warn', tr("{0}: text is hard to read on background {1}. Choose a light text color for dark backgrounds, or vice versa.", "{0}: текст плохо читается на фоне {1}. Задайте светлый «Цвет текста» для тёмного фона или наоборот.", [n, bg]), b.id);
     if (b.type === 'button') {
       const col = hex(b.color, S.accent), fill = b.variant !== 'outline';
-      if (contrast(hex(b.textColor, fill ? '#FFFFFF' : col), fill ? col : (bg || S.inner)) < 3) add('warn', `${n}: надпись кнопки плохо видна на её цвете.`, b.id);
+      if (contrast(hex(b.textColor, fill ? '#FFFFFF' : col), fill ? col : (bg || S.inner)) < 3) add('warn', tr("{0}: the button label has low contrast.", "{0}: надпись кнопки плохо видна на её цвете.", [n]), b.id);
     }
     if (b.type === 'columns') {
       const cnt = num(b.count, 2, 2, 3), gap = num(b.gap, 24, 0, 60);
       const cw = Math.floor((S.width - 2 * S.side - (bg && !b.bgFull ? 2 * num(b.pad, 16, 0, 60) : 0) - gap * (cnt - 1)) / cnt);
       b.cols.slice(0, cnt).forEach((c, k) => {
-        const cn = `${n}, колонка ${k + 1}`;
-        if (c.img?.src && !String(c.alt || '').trim()) add('warn', `${cn}: у картинки нет подписи.`, b.id);
-        if (c.img?.w && c.img.w < cw * 2) add('warn', `${cn}: картинка ${c.img.w} px показана в ${cw} px. Для чёткости нужен исходник от ${cw * 2} px.`, b.id);
-        if (String(c.btnLabel || '').trim() && !safeUrl(c.btnHref)) add('bad', `${cn}: у кнопки нет ссылки.`, b.id);
-        if (!c.img?.src && !String(c.title || '').trim() && !String(c.text || '').trim() && !String(c.btnLabel || '').trim()) add('warn', `${cn}: колонка пустая.`, b.id);
+        const cn = tr("{0}, column {1}", "{0}, колонка {1}", [n, k + 1]);
+        if (c.img?.src && !String(c.alt || '').trim()) add('warn', tr("{0}: the image has no alt text.", "{0}: у картинки нет подписи.", [cn]), b.id);
+        if (c.img?.w && c.img.w < cw * 2) add('warn', tr("{0}: a {1} px image is displayed at {2} px. Use an image at least {3} px wide for sharpness.", "{0}: картинка {1} px показана в {2} px. Для чёткости нужен исходник от {3} px.", [cn, c.img.w, cw, cw * 2]), b.id);
+        if (String(c.btnLabel || '').trim() && !safeUrl(c.btnHref)) add('bad', tr("{0}: the button has no link.", "{0}: у кнопки нет ссылки.", [cn]), b.id);
+        if (!c.img?.src && !String(c.title || '').trim() && !String(c.text || '').trim() && !String(c.btnLabel || '').trim()) add('warn', tr("{0}: this column is empty.", "{0}: колонка пустая.", [cn]), b.id);
       });
     }
     imagesOf(b).forEach(im => { if (im.src.startsWith('data:') && !seen.has(im.src)) { seen.add(im.src); bytes += Math.round(im.src.length * 0.75); } });
     if (b.type === 'image') {
-      if (!b.img?.src) add('warn', `${n}: картинка не выбрана, блок не попадёт в письмо.`, b.id);
+      if (!b.img?.src) add('warn', tr("{0}: no image selected; this block will be omitted.", "{0}: картинка не выбрана, блок не попадёт в письмо.", [n]), b.id);
       else {
-        if (!String(b.alt || '').trim()) add('warn', `${n}: нет подписи. Если у получателя отключены картинки, он увидит пустое место.`, b.id);
+        if (!String(b.alt || '').trim()) add('warn', tr("{0}: no alt text. Recipients who disable images will see an empty space.", "{0}: нет подписи. Если у получателя отключены картинки, он увидит пустое место.", [n]), b.id);
       }
     }
     for (const [key, label, displayWidth] of [
-      ['logo', 'логотип', num(b.logoWidth, b.type === 'footer' ? 110 : 90, 20, 300)],
-      ['icon', 'иконка', num(b.iconSize, 48, 16, 120)],
-      ['img', 'картинка', Math.min(num(b.width, 0, 0, 800) || (b.fullBleed ? S.width : S.width - 2 * S.side), b.fullBleed ? S.width : S.width - 2 * S.side)],
+      ['logo', tr("logo", "логотип"), num(b.logoWidth, b.type === 'footer' ? 110 : 90, 20, 300)],
+      ['icon', tr("icon", "иконка"), num(b.iconSize, 48, 16, 120)],
+      ['img', tr("image", "картинка"), Math.min(num(b.width, 0, 0, 800) || (b.fullBleed ? S.width : S.width - 2 * S.side), b.fullBleed ? S.width : S.width - 2 * S.side)],
     ]) {
       const im = b[key];
       if (!im?.w || !im.src) continue;
-      if (im.w < displayWidth) add('warn', `${n}: ${label} ${im.w} px растянута до ${displayWidth} px. Уменьшите размер в письме или замените исходником шириной от ${displayWidth * 2} px.`, b.id);
-      else if (im.w < displayWidth * 2) add('warn', `${n}: ${label} ${im.w} px показана в ${displayWidth} px. На экранах с высокой плотностью пикселей может выглядеть нечётко. Для запаса 2× нужен исходник от ${displayWidth * 2} px.`, b.id);
+      if (im.w < displayWidth) add('warn', tr("{0}: the {1} is {2} px wide but stretched to {3} px. Reduce its display width or use a source at least {4} px wide.", "{0}: {1} {2} px растянута до {3} px. Уменьшите размер в письме или замените исходником шириной от {4} px.", [n, label, im.w, displayWidth, displayWidth * 2]), b.id);
+      else if (im.w < displayWidth * 2) add('warn', tr("{0}: the {1} is {2} px wide and displayed at {3} px. It may look blurry on high-density screens. Use a source at least {4} px wide for 2× resolution.", "{0}: {1} {2} px показана в {3} px. На экранах с высокой плотностью пикселей может выглядеть нечётко. Для запаса 2× нужен исходник от {4} px.", [n, label, im.w, displayWidth, displayWidth * 2]), b.id);
     }
-    if (b.type === 'button' && !safeUrl(b.href)) add('bad', `${n}: у кнопки нет ссылки.`, b.id);
+    if (b.type === 'button' && !safeUrl(b.href)) add('bad', tr("{0}: the button has no link.", "{0}: у кнопки нет ссылки.", [n]), b.id);
     const texts = [b.text, b.items, b.rightText, ...(b.type === 'columns' ? b.cols.slice(0, num(b.count, 2, 2, 3)).flatMap(c => [c.title, c.text]) : [])].filter(Boolean).join('\n');
     if (texts) {
-      if (((texts.match(/\*\*/g) || []).length) % 2) add('warn', `${n}: непарные звёздочки **. Жирный текст может не закрыться.`, b.id);
+      if (((texts.match(/\*\*/g) || []).length) % 2) add('warn', tr("{0}: unpaired ** markers. Bold formatting may not close correctly.", "{0}: непарные звёздочки **. Жирный текст может не закрыться.", [n]), b.id);
       for (const m of texts.matchAll(/\[([^\]]+)\]\(([^)\s]*)\)/g)) {
-        if (!safeUrl(m[2])) add('bad', `${n}: ссылка «${m[1]}» ведёт в никуда — адрес должен начинаться с https://`, b.id);
-        else if (/^http:/i.test(m[2])) add('warn', `${n}: ссылка «${m[1]}» без https.`, b.id);
+        if (!safeUrl(m[2])) add('bad', tr("{0}: the “{1}” link has no valid destination; use an address beginning with https://", "{0}: ссылка «{1}» ведёт в никуда — адрес должен начинаться с https://", [n, m[1]]), b.id);
+        else if (/^http:/i.test(m[2])) add('warn', tr("{0}: the “{1}” link does not use HTTPS.", "{0}: ссылка «{1}» без https.", [n, m[1]]), b.id);
       }
     }
   });
-  if (bytes > 1.5 * 1024 * 1024) add('warn', `Картинки весят ${fmtKB(bytes)}. Оригиналы сохранены без сжатия. Проверьте лимит размера письма в вашей почте; при необходимости подготовьте более лёгкие исходники.`);
-  if (!st.blocks.length) add('warn', 'В письме нет блоков.');
+  if (bytes > 1.5 * 1024 * 1024) add('warn', tr("Images total {0}. Originals are preserved without compression. Check your email size limit and use smaller source files if needed.", "Картинки весят {0}. Оригиналы сохранены без сжатия. Проверьте лимит размера письма в вашей почте; при необходимости подготовьте более лёгкие исходники.", [fmtKB(bytes)]));
+  if (!st.blocks.length) add('warn', tr("The email has no blocks.", "В письме нет блоков."));
   return { list, bytes };
 }
-const fmtKB = b => b > 1024 * 1024 ? (b / 1048576).toFixed(1).replace('.', ',') + ' МБ' : Math.max(1, Math.round(b / 1024)) + ' КБ';
+const fmtKB = b => b > 1024 * 1024 ? (b / 1048576).toLocaleString(I18N.language === 'ru' ? 'ru-RU' : 'en-US', { maximumFractionDigits: 1 }) + tr(" MB", " МБ") : Math.max(1, Math.round(b / 1024)) + tr(" KB", " КБ");
 
-/* ---------- картинки ---------- */
+/* ---------- images ---------- */
 function loadImage(src) {
   if (!safeImageSrc(src)) return Promise.reject(new Error('local-images-only'));
   return new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
@@ -1138,20 +1649,20 @@ function readFile(file) {
 }
 async function fileToImage(file) {
   if (file.size > MAX_FILE_BYTES || !/^image\/(png|jpeg|gif)$/i.test(file.type)) throw new Error('unsupported-image');
-  // Сохраняем исходные байты: размер отображения задаётся отдельно в HTML письма.
+  // Preserve original bytes; set display dimensions separately in the email HTML.
   const src = await readFile(file);
   const im = await loadImage(src);
   return { src, w: im.naturalWidth, h: im.naturalHeight, name: file.name };
 }
 
-/* ---------- заглушки для примера ---------- */
+/* ---------- sample placeholders ---------- */
 function makeIcon(color, glyph) {
   const c = document.createElement('canvas'); c.width = c.height = 96;
   const x = c.getContext('2d');
   x.fillStyle = color; x.beginPath(); x.arc(48, 48, 46, 0, Math.PI * 2); x.fill();
   x.fillStyle = '#fff'; x.font = 'bold 54px Arial, sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle';
   x.fillText(glyph, 48, 52);
-  return { src: c.toDataURL('image/png'), w: 96, h: 96, name: 'пример-иконки.png' };
+  return { src: c.toDataURL('image/png'), w: 96, h: 96, name: "sample-icon.png" };
 }
 function makeHero(color) {
   const c = document.createElement('canvas'); c.width = 1072; c.height = 520;
@@ -1160,10 +1671,10 @@ function makeHero(color) {
   x.fillStyle = color; x.globalAlpha = .9; x.beginPath(); x.arc(930, 150, 210, 0, Math.PI * 2); x.fill();
   x.globalAlpha = .35; x.beginPath(); x.arc(760, 470, 120, 0, Math.PI * 2); x.fill(); x.globalAlpha = 1;
   x.fillStyle = SETTINGS_DEFAULT.text; x.font = 'bold 64px Arial, sans-serif';
-  ['Новости', 'команды'].forEach((l, i) => x.fillText(l, 64, 190 + i * 78));
-  x.font = '28px Arial, sans-serif'; x.fillStyle = SETTINGS_DEFAULT.muted; x.fillText('Выпуск №1', 64, 420);
-  x.font = '20px Arial, sans-serif'; x.fillText('пример обложки — замените своей', 64, 480);
-  return { src: c.toDataURL('image/jpeg', 0.88), w: 1072, h: 520, name: 'пример-обложки.jpg' };
+  [tr("Team", "Новости"), tr("news", "команды")].forEach((l, i) => x.fillText(l, 64, 190 + i * 78));
+  x.font = '28px Arial, sans-serif'; x.fillStyle = SETTINGS_DEFAULT.muted; x.fillText(tr("Issue #1", "Выпуск №1"), 64, 420);
+  x.font = '20px Arial, sans-serif'; x.fillText(tr("sample cover — replace with your own", "пример обложки — замените своей"), 64, 480);
+  return { src: c.toDataURL('image/jpeg', 0.88), w: 1072, h: 520, name: "sample-cover.jpg" };
 }
 
 function sampleState() {
@@ -1174,34 +1685,35 @@ function sampleState() {
     sample: true,
     settings: { ...SETTINGS_DEFAULT },
     blocks: [
-      B('header', { rightText: 'Новости команды · выпуск №1' }),
-      B('image', { img: makeHero(acc), alt: 'Новости команды', space: 24 }),
-      B('text', { text: 'Коллеги, привет!', space: 12 }),
-      B('text', { text: 'Это пример письма. Замените текст и картинки своими, а ненужные блоки удалите.', icon: icoInfo, space: 8 }),
+      B('header', { rightText: tr("Team news · issue #1", "Новости команды · выпуск №1") }),
+      B('image', { img: makeHero(acc), alt: tr("Team news", "Новости команды"), space: 24 }),
+      B('text', { text: tr("Hi team!", "Коллеги, привет!"), space: 12 }),
+      B('text', { text: tr("This is a sample email. Replace the text and images with your own, and remove any blocks you do not need.", "Это пример письма. Замените текст и картинки своими, а ненужные блоки удалите."), icon: icoInfo, space: 8 }),
       B('divider'),
-      B('heading', { text: 'Что нового за месяц' }),
-      B('text', { text: 'Коротко о главном: запустили новый процесс согласования, обновили шаблоны документов и провели **две встречи** с партнёрами.', space: 4 }),
-      B('text', { text: 'Подробности — во внутренней базе знаний.', small: true, space: 12 }),
-      B('text', { text: 'Что изменилось для вас:', space: 8 }),
-      B('list', { style: 'check', items: 'Заявки теперь согласуются **за один день** вместо трёх.\nШаблоны документов лежат в общей папке команды.' }),
+      B('heading', { text: tr("What is new this month", "Что нового за месяц") }),
+      B('text', { text: tr("A quick update: we launched a new approval process, refreshed our document templates and held **two meetings** with our partners.", "Коротко о главном: запустили новый процесс согласования, обновили шаблоны документов и провели **две встречи** с партнёрами."), space: 4 }),
+      B('text', { text: tr("Find the details in the team knowledge base.", "Подробности — во внутренней базе знаний."), small: true, space: 12 }),
+      B('text', { text: tr("What has changed for you:", "Что изменилось для вас:"), space: 8 }),
+      B('list', { style: 'check', items: tr("Requests are now approved **in one day** instead of three.\nDocument templates are in the shared team folder.", "Заявки теперь согласуются **за один день** вместо трёх.\nШаблоны документов лежат в общей папке команды.") }),
       B('divider'),
-      B('heading', { text: 'Три шага к аккуратной рассылке' }),
-      B('list', { icon: icoTip, items: '**Собирайте письмо из блоков.** Каждый блок — отдельная строка таблицы, поэтому отступы одинаковые в любом Outlook.\n**Проверяйте перед отправкой.** Вкладка «Проверка» покажет пустые ссылки и картинки без подписи.\n**Отправьте себе тестовое письмо** и откройте его на Mac и на Windows.', space: 8 }),
+      B('heading', { text: tr("Three steps to a polished email", "Три шага к аккуратной рассылке") }),
+      B('list', { icon: icoTip, items: tr("**Build your email from blocks.** Each block is a separate table row, so spacing stays consistent in Outlook.\n**Check before sending.** Checks highlights empty links and images without alt text.\n**Send yourself a test email** and open it on Mac and Windows.", "**Собирайте письмо из блоков.** Каждый блок — отдельная строка таблицы, поэтому отступы одинаковые в любом Outlook.\n**Проверяйте перед отправкой.** Вкладка «Проверка» покажет пустые ссылки и картинки без подписи.\n**Отправьте себе тестовое письмо** и откройте его на Mac и на Windows."), space: 8 }),
       B('divider'),
-      B('heading', { text: 'Вопросы и предложения' }),
-      B('text', { text: 'Пишите, что добавить в следующий выпуск. Мы собираем идеи в общем документе.', space: 16 }),
-      B('button', { label: 'Предложить тему', href: 'https://example.com', space: 8 }),
+      B('heading', { text: tr("Questions and suggestions", "Вопросы и предложения") }),
+      B('text', { text: tr("Tell us what to include in the next issue. We collect ideas in a shared document.", "Пишите, что добавить в следующий выпуск. Мы собираем идеи в общем документе."), space: 16 }),
+      B('button', { label: tr("Suggest a topic", "Предложить тему"), href: 'https://example.com', space: 8 }),
       B('divider'),
-      B('footer', { text: 'С уважением,\nКоманда', border: true }),
+      B('footer', { text: tr("Best regards,\nThe team", "С уважением,\nКоманда"), border: true }),
     ],
   };
 }
-const blankState = () => ({ sample: false, settings: { ...SETTINGS_DEFAULT }, blocks: [mk('header'), mk('heading'), mk('text', { text: 'Коллеги, привет!' }), mk('footer', { text: 'С заботой,\nКоманда', border: true })] });
+const blankState = () => ({ sample: false, settings: { ...SETTINGS_DEFAULT }, blocks: [mk('header'), mk('heading'), mk('text', { text: tr("Hi team!", "Коллеги, привет!") }), mk('footer', { text: tr("Best wishes,\nThe team", "С заботой,\nКоманда"), border: true })] });
 
-/* ---------- поля редактора ---------- */
-// Шаг кнопок ▲▼: отступы меняются по 4 px, остальные числа — по 1
+/* ---------- editor fields ---------- */
+// Stepper increments: 4 px for spacing, 1 for other values
 const STEP4 = new Set(['space', 'before', 'height', 'pad', 'gap', 'top', 'bottom', 'side', 'outerPad', 'pgap']);
 function field(obj, [key, type, label, opts = {}], onChange) {
+  label = tr(label);
   const id = `f-${uid()}-${key}`;
   if (type === 'sep') { const h = document.createElement('div'); h.className = 'sep'; h.textContent = label; return h; }
   if (type === 'cols') return colsField(obj, onChange);
@@ -1221,14 +1733,14 @@ function field(obj, [key, type, label, opts = {}], onChange) {
   let el;
   if (type === 'textarea') {
     const tools = document.createElement('div'); tools.className = 'ta-tools';
-    tools.innerHTML = `<button type="button" class="btn small" data-md="b"><b>Ж</b>&nbsp;жирный</button><button type="button" class="btn small" data-md="a">Ссылка</button>`;
+    tools.innerHTML = tr("<button type=\"button\" class=\"btn small\" data-md=\"b\"><b>B</b>&nbsp;bold</button><button type=\"button\" class=\"btn small\" data-md=\"a\">Link</button>", "<button type=\"button\" class=\"btn small\" data-md=\"b\"><b>Ж</b>&nbsp;жирный</button><button type=\"button\" class=\"btn small\" data-md=\"a\">Ссылка</button>");
     el = document.createElement('textarea');
     el.value = obj[key] || '';
     el.rows = Math.min(14, Math.max(3, Math.ceil(el.value.length / 48) + (el.value.match(/\n/g) || []).length));
     tools.addEventListener('click', e => {
       const t = e.target.closest('[data-md]'); if (!t) return;
       const a = el.selectionStart, z = el.selectionEnd, sel = el.value.slice(a, z);
-      const ins = t.dataset.md === 'b' ? `**${sel || 'текст'}**` : `[${sel || 'текст ссылки'}](https://)`;
+      const ins = t.dataset.md === 'b' ? `**${sel || tr("text", "текст")}**` : `[${sel || tr("link text", "текст ссылки")}](https://)`;
       el.setRangeText(ins, a, z, 'end'); el.focus();
       if (t.dataset.md === 'a') { const p = el.selectionEnd - 1; el.setSelectionRange(p - 8, p); }
       el.dispatchEvent(new Event('input'));
@@ -1236,13 +1748,13 @@ function field(obj, [key, type, label, opts = {}], onChange) {
     wrap.append(el, tools);
   } else if (type === 'select') {
     el = document.createElement('select');
-    el.innerHTML = opts.options.map(([v, t]) => `<option value="${esc(v)}">${esc(t)}</option>`).join('');
+    el.innerHTML = opts.options.map(([v, t]) => `<option value="${esc(v)}">${esc(tr(t))}</option>`).join('');
     el.value = obj[key];
     wrap.append(el);
   } else if (type === 'color') {
     const box = document.createElement('div'); box.className = 'color';
     const pick = document.createElement('input'); pick.type = 'color'; pick.setAttribute('aria-label', label);
-    el = document.createElement('input'); el.type = 'text'; el.placeholder = 'пусто';
+    el = document.createElement('input'); el.type = 'text'; el.placeholder = tr("empty", "пусто");
     el.value = obj[key] || ''; pick.value = hex(obj[key], '#888888').length === 7 ? hex(obj[key], '#888888') : '#888888';
     pick.addEventListener('input', () => { el.value = pick.value.toUpperCase(); set(el.value); });
     box.append(pick, el); wrap.append(box);
@@ -1260,18 +1772,18 @@ function field(obj, [key, type, label, opts = {}], onChange) {
   el.id = id;
   el.dataset.historyField = key;
   el.addEventListener(type === 'select' ? 'change' : 'input', () => set(type === 'number' ? el.value === '' ? 0 : Number(el.value) : el.value));
-  if (type === 'textarea' && key !== 'items') wrap.insertAdjacentHTML('beforeend', '<p class="hint"><code>**жирный**</code> · <code>[текст](https://…)</code> · пустая строка — новый абзац</p>');
-  if (key === 'items') wrap.insertAdjacentHTML('beforeend', '<p class="hint">Внутри пункта работают <code>**жирный**</code> и <code>[ссылки](https://…)</code>.</p>');
+  if (type === 'textarea' && key !== 'items') wrap.insertAdjacentHTML('beforeend', tr("<p class=\"hint\"><code>**bold**</code> · <code>[text](https://…)</code> · a blank line starts a paragraph</p>", "<p class=\"hint\"><code>**жирный**</code> · <code>[текст](https://…)</code> · пустая строка — новый абзац</p>"));
+  if (key === 'items') wrap.insertAdjacentHTML('beforeend', tr("<p class=\"hint\">Items support <code>**bold**</code> and <code>[links](https://…)</code>.</p>", "<p class=\"hint\">Внутри пункта работают <code>**жирный**</code> и <code>[ссылки](https://…)</code>.</p>"));
   return wrap;
 }
 
 function stepper(el, step, { min = -Infinity, max = Infinity } = {}) {
   const box = document.createElement('div'); box.className = 'num';
   const btns = document.createElement('div'); btns.className = 'step';
-  btns.innerHTML = `<button type="button" tabindex="-1" data-d="1" aria-label="Больше на ${step}" title="Больше на ${step}">▲</button><button type="button" tabindex="-1" data-d="-1" aria-label="Меньше на ${step}" title="Меньше на ${step}">▼</button>`;
+  btns.innerHTML = tr("<button type=\"button\" tabindex=\"-1\" data-d=\"1\" aria-label=\"Increase by {0}\" title=\"Increase by {1}\">▲</button><button type=\"button\" tabindex=\"-1\" data-d=\"-1\" aria-label=\"Decrease by {2}\" title=\"Decrease by {3}\">▼</button>", "<button type=\"button\" tabindex=\"-1\" data-d=\"1\" aria-label=\"Больше на {0}\" title=\"Больше на {1}\">▲</button><button type=\"button\" tabindex=\"-1\" data-d=\"-1\" aria-label=\"Меньше на {2}\" title=\"Меньше на {3}\">▼</button>", [step, step, step, step]);
   const bump = d => {
     const cur = Number(el.value) || 0;
-    // С нечётного значения первый шаг выравнивает к сетке шага
+    // Align off-grid values on the first step
     const next = d > 0 ? Math.floor(cur / step) * step + step : Math.ceil(cur / step) * step - step;
     const v = Math.min(max, Math.max(min, next));
     if (String(v) === el.value) return;
@@ -1296,7 +1808,7 @@ function colsField(obj, onChange) {
   const box = document.createElement('div'); box.className = 'field';
   obj.cols.slice(0, num(obj.count, 2, 2, 3)).forEach((col, i) => {
     const g = document.createElement('div'); g.className = 'colbox';
-    g.innerHTML = `<h4>Колонка ${i + 1}</h4>`;
+    g.innerHTML = tr("<h4>Column {0}</h4>", "<h4>Колонка {0}</h4>", [i + 1]);
     COL_FIELDS.forEach(fd => {
       const el = field(col, fd, key => onChange(`c${i}.${key}`));
       el.querySelectorAll('[data-history-field]').forEach(x => { x.dataset.historyField = `c${i}.${x.dataset.historyField}`; });
@@ -1311,19 +1823,12 @@ function imageField(obj, key, label, id, set) {
   const wrap = document.createElement('div'); wrap.className = 'field';
   const draw = () => {
     const im = obj[key];
-    const info = im ? `${im.w && im.h ? `${im.w}×${im.h} px` : 'встроенная картинка'}${im.src.startsWith('data:') ? ' · ' + fmtKB(im.src.length * 0.75) : ''}` : 'PNG, JPG или GIF, до 20 МБ. Без сжатия. Для чёткости — вдвое шире, чем в письме.';
-    wrap.innerHTML = `<span class="lbl">${esc(label)}</span>
-      <div class="imgfield">
-        <div class="thumb">${im && safeImageSrc(im.src) ? `<img src="${esc(safeImageSrc(im.src))}" alt="">` : 'нет'}</div>
-        <div class="ctrls">
-          <div><label class="btn small file-lbl">Загрузить файл<input type="file" accept="image/png,image/jpeg,image/gif" id="${id}"></label>${im ? '<button type="button" class="btn small ghost danger" data-rm>Убрать</button>' : ''}</div>
-          <p class="hint">${esc(info)}${im ? ' · без сжатия' : ''}</p>
-        </div>
-      </div>`;
+    const info = im ? `${im.w && im.h ? `${im.w}×${im.h} px` : tr("embedded image", "встроенная картинка")}${im.src.startsWith('data:') ? ' · ' + fmtKB(im.src.length * 0.75) : ''}` : tr("PNG, JPG or GIF, up to 20 MB. No compression. For sharpness, use twice the display width.", "PNG, JPG или GIF, до 20 МБ. Без сжатия. Для чёткости — вдвое шире, чем в письме.");
+    wrap.innerHTML = tr("<span class=\"lbl\">{0}</span>\n      <div class=\"imgfield\">\n        <div class=\"thumb\">{1}</div>\n        <div class=\"ctrls\">\n          <div><label class=\"btn small file-lbl\">Upload file<input type=\"file\" accept=\"image/png,image/jpeg,image/gif\" id=\"{2}\"></label>{3}</div>\n          <p class=\"hint\">{4}{5}</p>\n        </div>\n      </div>", "<span class=\"lbl\">{0}</span>\n      <div class=\"imgfield\">\n        <div class=\"thumb\">{1}</div>\n        <div class=\"ctrls\">\n          <div><label class=\"btn small file-lbl\">Загрузить файл<input type=\"file\" accept=\"image/png,image/jpeg,image/gif\" id=\"{2}\"></label>{3}</div>\n          <p class=\"hint\">{4}{5}</p>\n        </div>\n      </div>", [esc(label), im && safeImageSrc(im.src) ? `<img src="${esc(safeImageSrc(im.src))}" alt="">` : tr("none", "нет"), id, im ? tr("<button type=\"button\" class=\"btn small ghost danger\" data-rm>Remove</button>", "<button type=\"button\" class=\"btn small ghost danger\" data-rm>Убрать</button>") : '', esc(info), im ? tr(" · uncompressed", " · без сжатия") : '']);
     wrap.querySelector('input[type=file]').addEventListener('change', async e => {
       const file = e.target.files[0]; if (!file) return;
       try { set(await fileToImage(file)); draw(); }
-      catch (err) { toast('Не удалось прочитать картинку. Попробуйте PNG или JPG.'); }
+      catch (err) { toast(tr("Could not read the image. Try PNG or JPG.", "Не удалось прочитать картинку. Попробуйте PNG или JPG.")); }
     });
     wrap.querySelector('[data-rm]')?.addEventListener('click', () => { set(null); draw(); });
 
@@ -1332,18 +1837,18 @@ function imageField(obj, key, label, id, set) {
   return wrap;
 }
 
-/* ---------- список блоков ---------- */
+/* ---------- block list ---------- */
 function summary(b) {
   const clean = s => String(s || '').replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').split('\n').find(l => l.trim()) || '';
   switch (b.type) {
-    case 'header': return b.rightText || (b.logo ? b.logo.name || 'логотип' : '');
-    case 'image': return b.img ? (b.alt || b.img.name || 'картинка') : 'не выбрана';
+    case 'header': return b.rightText || (b.logo ? b.logo.name || tr("logo", "логотип") : '');
+    case 'image': return b.img ? (b.alt || b.img.name || tr("image", "картинка")) : tr("not selected", "не выбрана");
     case 'heading': return clean(b.text);
     case 'text': return (b.icon ? '◐ ' : '') + clean(b.text);
-    case 'list': { const n = String(b.items || '').split('\n').filter(s => s.trim()).length; return `${n} пункт${n % 10 === 1 && n % 100 !== 11 ? '' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 'а' : 'ов'} · ${clean(b.items)}`; }
+    case 'list': { const n = String(b.items || '').split('\n').filter(s => s.trim()).length; return n + ' ' + plural(n, tr('item', 'пункт'), tr('items', 'пункта'), tr('items', 'пунктов')) + ' · ' + clean(b.items); }
     case 'button': return b.label;
     case 'columns': return `${num(b.count, 2, 2, 3)} · ` + b.cols.slice(0, num(b.count, 2, 2, 3)).map(c => clean(c.title) || clean(c.text) || '…').join(' | ');
-    case 'divider': return b.style === 'dashed' ? 'пунктир' : 'сплошная';
+    case 'divider': return b.style === 'dashed' ? tr("dashed", "пунктир") : tr("solid", "сплошная");
     case 'spacer': return `${b.height} px`;
     case 'footer': return clean(b.text);
   }
@@ -1358,16 +1863,7 @@ function renderBlocks() {
     card.className = 'card' + (b.id === selectedId ? ' sel' : '');
     card.dataset.id = b.id;
     const isOpen = open.has(b.id);
-    card.innerHTML = `<div class="card-head">
-        <span class="grip" title="Перетащите, чтобы переставить блок" aria-hidden="true">⋮⋮</span>
-        <button type="button" class="toggle" aria-expanded="${isOpen}"><span class="chev">▶</span><span class="type">${esc(TYPES[b.type].name)}</span><span class="sum"></span></button>
-        <div class="tools">
-          <button type="button" class="icon-btn" data-act="up" aria-label="Выше" title="Выше" ${i === 0 ? 'disabled' : ''}>↑</button>
-          <button type="button" class="icon-btn" data-act="down" aria-label="Ниже" title="Ниже" ${i === state.blocks.length - 1 ? 'disabled' : ''}>↓</button>
-          <button type="button" class="icon-btn" data-act="dup" aria-label="Дублировать" title="Дублировать">⧉</button>
-          <button type="button" class="icon-btn" data-act="lib" aria-label="В мои блоки" title="Сохранить в «Мои блоки»">★</button>
-          <button type="button" class="icon-btn del" data-act="del" aria-label="Удалить" title="Удалить">✕</button>
-        </div></div>`;
+    card.innerHTML = tr("<div class=\"card-head\">\n        <span class=\"grip\" title=\"Drag to reorder this block\" aria-hidden=\"true\">⋮⋮</span>\n        <button type=\"button\" class=\"toggle\" aria-expanded=\"{0}\"><span class=\"chev\">▶</span><span class=\"type\">{1}</span><span class=\"sum\"></span></button>\n        <div class=\"tools\">\n          <button type=\"button\" class=\"icon-btn\" data-act=\"up\" aria-label=\"Move up\" title=\"Move up\" {2}>↑</button>\n          <button type=\"button\" class=\"icon-btn\" data-act=\"down\" aria-label=\"Move down\" title=\"Move down\" {3}>↓</button>\n          <button type=\"button\" class=\"icon-btn\" data-act=\"dup\" aria-label=\"Duplicate\" title=\"Duplicate\">⧉</button>\n          <button type=\"button\" class=\"icon-btn\" data-act=\"lib\" aria-label=\"Save block\" title=\"Save to My blocks\">★</button>\n          <button type=\"button\" class=\"icon-btn del\" data-act=\"del\" aria-label=\"Delete\" title=\"Delete\">✕</button>\n        </div></div>", "<div class=\"card-head\">\n        <span class=\"grip\" title=\"Перетащите, чтобы переставить блок\" aria-hidden=\"true\">⋮⋮</span>\n        <button type=\"button\" class=\"toggle\" aria-expanded=\"{0}\"><span class=\"chev\">▶</span><span class=\"type\">{1}</span><span class=\"sum\"></span></button>\n        <div class=\"tools\">\n          <button type=\"button\" class=\"icon-btn\" data-act=\"up\" aria-label=\"Выше\" title=\"Выше\" {2}>↑</button>\n          <button type=\"button\" class=\"icon-btn\" data-act=\"down\" aria-label=\"Ниже\" title=\"Ниже\" {3}>↓</button>\n          <button type=\"button\" class=\"icon-btn\" data-act=\"dup\" aria-label=\"Дублировать\" title=\"Дублировать\">⧉</button>\n          <button type=\"button\" class=\"icon-btn\" data-act=\"lib\" aria-label=\"В мои блоки\" title=\"Сохранить в «Мои блоки»\">★</button>\n          <button type=\"button\" class=\"icon-btn del\" data-act=\"del\" aria-label=\"Удалить\" title=\"Удалить\">✕</button>\n        </div></div>", [isOpen, esc(TYPES[b.type].name), i === 0 ? 'disabled' : '', i === state.blocks.length - 1 ? 'disabled' : '']);
     card.querySelector('.sum').textContent = summary(b);
     if (isOpen) {
       const body = document.createElement('div'); body.className = 'card-body';
@@ -1381,7 +1877,7 @@ function renderBlocks() {
     box.append(card);
   });
   $('#clearSel').hidden = !selectedId || $('#frame').hidden;
-  $('#addWhere').textContent = selectedId && state.blocks.some(b => b.id === selectedId) ? 'после выбранного' : 'в конец';
+  $('#addWhere').textContent = selectedId && state.blocks.some(b => b.id === selectedId) ? tr("after selection", "после выбранного") : tr("at the end", "в конец");
   $('#sampleNote').hidden = !state.sample;
 }
 
@@ -1393,16 +1889,16 @@ $('#blocks').addEventListener('click', e => {
   else if (act === 'down' && i < state.blocks.length - 1) { [state.blocks[i + 1], state.blocks[i]] = [state.blocks[i], state.blocks[i + 1]]; }
   else if (act === 'dup') { const c = structuredClone(state.blocks[i]); c.id = uid(); state.blocks.splice(i + 1, 0, c); selectedId = c.id; open.add(c.id); }
   else if (act === 'del') { state.blocks.splice(i, 1); open.delete(id); if (selectedId === id) selectedId = null; }
-  else if (act === 'lib') { addToLibrary(`${TYPES[state.blocks[i].type].name}: ${summary(state.blocks[i]) || 'без текста'}`.slice(0, 60), [state.blocks[i]]); return; }
+  else if (act === 'lib') { addToLibrary(`${TYPES[state.blocks[i].type].name}: ${summary(state.blocks[i]) || tr("no text", "без текста")}`.slice(0, 60), [state.blocks[i]]); return; }
   else if (e.target.closest('.toggle')) { open.has(id) ? open.delete(id) : open.add(id); selectedId = id; }
   else return;
   renderBlocks(); changed();
 });
 
-// Вставка новых блоков: по клику — после выбранного, при перетаскивании — в точку сброса
+// Insert after the selected block on click, or at the drop position when dragging
 function insertBlocks(blocks, at) {
   if (!blocks.length) return;
-  if (state.blocks.length + blocks.length > MAX_BLOCKS) { toast(`В письме может быть не больше ${MAX_BLOCKS} блоков.`); return; }
+  if (state.blocks.length + blocks.length > MAX_BLOCKS) { toast(tr("An email can contain no more than {0} blocks.", "В письме может быть не больше {0} блоков.", [MAX_BLOCKS])); return; }
   if (at == null) { const i = state.blocks.findIndex(x => x.id === selectedId); at = i >= 0 ? i + 1 : state.blocks.length; }
   state.blocks.splice(at, 0, ...blocks);
   const last = blocks[blocks.length - 1];
@@ -1412,14 +1908,14 @@ function insertBlocks(blocks, at) {
 }
 function renderAdder() {
   $('#addBtns').innerHTML = Object.entries(TYPES).map(([t, d]) => `<button type="button" class="btn small" draggable="true" data-add="${t}">+ ${esc(d.name)}</button>`).join('');
-  $('#addBtns').addEventListener('click', e => {
+  $('#addBtns').onclick = e => {
     const t = e.target.closest('[data-add]')?.dataset.add; if (!t) return;
     insertBlocks([mk(t)]);
-  });
+  };
 }
 
-/* ---------- перетаскивание блоков ---------- */
-// drag = { id } — перестановка карточки; { make } — новый блок из палитры или библиотеки
+/* ---------- block drag and drop ---------- */
+// drag = { id } for reordering; { make } for a new block from the palette or library
 let drag = null;
 const blocksBox = $('#blocks');
 blocksBox.addEventListener('pointerdown', e => { const g = e.target.closest('.grip'); if (g) g.closest('.card').draggable = true; });
@@ -1442,7 +1938,7 @@ function clearDropMarks() {
   blocksBox.querySelectorAll('.drop-before, .drop-after').forEach(c => c.classList.remove('drop-before', 'drop-after'));
   blocksBox.classList.remove('drop-end');
 }
-// Индекс вставки: над серединой карточки — перед ней, ниже — после
+// Insert before a card above its midpoint, otherwise after it
 function dropIndex(e) {
   const cards = [...blocksBox.children];
   for (let i = 0; i < cards.length; i++) {
@@ -1482,33 +1978,29 @@ document.addEventListener('dragend', () => {
   blocksBox.querySelectorAll('.card').forEach(c => { c.classList.remove('dragging'); c.draggable = false; });
 });
 
-/* ---------- мои блоки и шаблоны: только память вкладки и файл .json ---------- */
+/* ---------- block and template library: tab memory and .json files only ---------- */
 const MAX_LIB = 200;
 let library = [], libDirty = false;
 const freshCopy = blocks => blocks.map(b => normBlock(structuredClone(b)).block);
 function addToLibrary(name, blocks, settings) {
-  if (library.length >= MAX_LIB) { toast(`В библиотеке может быть не больше ${MAX_LIB} записей.`); return; }
-  // Та же нормализация, что при открытии файла: так повторный импорт узнаёт уже сохранённые записи
+  if (library.length >= MAX_LIB) { toast(tr("The library can contain no more than {0} entries.", "В библиотеке может быть не больше {0} записей.", [MAX_LIB])); return; }
+  // Use the same normalization as file import so repeated imports can detect duplicates
   library.push({ id: uid(), name, blocks: freshCopy(blocks), ...(settings ? { settings: { ...SETTINGS_DEFAULT, ...structuredClone(settings) } } : {}) });
   libDirty = true;
   renderLibrary();
-  toast(settings ? 'Письмо сохранено в «Мои блоки» как шаблон.' : 'Блок сохранён в «Мои блоки».');
+  toast(settings ? tr("Email saved to My blocks as a template.", "Письмо сохранено в «Мои блоки» как шаблон.") : tr("Block saved to My blocks.", "Блок сохранён в «Мои блоки»."));
 }
 function renderLibrary() {
   const box = $('#lib');
-  if (!library.length) { box.innerHTML = '<p class="hint">Пока пусто.</p>'; return; }
-  box.innerHTML = library.map(it => `<div class="lib-row" data-lib="${esc(it.id)}">
-      <button type="button" class="btn small" draggable="${it.settings ? 'false' : 'true'}" data-lib-add title="${it.settings ? 'Заменить текущее письмо шаблоном' : 'Вставить или перетащить в список'}">${it.settings ? 'Открыть' : '+ Вставить'}</button>
-      <input type="text" value="${esc(it.name)}" aria-label="Название" data-lib-name>
-      <button type="button" class="icon-btn del" data-lib-del aria-label="Удалить из библиотеки" title="Удалить из библиотеки">✕</button>
-    </div>`).join('');
+  if (!library.length) { box.innerHTML = tr("<p class=\"hint\">No saved blocks yet.</p>", "<p class=\"hint\">Пока пусто.</p>"); return; }
+  box.innerHTML = library.map(it => tr("<div class=\"lib-row\" data-lib=\"{0}\">\n      <button type=\"button\" class=\"btn small\" draggable=\"{1}\" data-lib-add title=\"{2}\">{3}</button>\n      <input type=\"text\" value=\"{4}\" aria-label=\"Name\" data-lib-name>\n      <button type=\"button\" class=\"icon-btn del\" data-lib-del aria-label=\"Delete from library\" title=\"Delete from library\">✕</button>\n    </div>", "<div class=\"lib-row\" data-lib=\"{0}\">\n      <button type=\"button\" class=\"btn small\" draggable=\"{1}\" data-lib-add title=\"{2}\">{3}</button>\n      <input type=\"text\" value=\"{4}\" aria-label=\"Название\" data-lib-name>\n      <button type=\"button\" class=\"icon-btn del\" data-lib-del aria-label=\"Удалить из библиотеки\" title=\"Удалить из библиотеки\">✕</button>\n    </div>", [esc(it.id), it.settings ? 'false' : 'true', it.settings ? tr("Replace the current email with this template", "Заменить текущее письмо шаблоном") : tr("Insert or drag into the list", "Вставить или перетащить в список"), it.settings ? tr("Open", "Открыть") : tr("+ Insert", "+ Вставить"), esc(it.name)])).join('');
 }
 const libItem = el => library.find(x => x.id === el.closest('[data-lib]')?.dataset.lib);
 $('#lib').addEventListener('click', e => {
   const btn = e.target.closest('[data-lib-add], [data-lib-del]'); if (!btn) return;
   const it = libItem(btn); if (!it) return;
   if (btn.hasAttribute('data-lib-del')) { library = library.filter(x => x !== it); libDirty = true; renderLibrary(); return; }
-  if (it.settings) confirmTwice(btn, 'Заменить письмо?', () => { replaceState({ sample: false, settings: { ...SETTINGS_DEFAULT, ...structuredClone(it.settings) }, blocks: freshCopy(it.blocks) }); toast(`Шаблон «${it.name}» открыт.`); });
+  if (it.settings) confirmTwice(btn, tr("Replace email?", "Заменить письмо?"), () => { replaceState({ sample: false, settings: { ...SETTINGS_DEFAULT, ...structuredClone(it.settings) }, blocks: freshCopy(it.blocks) }); toast(tr("Template “{0}” opened.", "Шаблон «{0}» открыт.", [it.name])); });
   else insertBlocks(freshCopy(it.blocks));
 });
 $('#lib').addEventListener('input', e => { if (e.target.matches('[data-lib-name]')) { const it = libItem(e.target); if (it) { it.name = e.target.value.slice(0, 80); libDirty = true; } } });
@@ -1516,9 +2008,9 @@ $('#lib').addEventListener('dragstart', e => {
   const btn = e.target.closest?.('[data-lib-add]'); const it = btn && libItem(btn);
   if (it && !it.settings) paletteDrag(e, () => freshCopy(it.blocks));
 });
-$('#saveTemplate').addEventListener('click', () => addToLibrary(`Шаблон: ${state.settings.subject || 'без темы'}`.slice(0, 60), state.blocks, state.settings));
+$('#saveTemplate').addEventListener('click', () => addToLibrary(tr("Template: {0}", "Шаблон: {0}", [state.settings.subject || tr("no subject", "без темы")]).slice(0, 60), state.blocks, state.settings));
 $('#saveLib').addEventListener('click', () => {
-  if (!library.length) { toast('Библиотека пуста: сначала сохраните блок кнопкой ★.'); return; }
+  if (!library.length) { toast(tr("The library is empty. Save a block with ★ first.", "Библиотека пуста: сначала сохраните блок кнопкой ★.")); return; }
   saveFile('my-blocks.json', JSON.stringify({ kind: 'mailer-library', version: 1, items: library.map(({ name, blocks, settings }) => ({ name, blocks, ...(settings ? { settings } : {}) })) }, null, 1), { project: false });
   libDirty = false;
 });
@@ -1539,15 +2031,15 @@ $('#openLib').addEventListener('change', async e => {
       const key = JSON.stringify([blocks.map(({ id, ...b }) => b), settings]);
       if (known.has(key)) continue;
       known.add(key);
-      library.push({ id: uid(), name: String(raw.name || 'Без названия').slice(0, 80), blocks, ...(settings ? { settings } : {}) });
+      library.push({ id: uid(), name: String(raw.name || tr("Untitled", "Без названия")).slice(0, 80), blocks, ...(settings ? { settings } : {}) });
       added++;
     }
     renderLibrary();
-    toast(`Библиотека «${file.name}»: добавлено ${added} ${plural(added, 'запись', 'записи', 'записей')}.${omitted ? ` Картинок по ссылкам пропущено: ${omitted}.` : ''}`);
-  } catch (err) { toast('Не удалось открыть библиотеку. Нужен файл my-blocks.json из конструктора, до 20 МБ.'); }
+    toast(tr("Library “{0}”: added {1} {2}.{3}", "Библиотека «{0}»: добавлено {1} {2}.{3}", [file.name, added, plural(added, tr("entry", "запись"), tr("entries", "записи"), tr("entries", "записей")), omitted ? tr(" Remote images omitted: {0}.", " Картинок по ссылкам пропущено: {0}.", [omitted]) : '']));
+  } catch (err) { toast(tr("Could not open the library. Choose a my-blocks.json file from this builder, up to 20 MB.", "Не удалось открыть библиотеку. Нужен файл my-blocks.json из конструктора, до 20 МБ.")); }
 });
 
-/* ---------- оформление ---------- */
+/* ---------- appearance ---------- */
 function renderStyle() {
   const p = $('#p-style');
   p.innerHTML = '';
@@ -1565,39 +2057,29 @@ function renderStyle() {
     p.append(g);
     return g;
   };
-  const g1 = grp('Письмо', [['subject', 'text', 'Тема письма'], ['preheader', 'text', 'Прехедер — строка рядом с темой в списке писем'], ['font', 'text', 'Шрифт — всегда с запасным через запятую'], ['hfont', 'text', 'Шрифт заголовков (пусто — как у текста)']]);
-  g1.querySelector('input[id$="-preheader"]')?.closest('.field').insertAdjacentHTML('beforeend', '<p class="hint">В самом письме не виден. Если оставить пустым, почта покажет начало текста — часто это «Логотип» или шапка. 40–100 символов.</p>');
+  const g1 = grp(tr("Email", "Письмо"), [['subject', 'text', tr("Email subject", "Тема письма")], ['preheader', 'text', tr("Preheader — text next to the subject in the inbox", "Прехедер — строка рядом с темой в списке писем")], ['font', 'text', tr("Font — always include comma-separated fallbacks", "Шрифт — всегда с запасным через запятую")], ['hfont', 'text', tr("Heading font (empty to match body text)", "Шрифт заголовков (пусто — как у текста)")]]);
+  g1.querySelector('input[id$="-preheader"]')?.closest('.field').insertAdjacentHTML('beforeend', tr("<p class=\"hint\">Hidden in the email body. If empty, inboxes show the start of the message, often the logo or header. Aim for 40–100 characters.</p>", "<p class=\"hint\">В самом письме не виден. Если оставить пустым, почта покажет начало текста — часто это «Логотип» или шапка. 40–100 символов.</p>"));
   g1.querySelectorAll('input[id$="-font"], input[id$="-hfont"]').forEach(el => el.setAttribute('list', 'fonts'));
   g1.insertAdjacentHTML('beforeend', `<datalist id="fonts"><option value="Arial, Helvetica, sans-serif"><option value="Calibri, Arial, sans-serif"><option value="Verdana, Geneva, sans-serif"><option value="Georgia, 'Times New Roman', serif"></datalist>`);
-  grp('Текст', [['size', 'number', 'Размер, px', { min: 10, max: 24 }], ['lh', 'number', 'Высота строки, px', { min: 12, max: 40 }], ['pgap', 'number', 'Между абзацами, px', { min: 0, max: 60 }], ['typo', 'check', 'Не отрывать предлоги от слов']], true);
-  grp('Цвета', [['text', 'color', 'Текст'], ['muted', 'color', 'Второстепенный текст'], ['accent', 'color', 'Акцент: маркеры, кнопки'], ['link', 'color', 'Ссылки'], ['divider', 'color', 'Линии'], ['inner', 'color', 'Фон письма'], ['outer', 'color', 'Фон вокруг письма']], true);
-  grp('Размеры', [['width', 'number', 'Ширина письма, px', { min: 400, max: 800 }], ['side', 'number', 'Поля слева и справа, px', { min: 0, max: 80 }], ['top', 'number', 'Отступ сверху, px', { min: 0, max: 120 }], ['bottom', 'number', 'Отступ снизу, px', { min: 0, max: 120 }], ['outerPad', 'number', 'Фон над и под письмом, px', { min: 0, max: 80 }]], true);
+  grp(tr("Text", "Текст"), [['size', 'number', tr("Size, px", "Размер, px"), { min: 10, max: 24 }], ['lh', 'number', tr("Line height, px", "Высота строки, px"), { min: 12, max: 40 }], ['pgap', 'number', tr("Paragraph gap, px", "Между абзацами, px"), { min: 0, max: 60 }], ['typo', 'check', tr("Keep Russian prepositions with the next word", "Не отрывать предлоги от слов")]], true);
+  grp(tr("Colors", "Цвета"), [['text', 'color', tr("Text", "Текст")], ['muted', 'color', tr("Secondary text", "Второстепенный текст")], ['accent', 'color', tr("Accent: markers and buttons", "Акцент: маркеры, кнопки")], ['link', 'color', tr("Links", "Ссылки")], ['divider', 'color', tr("Lines", "Линии")], ['inner', 'color', tr("Email background", "Фон письма")], ['outer', 'color', tr("Outer background", "Фон вокруг письма")]], true);
+  grp(tr("Dimensions", "Размеры"), [['width', 'number', tr("Email width, px", "Ширина письма, px"), { min: 400, max: 800 }], ['side', 'number', tr("Left and right padding, px", "Поля слева и справа, px"), { min: 0, max: 80 }], ['top', 'number', tr("Top padding, px", "Отступ сверху, px"), { min: 0, max: 120 }], ['bottom', 'number', tr("Bottom padding, px", "Отступ снизу, px"), { min: 0, max: 120 }], ['outerPad', 'number', tr("Outer top and bottom padding, px", "Фон над и под письмом, px"), { min: 0, max: 80 }]], true);
   const g = document.createElement('div'); g.className = 'group';
-  g.innerHTML = `<h3>Проект</h3>
-    <p class="hint">Черновик хранится только до закрытия или перезагрузки вкладки. Сохраните проект в файл, чтобы продолжить работу позже. Внешние ресурсы не загружаются; картинки добавляйте из файлов.</p>
-    <div class="btnrow">
-      <button type="button" class="btn small" id="saveJson">Сохранить проект (.json)</button>
-      <button type="button" class="btn small" id="copyJson">Копировать проект</button>
-      <label class="btn small file-lbl">Открыть проект…<input type="file" accept=".json,application/json" id="openJson"></label>
-    </div>
-    <div class="btnrow">
-      <button type="button" class="btn small" id="loadSample">Открыть пример</button>
-      <button type="button" class="btn small danger" id="clearAll">Начать с чистого листа</button>
-    </div>`;
+  g.innerHTML = tr("<h3>Project</h3>\n    <p class=\"hint\">Drafts last until the tab closes or reloads. Save a project file to continue later. Remote resources are not loaded; add images from files.</p>\n    <div class=\"btnrow\">\n      <button type=\"button\" class=\"btn small\" id=\"saveJson\">Save project (.json)</button>\n      <button type=\"button\" class=\"btn small\" id=\"copyJson\">Copy project</button>\n      <label class=\"btn small file-lbl\">Open project…<input type=\"file\" accept=\".json,application/json\" id=\"openJson\"></label>\n    </div>\n    <div class=\"btnrow\">\n      <button type=\"button\" class=\"btn small\" id=\"loadSample\">Load example</button>\n      <button type=\"button\" class=\"btn small danger\" id=\"clearAll\">Start fresh</button>\n    </div>", "<h3>Проект</h3>\n    <p class=\"hint\">Черновик хранится только до закрытия или перезагрузки вкладки. Сохраните проект в файл, чтобы продолжить работу позже. Внешние ресурсы не загружаются; картинки добавляйте из файлов.</p>\n    <div class=\"btnrow\">\n      <button type=\"button\" class=\"btn small\" id=\"saveJson\">Сохранить проект (.json)</button>\n      <button type=\"button\" class=\"btn small\" id=\"copyJson\">Копировать проект</button>\n      <label class=\"btn small file-lbl\">Открыть проект…<input type=\"file\" accept=\".json,application/json\" id=\"openJson\"></label>\n    </div>\n    <div class=\"btnrow\">\n      <button type=\"button\" class=\"btn small\" id=\"loadSample\">Открыть пример</button>\n      <button type=\"button\" class=\"btn small danger\" id=\"clearAll\">Начать с чистого листа</button>\n    </div>");
   p.append(g);
   $('#saveJson').addEventListener('click', () => saveFile(fileBase() + '.json', JSON.stringify(state, null, 1)));
-  $('#copyJson').addEventListener('click', () => copyText(JSON.stringify(state), 'Проект скопирован. Его можно вставить в файл .json и открыть позже.'));
+  $('#copyJson').addEventListener('click', () => copyText(JSON.stringify(state), tr("Project copied. Paste it into a .json file to open it later.", "Проект скопирован. Его можно вставить в файл .json и открыть позже.")));
   $('#openJson').addEventListener('change', async e => {
     const file = e.target.files[0]; if (!file) return;
     try {
       if (file.size > MAX_FILE_BYTES) throw new Error('file-too-large');
       const s = JSON.parse(await file.text());
       const { omittedImages } = normalizeProject(s);
-      replaceState(s); toast(`Проект «${file.name}» открыт.${omittedImages ? ` Картинок по ссылкам или в неподдерживаемом формате: ${omittedImages}. Загрузите их из файлов.` : ''}`);
-    } catch (err) { toast('Не удалось открыть проект. Нужен .json из конструктора, до 20 МБ и 1000 блоков.'); }
+      replaceState(s); toast(tr("Project “{0}” opened.{1}", "Проект «{0}» открыт.{1}", [file.name, omittedImages ? tr(" Remote or unsupported images: {0}. Upload them from files.", " Картинок по ссылкам или в неподдерживаемом формате: {0}. Загрузите их из файлов.", [omittedImages]) : '']));
+    } catch (err) { toast(tr("Could not open the project. Choose a .json file from this builder, up to 20 MB and 1000 blocks.", "Не удалось открыть проект. Нужен .json из конструктора, до 20 МБ и 1000 блоков.")); }
   });
-  $('#loadSample').addEventListener('click', () => confirmTwice($('#loadSample'), 'Заменить текущее письмо?', () => replaceState(sampleState())));
-  $('#clearAll').addEventListener('click', () => confirmTwice($('#clearAll'), 'Точно очистить?', () => replaceState(blankState())));
+  $('#loadSample').addEventListener('click', () => confirmTwice($('#loadSample'), tr("Replace the current email?", "Заменить текущее письмо?"), () => replaceState(sampleState())));
+  $('#clearAll').addEventListener('click', () => confirmTwice($('#clearAll'), tr("Clear everything?", "Точно очистить?"), () => replaceState(blankState())));
 }
 function confirmTwice(btn, ask, fn) {
   if (btn.dataset.armed) { fn(); return; }
@@ -1606,7 +2088,7 @@ function confirmTwice(btn, ask, fn) {
 }
 function replaceState(s) { state = s; selectedId = null; open.clear(); renderBlocks(); renderStyle(); changed(true); }
 
-/* ---------- отмена и повтор изменений: только память текущей вкладки ---------- */
+/* ---------- undo and redo: current tab memory only ---------- */
 const undoStack = [], redoStack = [];
 let historyCurrent = null, historyChars = 0, lastEditGroup = null, lastEditTime = 0;
 let savedCheckpoint = null;
@@ -1628,8 +2110,8 @@ function syncHistoryButtons() {
   $('#undoChange').disabled = !undoStack.length;
   $('#redoChange').disabled = !redoStack.length;
 }
-const undoChange = () => stepHistory(undoStack, redoStack, 'Последнее изменение отменено.');
-const redoChange = () => stepHistory(redoStack, undoStack, 'Изменение возвращено.');
+const undoChange = () => stepHistory(undoStack, redoStack, tr("Last change undone.", "Последнее изменение отменено."));
+const redoChange = () => stepHistory(redoStack, undoStack, tr("Change restored.", "Изменение возвращено."));
 function stepHistory(from, to, msg) {
   const previous = from.pop();
   if (!previous) return;
@@ -1666,7 +2148,7 @@ $('#undoChange').addEventListener('click', undoChange);
 $('#redoChange').addEventListener('click', redoChange);
 document.addEventListener('keydown', undoShortcut);
 
-/* ---------- превью ---------- */
+/* ---------- preview ---------- */
 const frame = $('#frame');
 let previewTimer = 0, view = 'mail', cleanView = false, lastChecks = { list: [], bytes: 0 };
 function changed(now, group) {
@@ -1693,7 +2175,7 @@ function renderPreview() {
   lastChecks = runChecks(state);
   const bad = lastChecks.list.length;
   $('#checkCount').textContent = bad ? `· ${bad}` : '';
-  $('#meta').textContent = `${state.blocks.length} блок${state.blocks.length % 10 === 1 && state.blocks.length % 100 !== 11 ? '' : state.blocks.length % 10 >= 2 && state.blocks.length % 10 <= 4 && (state.blocks.length % 100 < 10 || state.blocks.length % 100 >= 20) ? 'а' : 'ов'} · картинки ${lastChecks.bytes ? fmtKB(lastChecks.bytes) : '0 КБ'}`;
+  $('#meta').textContent = state.blocks.length + ' ' + plural(state.blocks.length, tr('block', 'блок'), tr('blocks', 'блока'), tr('blocks', 'блоков')) + ' · ' + tr('images', 'картинки') + ' ' + (lastChecks.bytes ? fmtKB(lastChecks.bytes) : tr('0 KB', '0 КБ'));
   if (view === 'code') renderCode();
   if (view === 'checks') renderChecks();
 }
@@ -1740,14 +2222,14 @@ function selectBlock(id) {
 }
 
 function renderCode() {
-  const html = buildEmail(state).replace(/data:image\/[a-z+]+;base64,[A-Za-z0-9+/=]+/g, m => `data:…[картинка ${fmtKB(m.length * 0.75)}]`);
+  const html = buildEmail(state).replace(/data:image\/[a-z+]+;base64,[A-Za-z0-9+/=]+/g, m => tr("data:…[image {0}]", "data:…[картинка {0}]", [fmtKB(m.length * 0.75)]));
   $('#code').textContent = html;
 }
 function renderChecks() {
   const ul = $('#checks');
   const { list } = lastChecks;
-  if (!list.length) { ul.innerHTML = '<li><span class="pill ok">ок</span><span>Замечаний нет. Перед рассылкой всё равно отправьте письмо себе и откройте на Mac и на Windows.</span><span></span></li>'; return; }
-  ul.innerHTML = list.map((c, i) => `<li><span class="pill ${c.lvl}">${c.lvl === 'bad' ? 'ошибка' : 'внимание'}</span><span>${esc(c.text)}</span>${c.id ? `<button type="button" class="btn small ghost" data-go="${esc(c.id)}">Открыть</button>` : '<span></span>'}</li>`).join('');
+  if (!list.length) { ul.innerHTML = tr("<li><span class=\"pill ok\">ok</span><span>No issues found. Still send yourself a test email and open it on Mac and Windows before sending it to others.</span><span></span></li>", "<li><span class=\"pill ok\">ок</span><span>Замечаний нет. Перед рассылкой всё равно отправьте письмо себе и откройте на Mac и на Windows.</span><span></span></li>"); return; }
+  ul.innerHTML = list.map((c, i) => `<li><span class="pill ${c.lvl}">${c.lvl === 'bad' ? tr("error", "ошибка") : tr("warning", "внимание")}</span><span>${esc(c.text)}</span>${c.id ? tr("<button type=\"button\" class=\"btn small ghost\" data-go=\"{0}\">Open</button>", "<button type=\"button\" class=\"btn small ghost\" data-go=\"{0}\">Открыть</button>", [esc(c.id)]) : '<span></span>'}</li>`).join('');
 }
 $('#checks').addEventListener('click', e => { const id = e.target.closest('[data-go]')?.dataset.go; if (id) { setView('mail'); selectBlock(id); } });
 
@@ -1764,7 +2246,7 @@ document.querySelectorAll('[data-device]').forEach(b => b.addEventListener('clic
   document.querySelector('.view').classList.toggle('phone', b.dataset.device === 'phone');
 }));
 
-// Панель слева открывают и вкладки редактора, и кнопки в шапке
+// Both editor tabs and header buttons open the left pane
 function showTab(pid) {
   document.querySelectorAll('[data-pane]').forEach(t => {
     const on = t.dataset.pane === pid;
@@ -1778,10 +2260,10 @@ const themeToggle = $('#themeToggle');
 themeToggle.addEventListener('click', () => {
   const dark = document.documentElement.dataset.theme !== 'dark';
   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-  themeToggle.title = dark ? 'Светлая тема' : 'Тёмная тема';
+  themeToggle.title = dark ? tr("Light theme", "Светлая тема") : tr("Dark theme", "Тёмная тема");
 });
 
-/* ---------- копирование и файлы ---------- */
+/* ---------- clipboard and files ---------- */
 let toastTimer = 0;
 function toast(msg) {
   const t = $('#toast'); t.textContent = msg; t.hidden = false;
@@ -1793,12 +2275,12 @@ async function copyText(text, okMsg) {
     const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.append(ta); ta.select();
     const ok = document.execCommand('copy'); ta.remove();
-    toast(ok ? okMsg : 'Браузер не дал скопировать. Откройте вкладку HTML и скопируйте код вручную.');
+    toast(ok ? okMsg : tr("The browser blocked copying. Open the HTML view and copy the code manually.", "Браузер не дал скопировать. Откройте вкладку HTML и скопируйте код вручную."));
   }
 }
 $('#copyMail').addEventListener('click', async () => {
   const html = buildEmail(state), text = plainText(state);
-  const okMsg = 'Письмо скопировано. Вставьте его в новое письмо Outlook.';
+  const okMsg = tr("Email copied. Paste it into a new Outlook message.", "Письмо скопировано. Вставьте его в новое письмо Outlook.");
   try {
     if (!window.ClipboardItem || !navigator.clipboard?.write) throw new Error('no api');
     await navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([text], { type: 'text/plain' }) })]);
@@ -1813,10 +2295,10 @@ $('#copyMail').addEventListener('click', async () => {
       const s = d.getSelection(); s.removeAllRanges(); s.addRange(r);
       ok = d.execCommand('copy'); s.removeAllRanges(); markSelected();
     } catch (err) {}
-    toast(ok ? okMsg : 'Браузер не дал скопировать. Кликните по письму в превью, нажмите ⌘A и ⌘C (Ctrl+A и Ctrl+C на Windows).');
+    toast(ok ? okMsg : tr("The browser blocked copying. Click the email preview, then press ⌘A and ⌘C (Ctrl+A and Ctrl+C on Windows).", "Браузер не дал скопировать. Кликните по письму в превью, нажмите ⌘A и ⌘C (Ctrl+A и Ctrl+C на Windows)."));
   }
 });
-$('#copyCode').addEventListener('click', () => copyText(buildEmail(state), 'HTML-код скопирован вместе с картинками.'));
+$('#copyCode').addEventListener('click', () => copyText(buildEmail(state), tr("HTML copied, including images.", "HTML-код скопирован вместе с картинками.")));
 
 const fileBase = () => 'newsletter';
 function saveFile(name, data, { project = name.endsWith('.json') } = {}) {
@@ -1830,7 +2312,7 @@ function saveFile(name, data, { project = name.endsWith('.json') } = {}) {
 }
 $('#saveHtml').addEventListener('click', () => saveFile(fileBase() + '.html', buildEmail(state)));
 
-/* ---------- импорт готового письма: общие разборщики CSS ---------- */
+/* ---------- email import: shared CSS parsers ---------- */
 function parseStyle(str) {
   const o = {};
   String(str || '').split(';').forEach(d => { const k = d.indexOf(':'); if (k > 0) o[d.slice(0, k).trim().toLowerCase()] = d.slice(k + 1).trim(); });
@@ -1889,7 +2371,7 @@ const widthOf = (el, st) => { const a = el.getAttribute('width'); if (a && /^\d+
 const GENERIC = /^(sans-serif|serif|monospace|cursive|fantasy|system-ui)$/i;
 const fontList = f => String(f || '').split(',').map(x => x.trim().replace(/^["']|["']$/g, '').trim()).filter(Boolean);
 
-/* ---------- проверка исходного письма ---------- */
+/* ---------- source email analysis ---------- */
 function analyzeHtml(raw, doc, images) {
   const rules = classRules(doc);
   const issues = [];
@@ -1900,63 +2382,63 @@ function analyzeHtml(raw, doc, images) {
   const byStyle = re => all.filter(el => re.test(el.getAttribute('style') || ''));
   const TEXTBLK = /^(P|LI|DIV|H[1-6])$/;
 
-  add('bad', 'Интервалы через mso-margin-*-alt',
-    'Outlook для Windows берёт отступ из mso-margin-top-alt, Outlook для Mac его не знает и ставит 0. Поэтому на Маке абзацы плотнее.',
-    'Интервалы задаются через padding ячеек таблицы.', byStyle(/mso-margin-(top|bottom)-alt/i).map(snip));
-  add('bad', 'Списки Word (mso-list)',
-    'Windows берёт отступ маркера из описания списка Word, Mac — из браузерных 40 px. Пункты сдвигаются по-разному.',
-    'Список собирается таблицей «маркер | текст».', byStyle(/mso-list\s*:/i).filter(el => !/ignore/i.test(el.getAttribute('style'))).map(snip));
-  add('bad', 'Отрицательные отступы',
-    'Outlook для Windows игнорирует отрицательный margin, а Mac применяет его. Из-за этого левый и правый край «гуляют».',
-    'Отрицательных отступов нет: блоки стоят в одной колонке с одинаковыми полями.', byStyle(/(^|;)\s*(margin|text-indent)(-[a-z]+)?\s*:[^;]*-\d/i).map(snip));
+  add('bad', tr("Spacing via mso-margin-*-alt", "Интервалы через mso-margin-*-alt"),
+    tr("Outlook for Windows reads mso-margin-top-alt, while Outlook for Mac ignores it and uses 0. Paragraphs therefore appear closer together on Mac.", "Outlook для Windows берёт отступ из mso-margin-top-alt, Outlook для Mac его не знает и ставит 0. Поэтому на Маке абзацы плотнее."),
+    tr("Use table cell padding for spacing.", "Интервалы задаются через padding ячеек таблицы."), byStyle(/mso-margin-(top|bottom)-alt/i).map(snip));
+  add('bad', tr("Word lists (mso-list)", "Списки Word (mso-list)"),
+    tr("Windows reads marker indentation from the Word list definition; Mac uses the browser default of 40 px. Items therefore shift differently.", "Windows берёт отступ маркера из описания списка Word, Mac — из браузерных 40 px. Пункты сдвигаются по-разному."),
+    tr("Lists use a two-column table: marker and text.", "Список собирается таблицей «маркер | текст»."), byStyle(/mso-list\s*:/i).filter(el => !/ignore/i.test(el.getAttribute('style'))).map(snip));
+  add('bad', tr("Negative margins", "Отрицательные отступы"),
+    tr("Outlook for Windows ignores negative margins, while Mac applies them. This shifts the left and right edges.", "Outlook для Windows игнорирует отрицательный margin, а Mac применяет его. Из-за этого левый и правый край «гуляют»."),
+    tr("No negative margins: blocks share consistent padding.", "Отрицательных отступов нет: блоки стоят в одной колонке с одинаковыми полями."), byStyle(/(^|;)\s*(margin|text-indent)(-[a-z]+)?\s*:[^;]*-\d/i).map(snip));
   const vml = [...raw.matchAll(/<v:(shape|rect|roundrect|oval|imagedata|image)\b[^>]*>/gi)].map(m => cut(m[0].replace(/\s+/g, ' '), 110));
-  add('bad', 'Картинки через VML',
-    'Windows рисует VML-фигуру с абсолютным позиционированием, Mac показывает запасной <img>. Это две разные картинки в разных местах.',
-    'Каждая картинка — обычный <img> в своей ячейке.', vml);
+  add('bad', tr("VML images", "Картинки через VML"),
+    tr("Windows renders an absolutely positioned VML shape; Mac uses the fallback <img>. The images can appear in different places.", "Windows рисует VML-фигуру с абсолютным позиционированием, Mac показывает запасной <img>. Это две разные картинки в разных местах."),
+    tr("Each image uses a standard <img> in its own cell.", "Каждая картинка — обычный <img> в своей ячейке."), vml);
   const dups = [];
   for (const m of raw.matchAll(/<([a-z][\w:-]*)(\s[^<>]*?)?>/gi)) {
     const names = [...(m[2] || '').matchAll(/\s([\w:-]+)\s*=/g)].map(x => x[1].toLowerCase());
     const d = names.find((n, i) => names.indexOf(n) !== i);
     if (d) dups.push(`<${m[1]} … ${d}="…" … ${d}="…">`);
   }
-  add('bad', 'Атрибут указан дважды',
-    'Браузер берёт первое значение и отбрасывает второе, Word может поступить наоборот. Часть оформления молча теряется.',
-    'Каждый атрибут задаётся один раз.', dups);
+  add('bad', tr("Duplicate attribute", "Атрибут указан дважды"),
+    tr("Browsers use the first value and discard the second; Word may do the opposite. Some formatting is silently lost.", "Браузер берёт первое значение и отбрасывает второе, Word может поступить наоборот. Часть оформления молча теряется."),
+    tr("Each attribute is set only once.", "Каждый атрибут задаётся один раз."), dups);
   const overflow = [];
   doc.querySelectorAll('table').forEach(t => {
     const w = widthOf(t, cssOf(t, rules)); if (!w) return;
     for (let p = t.parentElement; p; p = p.parentElement) {
-      if (/^(TD|TH|TABLE)$/.test(p.tagName)) { const pw = widthOf(p, cssOf(p, rules)); if (pw) { if (w > pw + 2) overflow.push(`таблица ${Math.round(w)} px внутри ${Math.round(pw)} px`); break; } }
+      if (/^(TD|TH|TABLE)$/.test(p.tagName)) { const pw = widthOf(p, cssOf(p, rules)); if (pw) { if (w > pw + 2) overflow.push(tr("{0} px table inside a {1} px container", "таблица {0} px внутри {1} px", [Math.round(w), Math.round(pw)])); break; } }
     }
   });
-  add('bad', 'Вложенная таблица шире контейнера',
-    'Когда таблица не помещается в родителя, Word и WebKit решают противоречие по-разному: один растягивает письмо, другой обрезает или сжимает колонки.',
-    'Ширины посчитаны от одной сетки: 600 px минус поля.', overflow);
+  add('bad', tr("Nested table exceeds its container", "Вложенная таблица шире контейнера"),
+    tr("Word and WebKit handle oversized nested tables differently: one stretches the email, while the other clips or compresses columns.", "Когда таблица не помещается в родителя, Word и WebKit решают противоречие по-разному: один растягивает письмо, другой обрезает или сжимает колонки."),
+    tr("Widths follow one grid: 600 px minus padding.", "Ширины посчитаны от одной сетки: 600 px минус поля."), overflow);
   const fonts = new Set();
   byStyle(/font-family/i).forEach(el => { const f = parseStyle(el.getAttribute('style'))['font-family']; if (f) fonts.add(f); });
   doc.querySelectorAll('font[face]').forEach(el => fonts.add(el.getAttribute('face')));
-  add('bad', 'Шрифт без запасного варианта',
-    'Если основного шрифта нет у получателя, Outlook для Windows покажет Times New Roman.',
-    'Шрифт записан со списком запасных: …, Arial, sans-serif.', [...fonts].filter(f => { const l = fontList(f); return l.length && !GENERIC.test(l[l.length - 1]) && !/emoji/i.test(f); }).map(f => `font-family: ${f.replace(/&quot;/g, '"')}`));
+  add('bad', tr("Font without a fallback", "Шрифт без запасного варианта"),
+    tr("If the primary font is missing, Outlook for Windows uses Times New Roman.", "Если основного шрифта нет у получателя, Outlook для Windows покажет Times New Roman."),
+    tr("Fonts include fallbacks: …, Arial, sans-serif.", "Шрифт записан со списком запасных: …, Arial, sans-serif."), [...fonts].filter(f => { const l = fontList(f); return l.length && !GENERIC.test(l[l.length - 1]) && !/emoji/i.test(f); }).map(f => `font-family: ${f.replace(/&quot;/g, '"')}`));
   const missing = [...doc.querySelectorAll('img')].filter(im => { const s = im.getAttribute('src'); return s && !resolveSrc(s, images); }).map(im => cut(im.getAttribute('src'), 80));
-  add('bad', 'Картинки недоступны локально',
-    'Картинки отсутствуют во вложениях, заданы внешними ссылками или имеют неподдерживаемый формат. Сетевые загрузки отключены.',
-    'Места картинок сохранятся, останется загрузить файлы.', missing);
-  const badLinks = [...doc.querySelectorAll('a[href]')].filter(a => { const h = a.getAttribute('href').trim(); return !h || /^javascript:/i.test(h) || (!/^(https?:|mailto:|tel:|#)/i.test(h)); }).map(a => `${cut(a.textContent.trim(), 40)} → ${cut(a.getAttribute('href'), 60) || 'пусто'}`);
-  add('bad', 'Нерабочие ссылки', 'Ссылка пустая или ведёт на локальный адрес, который у получателя не откроется.', 'Такие ссылки превращаются в обычный текст — проверьте их.', badLinks);
+  add('bad', tr("Images unavailable locally", "Картинки недоступны локально"),
+    tr("Images are missing from attachments, use remote URLs, or have an unsupported format. Network loading is disabled.", "Картинки отсутствуют во вложениях, заданы внешними ссылками или имеют неподдерживаемый формат. Сетевые загрузки отключены."),
+    tr("Image placeholders are preserved for you to upload files.", "Места картинок сохранятся, останется загрузить файлы."), missing);
+  const badLinks = [...doc.querySelectorAll('a[href]')].filter(a => { const h = a.getAttribute('href').trim(); return !h || /^javascript:/i.test(h) || (!/^(https?:|mailto:|tel:|#)/i.test(h)); }).map(a => `${cut(a.textContent.trim(), 40)} → ${cut(a.getAttribute('href'), 60) || tr("empty", "пусто")}`);
+  add('bad', tr("Broken links", "Нерабочие ссылки"), tr("The link is empty or points to a local address that recipients cannot open.", "Ссылка пустая или ведёт на локальный адрес, который у получателя не откроется."), tr("These links become plain text. Review them.", "Такие ссылки превращаются в обычный текст — проверьте их."), badLinks);
 
-  add('warn', 'Отступы через margin у абзацев',
-    'Word и WebKit по-разному складывают margin соседних абзацев: у одних получателей отступ двойной, у других пропадает.',
-    'Отступы задаются через padding ячеек.', all.filter(el => TEXTBLK.test(el.tagName) && Object.entries(parseStyle(el.getAttribute('style'))).some(([k, v]) => /^margin/.test(k) && /[1-9]/.test(v))).map(snip));
-  add('warn', 'Обтекание (align=left/right, float)',
-    'Обтекание текстом Outlook для Windows и Mac считают по-разному: текст и картинки наезжают или меняются местами.',
-    'Картинка и текст стоят в соседних ячейках, без обтекания.', all.filter(el => /^(IMG|TABLE)$/.test(el.tagName) && /^(left|right)$/i.test(el.getAttribute('align') || '') || /(^|;)\s*float\s*:\s*(left|right)/i.test(el.getAttribute('style') || '')).map(snip));
-  add('warn', 'Размеры в pt, дюймах, сантиметрах',
-    'При масштабе экрана 125–150% Outlook для Windows пересчитывает pt и дюймы иначе, чем пиксели, и блоки «плывут».',
-    'Все размеры в px, картинкам заданы width и height.', byStyle(/(^|;)\s*(width|height)\s*:\s*[\d.]+\s*(pt|in|cm|mm)/i).map(snip));
-  add('warn', 'Колонки шириной меньше 1%',
-    'Такие распорки каждый движок округляет по-своему, из-за этого соседние колонки меняют ширину.',
-    'Распорок нет, поля одинаковые.', all.filter(el => { const w = el.getAttribute('width') || parseStyle(el.getAttribute('style')).width || ''; return /%/.test(w) && parseFloat(w) < 1; }).map(snip));
+  add('warn', tr("Paragraph spacing via margins", "Отступы через margin у абзацев"),
+    tr("Word and WebKit collapse adjacent paragraph margins differently. Spacing may double or disappear.", "Word и WebKit по-разному складывают margin соседних абзацев: у одних получателей отступ двойной, у других пропадает."),
+    tr("Use cell padding for spacing.", "Отступы задаются через padding ячеек."), all.filter(el => TEXTBLK.test(el.tagName) && Object.entries(parseStyle(el.getAttribute('style'))).some(([k, v]) => /^margin/.test(k) && /[1-9]/.test(v))).map(snip));
+  add('warn', tr("Text wrapping (align=left/right, float)", "Обтекание (align=left/right, float)"),
+    tr("Outlook for Windows and Mac wrap text differently, which can overlap or reorder images and text.", "Обтекание текстом Outlook для Windows и Mac считают по-разному: текст и картинки наезжают или меняются местами."),
+    tr("Images and text use adjacent cells without floats.", "Картинка и текст стоят в соседних ячейках, без обтекания."), all.filter(el => /^(IMG|TABLE)$/.test(el.tagName) && /^(left|right)$/i.test(el.getAttribute('align') || '') || /(^|;)\s*float\s*:\s*(left|right)/i.test(el.getAttribute('style') || '')).map(snip));
+  add('warn', tr("Dimensions in pt, inches or centimeters", "Размеры в pt, дюймах, сантиметрах"),
+    tr("At 125–150% display scaling, Outlook for Windows converts points and inches differently from pixels, shifting blocks.", "При масштабе экрана 125–150% Outlook для Windows пересчитывает pt и дюймы иначе, чем пиксели, и блоки «плывут»."),
+    tr("All dimensions use px, and images have width and height attributes.", "Все размеры в px, картинкам заданы width и height."), byStyle(/(^|;)\s*(width|height)\s*:\s*[\d.]+\s*(pt|in|cm|mm)/i).map(snip));
+  add('warn', tr("Columns narrower than 1%", "Колонки шириной меньше 1%"),
+    tr("Rendering engines round narrow spacer columns differently, changing adjacent column widths.", "Такие распорки каждый движок округляет по-своему, из-за этого соседние колонки меняют ширину."),
+    tr("No spacer columns; padding stays consistent.", "Распорок нет, поля одинаковые."), all.filter(el => { const w = el.getAttribute('width') || parseStyle(el.getAttribute('style')).width || ''; return /%/.test(w) && parseFloat(w) < 1; }).map(snip));
   const lefts = new Set();
   all.forEach(el => {
     if (!TEXTBLK.test(el.tagName) && !/^(TABLE|TD)$/.test(el.tagName)) return;
@@ -1964,9 +2446,9 @@ function analyzeHtml(raw, doc, images) {
     const v = st['margin-left'] || st['padding-left'];
     if (v && /[1-9]/.test(v) && !/^-/.test(v)) lefts.add(v.replace(/\s/g, ''));
   });
-  add('warn', `Разный левый край у блоков: ${lefts.size} вариантов`,
-    'Каждый блок отодвинут от края на свою величину, поэтому левый край текста неровный, а в разных Outlook расхождение ещё заметнее.',
-    'У всех блоков одно поле слева.', lefts.size >= 4 ? [[...lefts].slice(0, 8).join(', ')] : []);
+  add('warn', tr("Inconsistent left edges: {0} variations", "Разный левый край у блоков: {0} вариантов", [lefts.size]),
+    tr("Different block offsets make the left text edge uneven, with further variation between Outlook versions.", "Каждый блок отодвинут от края на свою величину, поэтому левый край текста неровный, а в разных Outlook расхождение ещё заметнее."),
+    tr("All blocks use the same left padding.", "У всех блоков одно поле слева."), lefts.size >= 4 ? [[...lefts].slice(0, 8).join(', ')] : []);
   const seps = [];
   const tw = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
   let spaces = 0;
@@ -1975,37 +2457,37 @@ function analyzeHtml(raw, doc, images) {
     if (/(?:_\s?){8,}|[-–—=~*·]{10,}/.test(v)) seps.push(cut(v.replace(/\s+/g, ' ').trim(), 60));
     if (/ [\s ]* [\s ]* /.test(v)) spaces++;
   }
-  add('warn', 'Разделители из символов',
-    'Длина строки из подчёркиваний зависит от шрифта: где-то она не дотягивает до края, где-то переносится на две строки.',
-    'Разделитель — линия шириной с текст.', seps);
-  add('warn', 'Отступы пробелами (&nbsp;)',
-    'Ширина пробела зависит от шрифта, поэтому отступ из пробелов разный на разных компьютерах.',
-    'Пробелы-отступы убраны.', spaces ? [`мест с тремя и более &nbsp; подряд: ${spaces}`] : []);
+  add('warn', tr("Character-based dividers", "Разделители из символов"),
+    tr("The width of repeated underscores depends on the font. The line may stop short or wrap.", "Длина строки из подчёркиваний зависит от шрифта: где-то она не дотягивает до края, где-то переносится на две строки."),
+    tr("Dividers are lines matching the content width.", "Разделитель — линия шириной с текст."), seps);
+  add('warn', tr("Spacing with &nbsp;", "Отступы пробелами (&nbsp;)"),
+    tr("Space width depends on the font, so space-based indentation varies between computers.", "Ширина пробела зависит от шрифта, поэтому отступ из пробелов разный на разных компьютерах."),
+    tr("Space-based indentation is removed.", "Пробелы-отступы убраны."), spaces ? [tr("runs of three or more &nbsp;: {0}", "мест с тремя и более &nbsp; подряд: {0}", [spaces])] : []);
   const empties = all.filter(el => /^(P|DIV)$/.test(el.tagName) && !el.querySelector('img,table') && !el.textContent.replace(/[\s ]/g, ''));
-  add('warn', 'Пустые абзацы вместо отступов',
-    'Высота пустого абзаца зависит от шрифта и настроек Word и WebKit, поэтому расстояния между блоками разные.',
-    'Пустое место задаётся точной высотой в px.', empties.length >= 2 ? [`пустых абзацев: ${empties.length}`] : []);
+  add('warn', tr("Empty paragraphs used for spacing", "Пустые абзацы вместо отступов"),
+    tr("Empty paragraph height depends on the font and Word/WebKit settings, making gaps inconsistent.", "Высота пустого абзаца зависит от шрифта и настроек Word и WebKit, поэтому расстояния между блоками разные."),
+    tr("Spacers use an exact pixel height.", "Пустое место задаётся точной высотой в px."), empties.length >= 2 ? [tr("empty paragraphs: {0}", "пустых абзацев: {0}", [empties.length])] : []);
   const imgs = [...doc.querySelectorAll('img')].filter(im => !(+im.getAttribute('width') <= 3 && im.getAttribute('width')));
-  add('warn', 'Картинки без атрибута width',
-    'Outlook для Windows игнорирует ширину из CSS и показывает картинку в натуральном размере.',
-    'У каждой картинки заданы width и height.', imgs.filter(im => !/^\d+$/.test((im.getAttribute('width') || '').trim())).map(im => cut(im.getAttribute('src') || '', 70)));
-  add('warn', 'Картинки без alt',
-    'Если у получателя отключены картинки, он увидит пустое место без подписи.',
-    'Картинкам проставлены подписи.', imgs.filter(im => !im.hasAttribute('alt')).map(im => cut(im.getAttribute('src') || '', 70)));
-  add('warn', 'CSS, который не понимает Outlook для Windows',
-    'Flex, grid, position, max-width и фоновые картинки Word не поддерживает: в Windows блоки встанут иначе, чем на Маке.',
-    'Раскладка только на таблицах.', byStyle(/display\s*:\s*(flex|grid)|position\s*:\s*(absolute|relative|fixed)|max-width|background-image|background\s*:[^;]*url\(/i).map(snip));
-  add('warn', 'Оформление через div',
-    'Outlook для Windows не применяет padding, ширину и фон у div.',
-    'Оформление перенесено на ячейки таблицы.', all.filter(el => el.tagName === 'DIV' && /(^|;)\s*(padding|width|background|border)[\w-]*\s*:/i.test(el.getAttribute('style') || '')).map(snip));
-  add('warn', 'Ссылки без https', 'Почтовые фильтры и браузеры предупреждают о небезопасных ссылках.', 'Ссылки перенесутся как есть, поправьте адреса вручную.',
+  add('warn', tr("Images without width attributes", "Картинки без атрибута width"),
+    tr("Outlook for Windows ignores CSS image widths and may display images at their native size.", "Outlook для Windows игнорирует ширину из CSS и показывает картинку в натуральном размере."),
+    tr("Every image has width and height attributes.", "У каждой картинки заданы width и height."), imgs.filter(im => !/^\d+$/.test((im.getAttribute('width') || '').trim())).map(im => cut(im.getAttribute('src') || '', 70)));
+  add('warn', tr("Images without alt text", "Картинки без alt"),
+    tr("Recipients with images disabled will see an empty space with no description.", "Если у получателя отключены картинки, он увидит пустое место без подписи."),
+    tr("Images receive alt text.", "Картинкам проставлены подписи."), imgs.filter(im => !im.hasAttribute('alt')).map(im => cut(im.getAttribute('src') || '', 70)));
+  add('warn', tr("CSS unsupported by Outlook for Windows", "CSS, который не понимает Outlook для Windows"),
+    tr("Word does not support flex, grid, position, max-width or background images. Blocks render differently on Windows and Mac.", "Flex, grid, position, max-width и фоновые картинки Word не поддерживает: в Windows блоки встанут иначе, чем на Маке."),
+    tr("Layout uses tables only.", "Раскладка только на таблицах."), byStyle(/display\s*:\s*(flex|grid)|position\s*:\s*(absolute|relative|fixed)|max-width|background-image|background\s*:[^;]*url\(/i).map(snip));
+  add('warn', tr("Formatting on div elements", "Оформление через div"),
+    tr("Outlook for Windows does not apply padding, width and backgrounds to div elements.", "Outlook для Windows не применяет padding, ширину и фон у div."),
+    tr("Formatting moves to table cells.", "Оформление перенесено на ячейки таблицы."), all.filter(el => el.tagName === 'DIV' && /(^|;)\s*(padding|width|background|border)[\w-]*\s*:/i.test(el.getAttribute('style') || '')).map(snip));
+  add('warn', tr("Links without HTTPS", "Ссылки без https"), tr("Email filters and browsers may warn about insecure links.", "Почтовые фильтры и браузеры предупреждают о небезопасных ссылках."), tr("Links are preserved. Update their addresses manually.", "Ссылки перенесутся как есть, поправьте адреса вручную."),
     [...doc.querySelectorAll('a[href^="http:"]')].map(a => cut(a.getAttribute('href'), 70)));
   const imgBytes = Object.values(images).filter((v, i, a) => a.indexOf(v) === i).reduce((s, v) => s + v.length * 0.75, 0);
-  add('warn', 'Тяжёлое письмо', 'Большие письма дольше загружаются; допустимый размер зависит от настроек вашей почты.', 'Картинки переносятся без сжатия; размер файла автоматически не уменьшается.', raw.length + imgBytes > 1.5 * 1048576 ? [`вес письма около ${fmtKB(raw.length + imgBytes)}`] : []);
+  add('warn', tr("Large email", "Тяжёлое письмо"), tr("Large emails take longer to load. Size limits depend on your email service.", "Большие письма дольше загружаются; допустимый размер зависит от настроек вашей почты."), tr("Images are copied without compression; file size is not reduced automatically.", "Картинки переносятся без сжатия; размер файла автоматически не уменьшается."), raw.length + imgBytes > 1.5 * 1048576 ? [tr("approximate email size: {0}", "вес письма около {0}", [fmtKB(raw.length + imgBytes)])] : []);
   return issues.sort((a, b) => (a.lvl === 'bad' ? 0 : 1) - (b.lvl === 'bad' ? 0 : 1));
 }
 
-/* ---------- переверстка: исходный HTML → блоки конструктора ---------- */
+/* ---------- conversion: source HTML to builder blocks ---------- */
 const BLOCK_TAGS = new Set('P DIV H1 H2 H3 H4 H5 H6 LI TD TH TR TABLE TBODY THEAD TFOOT UL OL BLOCKQUOTE CENTER SECTION ARTICLE HEADER FOOTER MAIN NAV ASIDE DL DT DD PRE ADDRESS FORM BODY FIGURE FIGCAPTION'.split(' '));
 const SKIP_TAGS = new Set(['STYLE', 'SCRIPT', 'HEAD', 'TITLE', 'META', 'LINK', 'XML', 'NOSCRIPT', 'TEMPLATE', 'SVG', 'OBJECT', 'IFRAME']);
 const MARKER_RE = /^(✅|✔️?|☑️?|✓|•|·|▪|◦|‣|–|—|-)\s+/;
@@ -2018,7 +2500,7 @@ function linearize(doc, images, stats) {
   const ensure = ctx => (buf ||= { segs: [], imgs: [], ctx, marker: null });
   const flush = () => { if (!buf) return; const b = buf; buf = null; const it = finish(b); if (Array.isArray(it)) items.push(...it.filter(Boolean)); else if (it) items.push(it); };
   const isGrey = c => !!c && lum(c) > 0.45 && satur(c) < 0.15;
-  // Абзац, где обычный текст и серая мелкая приписка разделены переносом, делим на части
+  // Split paragraphs where a line break separates normal text from a small muted note
   function finish(b) {
     const lines = [[]];
     b.segs.forEach(sg => sg.t === 'br' ? lines.push([]) : lines[lines.length - 1].push(sg));
@@ -2128,7 +2610,7 @@ function linearize(doc, images, stats) {
           const thin = (toPx(st.height) || +ch.getAttribute('height') || 99) <= 3 && !!bg;
           if ((line('top') || line('bottom') || thin) && !(w && w < 40)) items.push({ kind: 'divider' });
         } else if (items.length > before && !(w && w < 40) && !(line('left') && line('right')) && !/(solid|dashed|dotted)/i.test(st.border || '')) {
-          // Линия сверху или снизу у ячейки с содержимым — разделитель до или после неё; рамку вокруг блока не трогаем
+          // A top or bottom cell border becomes a divider; preserve full block borders
           if (line('top')) items.splice(before, 0, { kind: 'divider' });
           if (line('bottom')) items.push({ kind: 'divider' });
         }
@@ -2142,11 +2624,11 @@ function linearize(doc, images, stats) {
   return items;
 }
 
-// Сравнение имён шрифтов без учёта регистра, пробелов и разделителей
+// Compare font names without case, whitespace or separators
 const fontKey = x => x.toLowerCase().replace(/[\s_-]+/g, '');
 
 function normalizeFont(f) {
-  // Сохраняем заданные семейства, удаляем повторы и добавляем запасной шрифт.
+  // Preserve family names, remove duplicates and add fallbacks.
   const l = [];
   for (const x of fontList(f)) {
     if (/emoji/i.test(x)) continue;
@@ -2171,10 +2653,10 @@ function convertToState(doc, images, subject) {
   const CW = S.width - 2 * S.side;
   const blocks = [];
   const last = () => blocks[blocks.length - 1];
-  const imgObj = im => im.src ? { src: im.src, w: 0, h: 0, name: im.name || 'картинка' } : null;
+  const imgObj = im => im.src ? { src: im.src, w: 0, h: 0, name: im.name || tr("image", "картинка") } : null;
   const isSmall = im => im.w > 0 && im.w <= 80 && (im.h || im.w) <= 80;
   const missing = { images: 0, icons: 0, logos: 0 };
-  // Плашка: фон ячейки, который отличается и от внешнего фона, и от фона основной части письма
+  // A block background differs from both the outer and main email backgrounds
   const bgW = new Map();
   items.forEach(it => { if (it.kind === 'para') bgW.set(it.bg || '', (bgW.get(it.bg || '') || 0) + it.plain.length); });
   const pageBg = top(bgW) || '';
@@ -2221,7 +2703,7 @@ function convertToState(doc, images, subject) {
       const mark = listType === 'marker' ? mm[1] : it.marker || '';
       if (/✅/.test(mark)) style = 'emoji'; else if (/[✔☑✓]/.test(mark)) style = 'check'; else if (/^[–—-]$/.test(mark)) style = 'dash';
       if (listType === 'marker') md = md.replace(/^(\*\*)?\s*(✅|✔️?|☑️?|✓|•|·|▪|◦|‣|–|—|-)\s+/, '$1');
-      // Номер, набранный текстом, повторил бы нумерацию самого блока
+      // Strip typed list numbers to avoid duplicate numbering
       if (style === 'num') md = md.replace(/^(\*\*)?\s*\d{1,2}[.)]\s+/, '$1');
       md = md.replace(/\n+/g, ' ');
       const key = it.li && it.li.list ? it.li.list : 'seq-' + style;
@@ -2235,16 +2717,16 @@ function convertToState(doc, images, subject) {
       continue;
     }
     const l = last();
-    // Абзац, набранный не основным шрифтом письма, сохраняет свой шрифт
+    // Preserve paragraph fonts that differ from the primary email font
     const font = it.font && normalizeFont(it.font) !== S.font ? normalizeFont(it.font) : '';
     if (!ic && l && l.type === 'text' && !l.icon && l.small === small && l.align === align && (l.bg || '') === bg && (l.font || '') === font) l.text += '\n\n' + it.md;
     else blocks.push(mk('text', { text: it.md, small, align, font, icon: ic ? imgObj(ic) : null, iconSize: ic ? Math.min(ic.w || 48, 80) : 48, ...box(bg) }));
   }
-  // Заголовки набраны другим шрифтом, чем текст, — переносим его в «Шрифт заголовков»
+  // Move the predominant heading font into the heading font setting
   const hf = top(headFonts); if (hf && normalizeFont(hf) !== S.font) S.hfont = normalizeFont(hf);
-  // Заголовок, набранный третьим шрифтом, сохраняет его как свой
+  // Keep any other heading font as a block override
   for (const b of blocks) if (b.type === 'heading') { if (b._font && b._font !== (S.hfont || S.font)) b.font = b._font; delete b._font; }
-  // подпись в конце
+  // footer at the end
   let j = blocks.length;
   const plainLen = s => String(s || '').replace(/\*\*|\[|\]\([^)]*\)/g, '').length;
   while (j > 0 && ((blocks[j - 1].type === 'text' && plainLen(blocks[j - 1].text) <= 120 && !blocks[j - 1].icon && !blocks[j - 1].bg) || (blocks[j - 1].type === 'image' && blocks[j - 1].width < 250))) j--;
@@ -2258,7 +2740,7 @@ function convertToState(doc, images, subject) {
   }
   while (blocks.length && blocks[0].type === 'divider') blocks.shift();
   while (blocks.length && last().type === 'divider') blocks.pop();
-  // отступы между блоками
+  // spacing between blocks
   blocks.forEach((b, i) => {
     const nx = blocks[i + 1];
     delete b._key;
@@ -2267,7 +2749,7 @@ function convertToState(doc, images, subject) {
     else if (b.type === 'list') b.space = nx && nx.type === 'divider' ? 8 : 16;
     else if (b.type === 'image') b.space = 20;
     else if (b.type === 'footer') b.space = 0;
-    // Соседние блоки на одном фоне сливаются в одну плашку
+    // Merge adjacent blocks with the same background visually
     if (b.bg && nx && nx.bg === b.bg) b.space = 0;
   });
   if (blocks.length && blocks[blocks.length - 1].type !== 'footer') blocks[blocks.length - 1].space = 0;
@@ -2286,7 +2768,7 @@ async function finalizeImages(st) {
       if (!im || !im.src) continue;
       jobs.push(loadImage(im.src).then(i => { im.w = i.naturalWidth; im.h = i.naturalHeight; }).catch(() => {}));
     }
-    if (b.type === 'image' && !String(b.alt || '').trim()) b.alt = lastHeading || S.subject || 'Иллюстрация';
+    if (b.type === 'image' && !String(b.alt || '').trim()) b.alt = lastHeading || S.subject || tr("Illustration", "Иллюстрация");
   }
   await Promise.all(jobs);
   for (const b of st.blocks) {
@@ -2298,11 +2780,11 @@ async function finalizeImages(st) {
   }
 }
 
-/* ---------- импорт: интерфейс ---------- */
-let imported = null, prevState = null;
+/* ---------- import UI ---------- */
+let imported = null, prevState = null, importResult = null;
 async function importFile(file) {
   const res = $('#importResult');
-  res.innerHTML = `<p class="hint">Читаю «${esc(file.name)}»…</p>`;
+  res.innerHTML = tr("<p class=\"hint\">Reading “{0}”…</p>", "<p class=\"hint\">Читаю «{0}»…</p>", [esc(file.name)]);
   try {
     if (file.size > MAX_FILE_BYTES) throw new Error('file-too-large');
     const u8 = new Uint8Array(await file.arrayBuffer());
@@ -2310,10 +2792,10 @@ async function importFile(file) {
     if (!r.html) throw new Error('empty');
     loadImported({ ...r, fileName: file.name, size: file.size });
   } catch (e) {
-    res.innerHTML = `<p class="note warn-note">${e.message === 'file-too-large' ? 'Файл больше 20 МБ. Уменьшите его размер.' : e.message === 'unknown-format' ? 'Не узнал формат файла. Подойдут .msg, .oft, .eml, .html и .olk15Message.' : e.message === 'not-cfb' ? 'Файл повреждён или это не письмо Outlook.' : e.message === 'empty' ? 'В файле не нашлось текста письма.' : 'Не удалось прочитать письмо: файл повреждён или в неизвестном формате.'}</p>`;
+    res.innerHTML = `<p class="note warn-note">${e.message === 'file-too-large' ? tr("This file exceeds 20 MB. Reduce its size.", "Файл больше 20 МБ. Уменьшите его размер.") : e.message === 'unknown-format' ? tr("Unrecognized format. Use .msg, .oft, .eml, .html or .olk15Message.", "Не узнал формат файла. Подойдут .msg, .oft, .eml, .html и .olk15Message.") : e.message === 'not-cfb' ? tr("The file is damaged or is not an Outlook message.", "Файл повреждён или это не письмо Outlook.") : e.message === 'empty' ? tr("No message text was found in the file.", "В файле не нашлось текста письма.") : tr("Could not read the message: the file is damaged or uses an unknown format.", "Не удалось прочитать письмо: файл повреждён или в неизвестном формате.")}</p>`;
   }
 }
-// Превью исходника сохраняет оформление, но не активное содержимое и внешние ресурсы.
+// Preserve source formatting without active content or remote resources.
 function offlineOriginal(doc, images) {
   const clean = doc.cloneNode(true);
   clean.querySelectorAll('script,iframe,object,embed,link,meta,base,svg,math,audio,video,source,track').forEach(el => el.remove());
@@ -2333,7 +2815,7 @@ function offlineOriginal(doc, images) {
   return '<!doctype html>' + clean.documentElement.outerHTML;
 }
 function loadImported(r) {
-  if (r.html.length > MAX_FILE_BYTES) { toast('Письмо слишком большое: максимум 20 МБ HTML.'); return; }
+  if (r.html.length > MAX_FILE_BYTES) { toast(tr("The email is too large: maximum 20 MB of HTML.", "Письмо слишком большое: максимум 20 МБ HTML.")); return; }
   const doc = new DOMParser().parseFromString(r.html, 'text/html');
   const issues = analyzeHtml(r.html, doc, r.images);
   const imgRefs = [...doc.querySelectorAll('img[src]')].filter(im => !(+im.getAttribute('width') <= 3 && im.getAttribute('width')));
@@ -2344,57 +2826,46 @@ function loadImported(r) {
   renderImport();
   setView('orig');
 }
+function importFollowUp({ emptyImgs, missing }) {
+  const todo = [];
+  if (emptyImgs) todo.push(tr("Upload {0} {1}: they were missing from the file, so placeholders were kept.", "Загрузите {0} {1}: в файле их не было, места под них оставлены.", [emptyImgs, plural(emptyImgs, tr("image", "картинку"), tr("images", "картинки"), tr("images", "картинок"))]));
+  if (missing.logos) todo.push(tr("Upload a logo for the header.", "Загрузите логотип в шапку."));
+  if (missing.icons) todo.push(tr("Icons missing from the file: {0}. Add them to Text and List blocks.", "Иконок не нашлось в файле: {0}. Их можно добавить в блоки «Текст» и «Список».", [missing.icons]));
+  todo.push(tr("Review the email from top to bottom. Headings and lists were detected automatically.", "Просмотрите письмо сверху вниз: заголовки и списки определены автоматически."));
+  return todo;
+}
 function renderImport(result) {
+  if (result) result.todo = importFollowUp(result);
+  importResult = result || null;
   const r = imported, res = $('#importResult');
   if (!r) { res.innerHTML = ''; return; }
   const bad = r.issues.filter(i => i.lvl === 'bad').length, warn = r.issues.length - bad;
-  const verdict = !r.issues.length ? `<div class="verdict ok">Проблем не найдено. Письмо должно выглядеть одинаково в Outlook для Mac и Windows.</div>`
-    : `<div class="verdict ${bad ? 'bad' : 'warn'}">${bad ? `<b>${bad}</b> ${plural(bad, 'проблема ломает', 'проблемы ломают', 'проблем ломают')} вёрстку` : 'Серьёзных проблем нет'}${warn ? `, ещё <b>${warn}</b> ${plural(warn, 'замечание', 'замечания', 'замечаний')}` : ''}.</div>`;
-  const resultBox = result ? `<div class="note result">
-      <b>Переверстано: ${result.blocks} ${plural(result.blocks, 'блок', 'блока', 'блоков')}.</b> ${result.after ? `В новом макете ${result.after} ${plural(result.after, 'замечание', 'замечания', 'замечаний')}: <button type="button" class="linkbtn" data-open-checks>посмотреть</button>.` : 'Замечаний в новом макете нет.'}
-      ${result.todo.length ? `<ul>${result.todo.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
-      <div class="btnrow"><button type="button" class="btn small" data-undo>Вернуть прежний черновик</button></div></div>` : '';
-  res.innerHTML = `${resultBox}<div class="imp-card">
-      <div class="imp-name">${esc(r.fileName || 'Письмо из буфера обмена')}</div>
-      <p class="hint">${esc(r.format)}${r.subject ? ` · «${esc(r.subject)}»` : ''}${r.imgTotal ? ` · картинок в файле ${r.imgFound} из ${r.imgTotal}` : ''}</p>
-      ${verdict}
-      ${(r.notes || []).map(n => `<p class="hint">${esc(n)}</p>`).join('')}
-      <div class="btnrow">
-        <button type="button" class="btn primary" data-relayout>Переверстать в конструктор</button>
-        <button type="button" class="btn" data-show-orig>Показать исходное</button>
-      </div>
-      <p class="hint">Переверстка заменит текущий черновик. Его можно будет вернуть.</p>
-    </div>
-    ${r.issues.length ? `<ul class="issues">${r.issues.map(i => `<li><details><summary><span class="pill ${i.lvl}">${i.lvl === 'bad' ? 'ошибка' : 'внимание'}</span><span class="it">${esc(i.title)}</span><span class="cnt">${i.count > 1 ? '×' + i.count : ''}</span></summary>
-      <p>${esc(i.why)}</p><p class="fix"><b>После переверстки:</b> ${esc(i.fix)}</p>
-      ${i.examples.length ? `<pre>${i.examples.map(esc).join('\n')}</pre>` : ''}</details></li>`).join('')}</ul>` : ''}`;
+  const verdict = !r.issues.length ? tr("<div class=\"verdict ok\">No issues found. The email should render consistently in Outlook for Mac and Windows.</div>", "<div class=\"verdict ok\">Проблем не найдено. Письмо должно выглядеть одинаково в Outlook для Mac и Windows.</div>")
+    : `<div class="verdict ${bad ? 'bad' : 'warn'}">${bad ? tr("<b>{0}</b> {1} the layout", "<b>{0}</b> {1} вёрстку", [bad, plural(bad, tr("issue affects", "проблема ломает"), tr("issues affect", "проблемы ломают"), tr("issues affect", "проблем ломают"))]) : tr("No major issues", "Серьёзных проблем нет")}${warn ? tr(", plus <b>{0}</b> {1}", ", ещё <b>{0}</b> {1}", [warn, plural(warn, tr("warning", "замечание"), tr("warnings", "замечания"), tr("warnings", "замечаний"))]) : ''}.</div>`;
+  const resultBox = result ? tr("<div class=\"note result\">\n      <b>Converted: {0} {1}.</b> {2}\n      {3}\n      <div class=\"btnrow\"><button type=\"button\" class=\"btn small\" data-undo>Restore previous draft</button></div></div>", "<div class=\"note result\">\n      <b>Переверстано: {0} {1}.</b> {2}\n      {3}\n      <div class=\"btnrow\"><button type=\"button\" class=\"btn small\" data-undo>Вернуть прежний черновик</button></div></div>", [result.blocks, plural(result.blocks, tr("block", "блок"), tr("blocks", "блока"), tr("blocks", "блоков")), result.after ? tr("The new layout has {0} {1}: <button type=\"button\" class=\"linkbtn\" data-open-checks>view</button>.", "В новом макете {0} {1}: <button type=\"button\" class=\"linkbtn\" data-open-checks>посмотреть</button>.", [result.after, plural(result.after, tr("warning", "замечание"), tr("warnings", "замечания"), tr("warnings", "замечаний"))]) : tr("The new layout has no warnings.", "Замечаний в новом макете нет."), result.todo.length ? `<ul>${result.todo.map(t => `<li>${esc(tr(t))}</li>`).join('')}</ul>` : '']) : '';
+  res.innerHTML = tr("{0}<div class=\"imp-card\">\n      <div class=\"imp-name\">{1}</div>\n      <p class=\"hint\">{2}{3}{4}</p>\n      {5}\n      {6}\n      <div class=\"btnrow\">\n        <button type=\"button\" class=\"btn primary\" data-relayout>Convert to blocks</button>\n        <button type=\"button\" class=\"btn\" data-show-orig>Show original</button>\n      </div>\n      <p class=\"hint\">Conversion replaces the current draft. You can restore it afterwards.</p>\n    </div>\n    {7}", "{0}<div class=\"imp-card\">\n      <div class=\"imp-name\">{1}</div>\n      <p class=\"hint\">{2}{3}{4}</p>\n      {5}\n      {6}\n      <div class=\"btnrow\">\n        <button type=\"button\" class=\"btn primary\" data-relayout>Переверстать в конструктор</button>\n        <button type=\"button\" class=\"btn\" data-show-orig>Показать исходное</button>\n      </div>\n      <p class=\"hint\">Переверстка заменит текущий черновик. Его можно будет вернуть.</p>\n    </div>\n    {7}", [resultBox, esc(r.fileName || tr("Email from clipboard", "Письмо из буфера обмена")), esc(tr(r.format)), r.subject ? ` · «${esc(r.subject)}»` : '', r.imgTotal ? tr(" · images found: {0} of {1}", " · картинок в файле {0} из {1}", [r.imgFound, r.imgTotal]) : '', verdict, (r.notes || []).map(n => `<p class="hint">${esc(tr(n))}</p>`).join(''), r.issues.length ? `<ul class="issues">${r.issues.map(i => tr("<li><details><summary><span class=\"pill {0}\">{1}</span><span class=\"it\">{2}</span><span class=\"cnt\">{3}</span></summary>\n      <p>{4}</p><p class=\"fix\"><b>After conversion:</b> {5}</p>\n      {6}</details></li>", "<li><details><summary><span class=\"pill {0}\">{1}</span><span class=\"it\">{2}</span><span class=\"cnt\">{3}</span></summary>\n      <p>{4}</p><p class=\"fix\"><b>После переверстки:</b> {5}</p>\n      {6}</details></li>", [i.lvl, i.lvl === 'bad' ? tr("error", "ошибка") : tr("warning", "внимание"), esc(i.title), i.count > 1 ? '×' + i.count : '', esc(i.why), esc(i.fix), i.examples.length ? `<pre>${i.examples.map(esc).join('\n')}</pre>` : ''])).join('')}</ul>` : '']);
 }
-const plural = (n, one, few, many) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 10 || b >= 20) ? few : many; };
+const plural = (n, one, few, many) => { if (I18N.language === 'en') return n === 1 ? one : few; const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 10 || b >= 20) ? few : many; };
 
 async function relayout() {
   const r = imported; if (!r) return;
-  const btn = document.querySelector('[data-relayout]'); if (btn) { btn.disabled = true; btn.textContent = 'Переверстываю…'; }
+  const btn = document.querySelector('[data-relayout]'); if (btn) { btn.disabled = true; btn.textContent = tr("Converting…", "Переверстываю…"); }
   const { state: st, missing } = convertToState(r.doc, r.images, r.subject);
   await finalizeImages(st);
   prevState = state;
   replaceState(st);
   const after = runChecks(st).list;
-  const todo = [];
   const emptyImgs = st.blocks.filter(b => b.type === 'image' && !b.img).length;
-  if (emptyImgs) todo.push(`Загрузите ${emptyImgs} ${plural(emptyImgs, 'картинку', 'картинки', 'картинок')}: в файле их не было, места под них оставлены.`);
-  if (missing.logos) todo.push('Загрузите логотип в шапку.');
-  if (missing.icons) todo.push(`Иконок не нашлось в файле: ${missing.icons}. Их можно добавить в блоки «Текст» и «Список».`);
-  todo.push('Просмотрите письмо сверху вниз: заголовки и списки определены автоматически.');
-  renderImport({ blocks: st.blocks.length, after: after.length, todo });
+  renderImport({ blocks: st.blocks.length, after: after.length, emptyImgs, missing });
   setView('mail');
-  toast('Письмо переверстано. Проверьте его и отправьте себе тестовое.');
+  toast(tr("Email converted. Review it and send yourself a test.", "Письмо переверстано. Проверьте его и отправьте себе тестовое."));
 }
 
 $('#importResult').addEventListener('click', e => {
   if (e.target.closest('[data-relayout]')) relayout();
   else if (e.target.closest('[data-show-orig]')) setView('orig');
   else if (e.target.closest('[data-open-checks]')) setView('checks');
-  else if (e.target.closest('[data-undo]') && prevState) { replaceState(prevState); prevState = null; renderImport(); toast('Прежний черновик возвращён.'); }
+  else if (e.target.closest('[data-undo]') && prevState) { replaceState(prevState); prevState = null; renderImport(); toast(tr("Previous draft restored.", "Прежний черновик возвращён.")); }
 });
 $('#importFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) importFile(f); e.target.value = ''; });
 const drop = $('#drop');
@@ -2407,12 +2878,35 @@ document.addEventListener('paste', e => {
   const html = e.clipboardData.getData('text/html'), text = e.clipboardData.getData('text/plain');
   if (!html && !text) return;
   e.preventDefault();
-  loadImported({ html: html || '<html><body>' + text.split(/\r?\n\s*\r?\n/).map(p => `<p>${esc(p).replace(/\r?\n/g, '<br>')}</p>`).join('') + '</body></html>', subject: '', images: {}, format: 'Вставка из буфера обмена', notes: html ? [] : ['В буфере был только текст, без оформления.'], fileName: '' });
+  loadImported({ html: html || '<html><body>' + text.split(/\r?\n\s*\r?\n/).map(p => `<p>${esc(p).replace(/\r?\n/g, '<br>')}</p>`).join('') + '</body></html>', subject: '', images: {}, format: tr("Pasted from clipboard", "Вставка из буфера обмена"), notes: html ? [] : [tr("The clipboard contained plain text without formatting.", "В буфере был только текст, без оформления.")], fileName: '' });
 });
 
 
-/* ---------- старт ---------- */
-// Сначала переносим старый черновик в память; удаляем сохранённую копию только после восстановления.
+
+// A language switch redraws only the UI. State, history, library and dirty flags stay intact.
+function setLanguage(language) {
+  I18N.language = language;
+  $('#languageSelect').value = I18N.language;
+  I18N.translateStatic();
+  $('#languageSelect').setAttribute('aria-label', tr('Interface language', 'Язык интерфейса'));
+  themeToggle.title = document.documentElement.dataset.theme === 'dark' ? tr('Light theme', 'Светлая тема') : tr('Dark theme', 'Тёмная тема');
+  const scroll = [$('#p-blocks').scrollTop, $('#p-style').scrollTop];
+  renderAdder(); renderLibrary(); renderBlocks(); renderStyle();
+  if (imported) {
+    imported.issues = analyzeHtml(imported.html, imported.doc, imported.images);
+    renderImport(importResult);
+  }
+  clearTimeout(previewTimer);
+  renderPreview();
+  $('#p-blocks').scrollTop = scroll[0]; $('#p-style').scrollTop = scroll[1];
+  clearTimeout(toastTimer);
+  $('#toast').hidden = true;
+}
+$('#languageSelect').addEventListener('change', e => setLanguage(e.target.value));
+I18N.translateStatic();
+
+/* ---------- startup ---------- */
+// Restore the legacy draft in memory before removing its stored copy.
 let legacy = null, legacyError = false;
 try {
   const raw = localStorage.getItem('mailer-draft-v1');
@@ -2432,9 +2926,9 @@ dirty = !!legacy;
 savedCheckpoint = legacy ? null : historyCurrent;
 if (legacy) {
   try { localStorage.removeItem('mailer-draft-v1'); } catch (e) { legacyError = true; }
-  toast(`Прежний черновик восстановлен. Сохраните его в JSON: автосохранение отключено.${legacy.omittedImages ? ' Картинки по ссылкам нужно загрузить из файлов.' : ''}`);
+  toast(tr("Previous draft restored. Save it as JSON; autosave is disabled.{0}", "Прежний черновик восстановлен. Сохраните его в JSON: автосохранение отключено.{0}", [legacy.omittedImages ? tr(" Upload remote images from files.", " Картинки по ссылкам нужно загрузить из файлов.") : '']));
 }
-if (legacyError) toast('Старое хранилище недоступно или черновик повреждён. Сохранённая ранее копия могла остаться в браузере.');
+if (legacyError) toast(tr("Legacy storage is unavailable or the draft is damaged. A previously saved copy may still remain in the browser.", "Старое хранилище недоступно или черновик повреждён. Сохранённая ранее копия могла остаться в браузере."));
 })();
 </script>
 

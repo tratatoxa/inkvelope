@@ -12,8 +12,9 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     const page = await context.newPage(); page.setDefaultTimeout(5000);
     page.on('pageerror', e=>errors.push(e.message));
     await page.goto(pathToFileURL(path.resolve(__dirname, '../email-builder.html')).href);
+    await page.locator('#languageSelect').selectOption('ru');
     await page.waitForFunction(()=>document.querySelector('#frame').contentDocument?.querySelector('[data-bid]'));
-    // При запуске открыта панель «О конструкторе», работа с блоками — на своей вкладке
+    // About opens on startup; blocks have their own tab.
     await page.locator('#t-blocks').click();
     assert.equal(await page.locator('#undoChange').isDisabled(),true);
     await page.locator('.toggle').first().click();

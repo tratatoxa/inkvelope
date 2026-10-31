@@ -1,27 +1,29 @@
 # inkvelope
 
-## Что это
+**English** · [Русский](readme.ru.md)
 
-Конструктор писем для Outlook на Windows и macOS. Собирайте письмо из блоков, добавляйте текст и картинки, настраивайте оформление и сразу смотрите результат.
+## What it is
 
-Работает в браузере без интернета. Письма и изображения остаются на вашем компьютере.
+An email builder for Outlook on Windows and macOS. Build emails from blocks, add text and images, adjust the design and preview your changes as you go.
 
-## Как запустить
+Available in English and Russian. Runs in your browser and works offline when downloaded. Your emails and images stay on your computer.
 
-Откройте **[inkvelope в браузере](https://tratatoxa.github.io/inkvelope/)**. Установка не нужна.
+## Get started
 
-Для работы без интернета скачайте [email-builder.html](https://github.com/tratatoxa/inkvelope/raw/refs/heads/main/email-builder.html) и откройте его в браузере.
+**[Open inkvelope in your browser](https://tratatoxa.github.io/inkvelope/)** — no installation needed. Use the language selector in the header to switch between English and Russian.
 
-## Как пользоваться
+To work offline, download [email-builder.html](https://github.com/tratatoxa/inkvelope/raw/refs/heads/main/email-builder.html) and open it in your browser.
 
-1. На вкладке **«Блоки»** добавьте заголовки, текст, картинки, списки и кнопки. Перетаскивайте блоки, чтобы менять их порядок.
-2. На вкладке **«Оформление»** выберите цвета, шрифты и ширину письма.
-3. Откройте **«Проверку»** над превью и исправьте найденные проблемы.
-4. Нажмите **«Копировать письмо»** и вставьте его в новое письмо Outlook.
-5. Отправьте тестовое письмо себе и проверьте результат перед рассылкой.
+## How to use it
 
-Готовое письмо можно загрузить через **«Импорт»** — например, из файла `.msg`, `.eml` или `.html` — и продолжить редактирование.
+1. Use **Blocks** to add headings, text, images, lists and buttons. Drag blocks to reorder them.
+2. Choose colors, fonts and email width under **Appearance**.
+3. Open **Checks** above the preview and address any issues.
+4. Click **Copy email** and paste it into a new Outlook message.
+5. Send yourself a test email and check it before sending it to others.
 
-**Автосохранения нет.** Перед закрытием вкладки сохраните работу: **«Оформление → Проект → Сохранить проект (.json)»**. Этот файл можно открыть позже и продолжить.
+To edit an existing email, use **Import** to open a `.msg`, `.eml` or `.html` file.
 
-[Лицензия MIT](LICENSE) · [История изменений](changelog.md) · [Для разработчиков](development.md)
+**There is no autosave.** Before closing the tab, choose **Appearance → Project → Save project (.json)**. Open that file later to continue editing. Switching the interface language leaves your email content unchanged.
+
+[MIT license](LICENSE) · [Changelog](changelog.md) · [Development guide](development.md)

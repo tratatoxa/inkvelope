@@ -13,8 +13,9 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     const page = await context.newPage(); page.setDefaultTimeout(5000);
     page.on('pageerror', e => errors.push(e.message));
     await page.goto(pathToFileURL(path.resolve(__dirname, '../email-builder.html')).href);
+    await page.locator('#languageSelect').selectOption('ru');
     await page.waitForFunction(() => document.querySelector('#frame').contentDocument?.querySelector('[data-bid]'));
-    // При запуске открыта панель «О конструкторе», работа с блоками — на своей вкладке
+    // About opens on startup; blocks have their own tab.
     assert.ok(await page.locator('#p-about').isVisible());
     assert.ok(await page.locator('#p-about h3').first().textContent().then(t => t.includes('Как начать работу')));
     assert.equal(await page.locator('#p-blocks').isVisible(), false);
@@ -28,7 +29,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.locator('#openJson').setInputFiles({ name: 'f.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(project)) });
     await page.waitForFunction(() => document.querySelector('input[id$="-subject"]')?.value === 'FEATURES');
 
-    // Redo: кнопка и сочетания клавиш, новое изменение очищает повтор
+    // Redo buttons and shortcuts work; a new edit clears redo history.
     assert.equal(await page.locator('#redoChange').isDisabled(), true);
     await page.locator('[data-add=spacer]').click();
     assert.equal((await readState()).blocks.length, 4);
@@ -49,7 +50,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.evaluate(() => document.activeElement?.blur());
     console.log('ok redo');
 
-    // Кнопки ▲▼: отступ шагом 4, выравнивание к сетке, ограничение минимумом
+    // Steppers use 4 px spacing increments, align to the grid and respect minimums.
     await page.locator('.card').first().locator('.toggle').click();
     const space = page.locator('.card').first().locator('input[id$="-space"]');
     await space.fill('10');
@@ -67,7 +68,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.equal(Number(await size.inputValue()), before + 1);
     console.log('ok stepper');
 
-    // Перетаскивание карточки за ручку и нового блока из палитры
+    // Drag cards by their handles and new blocks from the palette.
     await page.locator('.card').first().locator('.toggle').click();
     await page.locator('.card').nth(2).locator('.grip').dragTo(page.locator('.card').first(), { targetPosition: { x: 40, y: 4 } });
     assert.deepEqual((await readState()).blocks.map(b => b.text), ['Third', 'First', 'Second']);
@@ -77,7 +78,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.deepEqual(await types(), ['heading', 'columns', 'text', 'text']);
     console.log('ok drag');
 
-    // Колонки: две ячейки по ширине, переключение на три, стек на телефоне
+    // Columns support two or three cells and stack on phones.
     let out = await html();
     assert.equal((out.match(/class="col"/g) || []).length, 2);
     assert.ok(out.includes('width="256"'));
@@ -96,11 +97,11 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.waitForTimeout(250);
     const widths = await page.evaluate(() => { const d = document.querySelector('#frame').contentDocument; return [...d.querySelectorAll('.col')].map(td => Math.round(td.getBoundingClientRect().width)); });
     assert.equal(await page.locator('#frame').evaluate(el => Math.round(el.getBoundingClientRect().width)), 375);
-    assert.ok(widths.every(w => w === widths[0] && w > 300), 'колонки на телефоне занимают всю ширину: ' + widths);
+    assert.ok(widths.every(w => w === widths[0] && w > 300), 'columns fill the phone width: ' + widths);
     await page.locator('[data-device=desktop]').click();
     console.log('ok columns');
 
-    // Фон блока, контраст и кнопка с новыми настройками
+    // Block backgrounds, contrast and button options.
     await page.locator('.card').nth(2).locator('.toggle').click();
     const textCard = page.locator('.card').nth(2);
     await textCard.locator('.color input[type=text]').nth(0).fill('#1F2937');
@@ -124,7 +125,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.ok(/<table role="presentation" width="100%"[^>]*><tr><td align="center" style="background:transparent;border:2px solid #2563EB;border-radius:20px/.test(out));
     console.log('ok box and button');
 
-    // Прехедер: скрытая строка в начале письма и предупреждение, если пусто
+    // Preheaders are hidden at the start of the email; warn when empty.
     await page.locator('[data-view=checks]').click();
     await page.waitForFunction(() => document.querySelector('#checks').textContent.includes('Нет прехедера'));
     await page.locator('#t-style').click();
@@ -138,7 +139,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     assert.equal(visible, false);
     console.log('ok preheader');
 
-    // Мои блоки: сохранить, вставить, файл библиотеки и шаблон
+    // Save and insert blocks, export the library and use templates.
     await page.locator('#t-blocks').click();
     await page.locator('.card').nth(1).locator('[data-act=lib]').click();
     assert.equal(await page.locator('.lib-row').count(), 1);
@@ -161,7 +162,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.waitForFunction(() => document.querySelectorAll('.lib-row').length === 2);
     await page.locator('#openLib').setInputFiles({ name: 'my-blocks.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(lib)) });
     await page.waitForTimeout(100);
-    assert.equal(await page.locator('.lib-row').count(), 2, 'повторное открытие не дублирует записи');
+    assert.equal(await page.locator('.lib-row').count(), 2, 'reopening does not duplicate entries');
     await page.locator('[data-add=spacer]').click();
     const tpl = page.locator('.lib-row').filter({ has: page.locator('input[value^="Шаблон"]') }).locator('[data-lib-add]');
     await tpl.click(); await tpl.click();
@@ -172,10 +173,10 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
     await page.locator('#openLib').setInputFiles({ name: 'evil.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(evil)) });
     await page.locator('.lib-row').last().locator('[data-lib-add]').click();
     const evilCols = (await readState()).blocks.find(b => b.type === 'columns' && b.cols[0].img === null && b.cols[1].title === '');
-    assert.ok(evilCols, 'картинки по ссылкам и мусор в колонках отброшены');
+    assert.ok(evilCols, 'remote images and malformed column values are omitted');
     console.log('ok library');
 
     assert.deepEqual(requests, []); assert.deepEqual(errors, []);
-    console.log('PASS: «О конструкторе» opens on start with the getting-started section first; redo, number steppers, drag-and-drop, columns with phone stacking, block background, button options, preheader, block library and templates; no network or JS errors.');
+    console.log('PASS: About opens on start with the getting-started section first; redo, number steppers, drag-and-drop, columns with phone stacking, block background, button options, preheader, block library and templates; no network or JS errors.');
   } finally { await browser.close(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });
